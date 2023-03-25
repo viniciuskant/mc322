@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author kant
- *
- */
-module lab {
-}

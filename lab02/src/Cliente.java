@@ -1,18 +1,48 @@
+import java.util.Scanner;
+
 public class Cliente {
     private String nome;
     private String dataNascimento;
     private int idade;
     private String endereco;
+    private String cpf;
 
     //construtor
-    public Cliente(String nome, String dataNascimento, String idade, String endereco){
+    public Cliente(String nome, String dataNascimento, String idade, String endereco, String cpf){
         this.nome = nome;
         this.dataNascimento = dataNascimento;
-        this.idade = idade;
+        this.idade = Integer.parseInt(idade);
         this.endereco = endereco;
+        this.cpf = cpf;
+
+        //Enquanto o cpf for inválido é socilitado um novo cpf
+        while(!validarCPF()){
+            Scanner scanner = new Scanner(System.in);
+            
+            System.out.print("\nCPF INVALIDO!\nFavor inserir novamente o CPF: ");
+            cpf = scanner.nextLine();
+            this.cpf = cpf;
+        }
     }
 
     //getters e setters
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+
+        //Enquanto o cpf for inválido é socilitado um novo cpf
+        while(!validarCPF()){
+            Scanner scanner = new Scanner(System.in);
+            
+            System.out.print("\nCPF INVALIDO!\nFavor inserir novamente o CPF: ");
+            String cpf_ = scanner.nextLine();
+            this.cpf = cpf_;
+        }
+    }
+
     public String getNome(){
         return nome;
     }
@@ -29,12 +59,12 @@ public class Cliente {
         this.dataNascimento = dataNascimento;
     }
 
-    public int getidade(){
+    public int getIdade(){
         return idade;
     }
 
-    public void setidade(int idade){
-        this.idade = idade;
+    public void setidade(String idade){
+        this.idade = Integer.parseInt(idade);
     }
 
     public String getEndereco(){
@@ -44,4 +74,65 @@ public class Cliente {
     public void setEndereco(String endereco){
         this.endereco = endereco;
     }
+
+    public String toString(){
+        String info;
+        info =  "Nome: " + getNome() + "\nData de nascimento: " + getdataNascimento() + "\nIdade: " + getIdade() + "\nEndereco: " +  getEndereco() + "\nCPF: " + getCpf();
+        return info;
+    }
+
+    private boolean numeroIguais(){
+        int i, numeroInteiro, primeiroNumero = cpf.charAt(0) - 48, repeticao = 0;
+        for (i = 0; i < 9; i++){
+            numeroInteiro = cpf.charAt(i) -  48; //faco a convercao da char para int 
+            if (primeiroNumero == numeroInteiro)
+                repeticao++;
+        }
+
+        //Testo se todos os numeros são iguais
+        if (repeticao == 9)
+            return true;
+
+        return false;
+    }
+
+    private boolean validarCPF(){
+        int somatorio , restoDivisao, k, i, numeroInteiro, multiplicador, primeiroNumero;
+        cpf = cpf.replace(".", "");
+        cpf = cpf.replace("-", "");
+
+        if (cpf.length() != 11) //Verifica se o tamanho está correto
+            return false;
+
+        if(numeroIguais()) //Verifica se os digitos são iguais
+            return false;
+
+        for (k = 0; k < 2;k++){
+            i = somatorio = 0;
+            for (; i < 9 + k; i++){
+                numeroInteiro = cpf.charAt(i) -  48; //faco a convercao da char para int 
+                multiplicador = 10 + k - i; // (10 - i)  faca a muultiplicacao de forma decrecente, ja que i cresce e k é uma fator de correção que tem valor 0 ou 1
+                somatorio += numeroInteiro * multiplicador; 
+
+                if (numeroInteiro < 0 || numeroInteiro > 9) //testo de o carcater era ou não um representante de um string de um numero
+                    return false;
+            }
+
+            restoDivisao = somatorio % 11;
+
+            //Começo a verificar se os digitos estão corretos            
+            if (restoDivisao == 0 || restoDivisao == 1) //significa que o primeiro verificador é zero
+                if(((int)cpf.charAt(9 + k) - 48) != 0)
+                    return false;
+ 
+
+            else
+                if((11 - restoDivisao) != ((int)cpf.charAt(9 + k) - 48))
+                    return false;            
+
+        }
+        return true;
+    }
+
+    
 }

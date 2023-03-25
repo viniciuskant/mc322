@@ -1,13 +1,13 @@
 public class Sinistro {
     private String data;
-    private int id;
     private String endereco;
+    private int id;
 
     //construtor
-    public Sinistro(String data, String dataNascimento, String id, String endereco){
+    public Sinistro(String data, String endereco){
         this.data = data;
-        this.id = id;
         this.endereco = endereco;
+        this.id = Integer.parseInt(super.toString().replace("Sinistro@", ""), 16);
     }
 
     //getters e setters
@@ -19,19 +19,21 @@ public class Sinistro {
         this.data = data;
     }
 
-    public int getid(){
-        return id;
-    }
-
-    public void setid(int id){
-        this.id = id;
-    }
-
+    
     public String getEndereco(){
         return endereco;
     }
-
+    
     public void setEndereco(String endereco){
         this.endereco = endereco;
     }
+    
+    public int getid(){
+        return id;
+    }
+    public String toString() {
+        String info;
+        info =  "Data: " + getdata() + "\nEndereco: " + getEndereco() + "\nid: " + Integer.toString(getid());
+        return info;
+    }     
 }
