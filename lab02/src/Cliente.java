@@ -97,40 +97,69 @@ public class Cliente {
     }
 
     private boolean validarCPF(){
-        int somatorio , restoDivisao, k, i, numeroInteiro, multiplicador, primeiroNumero;
+        int somatorio , restoDivisao, k, i, numeroInteiro, multiplicador, primeiroNumero, penultimoDigito, ultimoDigito;
         cpf = cpf.replace(".", "");
         cpf = cpf.replace("-", "");
 
         if (cpf.length() != 11) //Verifica se o tamanho está correto
             return false;
 
-        if(numeroIguais()) //Verifica se os digitos são iguais
+        if(numeroIguais()) //Verifica se os digitos são iguais6
             return false;
 
-        for (k = 0; k < 2;k++){
-            i = somatorio = 0;
-            for (; i < 9 + k; i++){
-                numeroInteiro = cpf.charAt(i) -  48; //faco a convercao da char para int 
-                multiplicador = 10 + k - i; // (10 - i)  faca a muultiplicacao de forma decrecente, ja que i cresce e k é uma fator de correção que tem valor 0 ou 1
-                somatorio += numeroInteiro * multiplicador; 
 
-                if (numeroInteiro < 0 || numeroInteiro > 9) //testo de o carcater era ou não um representante de um string de um numero
-                    return false;
-            }
+        penultimoDigito = cpf.charAt(9) - 48;
+        ultimoDigito = cpf.charAt(10) - 48;
+        
+        //Primeiro digito
+        somatorio = 0;
+        for (i = 0; i < 9; i++){
+            numeroInteiro = cpf.charAt(i) -  48; //faco a convercao da char para int 
+            multiplicador = 10 - i;
+            somatorio += numeroInteiro * multiplicador; 
 
-            restoDivisao = somatorio % 11;
-
-            //Começo a verificar se os digitos estão corretos            
-            if (restoDivisao == 0 || restoDivisao == 1) //significa que o primeiro verificador é zero
-                if(((int)cpf.charAt(9 + k) - 48) != 0)
-                    return false;
- 
-
-            else
-                if((11 - restoDivisao) != ((int)cpf.charAt(9 + k) - 48))
-                    return false;            
-
+            if (numeroInteiro < 0 || numeroInteiro > 9) //testo se o carcater era ou não um representante de um string de um numero
+                return false;
         }
+
+        restoDivisao = somatorio % 11;
+        
+        //Começo a verificar o digito           
+        if (restoDivisao <= 1){
+            if (penultimoDigito != 0){ //significa que o primeiro verificador é zero
+                return false;
+            }
+        }
+        
+        else if((11 - restoDivisao) != penultimoDigito){
+            return false;
+        }
+
+        //Segundo Digito
+        somatorio = 0;
+        for (i = 0; i < 10; i++){
+            numeroInteiro = cpf.charAt(i) - 48; //faco a convercao da char para int 
+            multiplicador = 11 - i;
+            somatorio += numeroInteiro * multiplicador; 
+
+            if (numeroInteiro < 0 || numeroInteiro > 9) //testo se o carcater era ou não um representante de um string de um numero
+                return false;
+        }
+
+        restoDivisao = somatorio % 11;
+
+        //Verificar o ultimo digito            
+        if (restoDivisao == 0 || restoDivisao == 1){
+            if (ultimoDigito != 0){ //significa que o primeiro verificador é zero
+                return false;
+            }
+        }
+
+        else if((11 - restoDivisao) != ultimoDigito){
+            return false;
+        }
+
+            
         return true;
     }
 

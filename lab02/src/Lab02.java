@@ -13,7 +13,7 @@ public class Lab02{
             Sinistro sinistro;
             Veiculo veiculo;
             
-            System.out.println("\n\n\t\tFaça um cadastro!\n\nQual tipo:\n(1)Cliente\n(2)Seguradora\n(3)Sinistro\n(4)Veiculo\n");
+            System.out.println("\n\n\t\tFaça um cadastro!\n\nQual tipo:\n\t(1)Cliente\n\t(2)Seguradora\n\t(3)Sinistro\n\t(4)Veiculo\n");
             
             
             input = scanner.nextLine();
@@ -32,7 +32,7 @@ public class Lab02{
 
                 cliente = new Cliente(nome, data, idade, endereco, cpf);
 
-                System.out.println("\nCadastro realizado com sucesso!\n\nDados inseridos:");
+                System.out.println("\nCADASTRO REALIZADO COM SUCESSO!\n\nDADOS INSERIDOS:");
                 System.out.println(cliente.toString());
 
 
@@ -51,7 +51,7 @@ public class Lab02{
 
                 seguradora = new Seguradora(nome, telefone, email, endereco);
 
-                System.out.println("\nCadastro realizado com sucesso!\n\nDados inseridos:");
+                System.out.println("\nCADASTRO REALIZADO COM SUCESSO!\n\nDADOS INSERIDOS:");
                 System.out.println(seguradora.toString());
 
             }
@@ -64,7 +64,7 @@ public class Lab02{
 
                 sinistro = new Sinistro(data, endereco);
 
-                System.out.println("\nCadastro realizado com sucesso!\n\nDados inseridos:");
+                System.out.println("\nCADASTRO REALIZADO COM SUCESSO!\n\nDADOS INSERIDOS:");
                 System.out.println(sinistro.toString());
             }
 
@@ -78,7 +78,7 @@ public class Lab02{
 
                 veiculo = new Veiculo(placa, marca, modelo);
 
-                System.out.println("\nCadastro realizado com sucesso!\n\nDados inseridos:");
+                System.out.println("\nCADASTRO REALIZADO COM SUCESSO!\n\nDADOS INSERIDOS:");
                 System.out.println(veiculo.toString());
             }
 
