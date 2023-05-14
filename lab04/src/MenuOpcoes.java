@@ -11,9 +11,12 @@ public enum MenuOpcoes {
 			SubmenuOpcoes.VOLTAR
 	}),
 	LISTAR("Listar", new SubmenuOpcoes[] {
-			SubmenuOpcoes.LISTAR_CLIENTES,
-			SubmenuOpcoes.LISTAR_SINISTROS,
-			SubmenuOpcoes.LISTAR_VEICULOS,
+			SubmenuOpcoes.LISTAR_CLIENTES_PF,
+			SubmenuOpcoes.LISTAR_CLIENTES_PJ,
+			SubmenuOpcoes.LISTAR_SINISTROS_SEGURADORA,
+			SubmenuOpcoes.LISTAR_SINISTROS_CLIENTE,
+			SubmenuOpcoes.LISTAR_VEICULOS_CLIENTE,
+			SubmenuOpcoes.LISTAR_VEICULOS_SEGURADORA,
 			SubmenuOpcoes.VOLTAR
 	}),
 	EXCLUIR("Excluir", new SubmenuOpcoes[] {

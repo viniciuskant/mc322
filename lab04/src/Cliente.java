@@ -46,14 +46,6 @@ public class Cliente{
         this.valorSeguro = valorSeguro;
     }
 
-    public String listaVeiculos(){
-        String info = "\n";
-        for(int i = 0; i < quantidadeVeiculos; i ++){
-            info += "\n" + listaVeiculos.get(i).toString() +"\n";
-        }
-        return info;
-    }
-
     public String toString() {
         return "\nNome: " + getNome() +
                "\nEndereço: " + getEndereco() +
@@ -64,5 +56,34 @@ public class Cliente{
     public void addVeiculo(Veiculo veiculo){
         listaVeiculos.add(veiculo);
         quantidadeVeiculos++;
+    }
+
+    public String listaVeiculos(){
+        String info = "\n";
+        for(int i = 0; i < quantidadeVeiculos; i ++){
+            info += "\n" + listaVeiculos.get(i).toString() +"\n";
+        }
+        return info;
+    }
+
+    private int indexVeiculo(String placa){ //Talvez tenha erro
+        int i = 0; 
+        for(; i < quantidadeVeiculos && listaVeiculos.get(i).getplaca() != placa; i ++);
+        
+        if (i == quantidadeVeiculos)
+            return -1;
+        
+        return i;
+    }
+
+    public Boolean removerVeiculo(String placa){
+        int i = indexVeiculo(placa);
+
+        if (i == -1)
+            return false;
+
+        listaVeiculos.remove(i);
+        quantidadeVeiculos--;
+        return true;
     }
 }

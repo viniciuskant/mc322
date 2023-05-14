@@ -124,4 +124,17 @@ public class Validacao {
         return true;
     }
     
+    public static boolean validarData(String data){
+        String[] dataSeparada = data.split("/");
+        return Date.dataValida(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
+    }
+
+    public static boolean ehInteiro(String numero){
+        for(int i = 0; i < numero.length(); i++){
+            if ( numero.charAt(i) < 48 || 57 < numero.charAt(i))
+                    return false;
+        }
+        return true;
+    }
+
 }

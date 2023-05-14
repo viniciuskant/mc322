@@ -6,19 +6,35 @@ public class Date {
     private int dia;
     
     // Construtor
-    public Date(int ano, int mes, int dia){
-        this.ano = ano;
-        this.mes = mes;
+    public Date(int dia, int mes, int ano){
         this.dia = dia;
+        this.mes = mes;
+        this.ano = ano;
     }
 
-    public Date(String ano, String mes, String dia){
-        this.ano = Integer.parseInt(ano);
-        this.mes = Integer.parseInt(mes);
+    public Date(String dia, String mes, String ano){
         this.dia = Integer.parseInt(dia);
+        this.mes = Integer.parseInt(mes);
+        this.ano = Integer.parseInt(ano);
     }
 
     // Getters and Setters
+    public int getDia() {
+        return dia;
+    }
+    
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+    
+    public int getMes() {
+        return mes;
+    }
+    
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+    
     public int getAno() {
         return ano;
     }
@@ -26,23 +42,7 @@ public class Date {
     public void setAno(int ano) {
         this.ano = ano;
     }
-
-    public int getMes() {
-        return mes;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
-    }
-
-    public int getDia() {
-        return dia;
-    }
-
-    public void setDia(int dia) {
-        this.dia = dia;
-    }
-
+    
     public String toString() {
         String str = String.valueOf(dia) + "/" + String.valueOf(mes) + "/" + String.valueOf(ano);
         return str;
@@ -63,7 +63,7 @@ public class Date {
         return true;
     }
 
-    public static boolean dataValida(int ano, int mes, int dia){
+    public static boolean dataValida(int dia, int mes, int ano){
         // Verifica se o ano é válido
         if (ano < 1 || ano > 3000){
             return false;
@@ -100,7 +100,11 @@ public class Date {
         return true;
     }
 
-    public static int diasTotais(int ano, int mes, int dia){
+    public static boolean dataValida(String dia, String mes, String ano){
+        return dataValida(Integer.parseInt(dia), Integer.parseInt(mes), Integer.parseInt(ano));
+    }
+
+    public static int diasTotais(int dia, int mes, int ano){
         int soma ;
 
         // Anos
@@ -151,8 +155,8 @@ public class Date {
         int diaAtual = dataAtual.getDayOfMonth();
 
 
-        int totalDiasAtuais = diasTotais(anoAtual, mesAtual, diaAtual);
-        int totalDiasData = diasTotais(ano, mes, dia);
+        int totalDiasAtuais = diasTotais(diaAtual, mesAtual, anoAtual);
+        int totalDiasData = diasTotais(dia, mes, ano);
 
         int diferenca = totalDiasAtuais - totalDiasData;
         

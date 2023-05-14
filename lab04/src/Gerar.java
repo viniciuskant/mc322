@@ -19,6 +19,12 @@ public class Gerar {
 
         System.out.print("Data de licença(dd/MM/aaaa): ");
         data = input.nextLine();
+
+        while(!Validacao.validarData(data)){
+            System.out.print("Data de licença(dd/MM/aaaa): ");
+            data = input.nextLine();
+        }
+        
         String[] dataSeparada = data.split("/");
         dataLicenca = new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
 
@@ -33,8 +39,8 @@ public class Gerar {
 
         System.out.print("CPF: ");
         cpf = input.nextLine();
-        while(Validacao.validarCPF(cpf)){
-            System.out.print("CPF inválido! Favor inserir novamente.\n CPF: ");
+        while(!Validacao.validarCPF(cpf)){
+            System.out.print("CPF inválido! Favor inserir novamente.\nCPF: ");
             cpf = input.nextLine();
         }
 
@@ -80,16 +86,16 @@ public class Gerar {
 
     public static Cliente cliente(){
         Scanner input = new Scanner(System.in);
+        boolean opcaoIncorreta = true;
+        
+        System.out.print("Tipo de cliente:\n0 - Pessoa Fisica\n1 - Pessoa Juridica\nDigite uma opcao: \n");
         String tipoCadastro = input.nextLine();
-        boolean opcaoIncorreta = false;
-
-        System.out.print("Agora vamos cadastrar o cliente que sofreu o sinistro!\n (1)Pessoa Fisica\n (2)Pessoa Juridica\n");
 
         while(opcaoIncorreta){
-            if(tipoCadastro.equals("1")){
+            if(tipoCadastro.equals("0")){
                 return Gerar.PF();  
             }
-            else if(tipoCadastro.equals("2")){
+            else if(tipoCadastro.equals("1")){
                 return Gerar.PJ();
             }
             else{
@@ -101,25 +107,25 @@ public class Gerar {
 
     public static Sinistro sinistro(){
         Date dataSinistro;
-        Veiculo veiculo;
         String endereco, data, dataSeparada[];
         Scanner input = new Scanner(System.in);
 
-        System.out.print("\n\nVamos cadastrar os dados do sinistro!\nData do sinistro(aaaa/mm/dd): ");
-                data = input.nextLine();
-                dataSeparada = data.split("/");
-                dataSinistro = new Date(dataSeparada[1], dataSeparada[1], dataSeparada[2]);
 
-                System.out.print("Endereco: ");
-                endereco = input.nextLine();
+        System.out.print("Data do Sinistro(dd/MM/aaaa): ");
+        data = input.nextLine();
 
-                veiculo = veiculo();
+        while(!Validacao.validarData(data)){
+            System.out.print("Data do Sinistro(dd/MM/aaaa): ");
+            data = input.nextLine();
+        }
+        
+        dataSeparada = data.split("/");
+        dataSinistro = new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
 
-                Cliente cliente = cliente();
-                // Pergintar se deseja add veiculo
-                // pessoa.addVeiculo(veiculo);
+        System.out.print("Endereco: ");
+        endereco = input.nextLine();
 
-                return new Sinistro(dataSinistro, endereco, veiculo, cliente);
+        return new Sinistro(dataSinistro, endereco);
 
     }
 

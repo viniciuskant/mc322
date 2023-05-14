@@ -15,6 +15,12 @@ public class Sinistro{
         this.cliente = cliente;
     }
 
+    public Sinistro(Date data, String endereco){
+        this.data = data;
+        this.endereco = endereco;
+        this.ID = Integer.parseInt(super.toString().replace("Sinistro@", ""), 16);
+    }
+
     //getters e setters
     public int getid(){
         return ID;

@@ -59,6 +59,22 @@ public class Seguradora {
         return nCliente;
     }
 
+    public void setListaSinistros(ArrayList<Sinistro> listaSinistros) {
+        this.listaSinistros = listaSinistros;
+    }
+
+    public void setListaClientes(ArrayList<Cliente> listaClientes) {
+        this.listaClientes = listaClientes;
+    }
+
+    public boolean addCliente(Cliente cliente){
+        return listaClientes.add(cliente);
+    }
+
+    public boolean addSinistro(Sinistro sinistro){
+        return listaSinistros.add(sinistro);
+    }
+
     public String toString(){
         String info;
         info =  "Nome: " + getNome() + "\nTelefone: " + getTelefone() + "\nEmail: " + getEmail() + "\nEndereco: " + getEndereco();
@@ -83,6 +99,16 @@ public class Seguradora {
         return i;
     }
 
+    public int indexSinistro(int id){
+        int i = 0;
+        for(; i < nSinistro && listaSinistros.get(i).getid() != id; i ++);
+        
+        if (i == nSinistro)
+            return -1;
+        
+        return i;
+    }
+
     public boolean removeCliente(String cliente){
         int indice = indexCliente(cliente);
         if (indice == -1)
@@ -91,6 +117,14 @@ public class Seguradora {
         listaClientes.remove(indice);
         nCliente--;
         return true;
+    }
+
+    public boolean removerVeiculo(String cliente, String placa){
+        int indice = indexCliente(cliente);
+        if (indice == -1)
+            return false;
+
+        return listaClientes.get(indice).removerVeiculo(placa);
     }
 
     public String listarClientes(String cliente){
@@ -115,7 +149,8 @@ public class Seguradora {
         return info;
     }
 
-    public boolean gerarSinistro(Sinistro sinistro){
+    public boolean gerarSinistro(){
+        Sinistro sinistro = Gerar.sinistro();
         boolean alocou = listaSinistros.add(sinistro);
         if (alocou)
             nSinistro++;
@@ -142,16 +177,30 @@ public class Seguradora {
         return info;
     }
 
-    
+    public void listarVeiculosCliente(String nome){
+        int indice = indexCliente(nome);
+        if (indice != -1){
+            listaClientes.get(indice).listaVeiculos();
+        }
+    }
 
-    // public boolean addVeiculo(String cliente, Veiculo veiculo){
-    //     int indice = indexCliente(cliente);
-    //     if (indice == -1)
-    //         return false;
+    public void listarVeiculos(){
+        for(Cliente cliente: listaClientes){
+            cliente.listaVeiculos();
+        }
+    }
+    
+    public Boolean removerSinistro(int id){
+        int i = indexSinistro(id);
+        if (i == -1)
+            return false;
         
-    //     else{
-    //         this.listaClientes.get(indice).addVeiculo(veiculo);
-    //         return true;
-    //     }
-    // }
+        listaSinistros.remove(i);
+        nSinistro--;
+        return true;
+    }
+
+    public Boolean removerSinistro(String id){
+        return removerSinistro(Integer.parseInt(id));
+    }
 }
