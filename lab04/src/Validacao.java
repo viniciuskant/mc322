@@ -1,4 +1,4 @@
-static class Validacao {
+public class Validacao {
     
     private static boolean numeroIguais(String cpfTeste){
         int i, primeiroNumero = cpfTeste.charAt(0);
@@ -137,9 +137,9 @@ static class Validacao {
         return Date.dataValida(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
     }
 
-    public static boolean ehInteiro(String numero){
+    public static boolean ehInteiro(String n){
         try{
-            Integer.parseInt(numero);
+            Integer.parseInt(n);
             return true;
         }
         catch(NumberFormatException e){
@@ -147,4 +147,10 @@ static class Validacao {
         } 
     }
 
+    public static boolean ehNatural(String n){
+        if(!ehInteiro(n))
+            return false;
+
+        return Integer.parseInt(n) >= 0;
+    }
 }

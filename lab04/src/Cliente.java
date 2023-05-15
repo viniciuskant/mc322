@@ -66,9 +66,9 @@ public class Cliente{
     }
 
     public String listaVeiculos(){
-        String info = "\n";
-        for(int i = 0; i < quantidadeVeiculos; i ++){
-            info += "\n" + listaVeiculos.get(i).toString() +"\n";
+        String info = "";
+        for(Veiculo veiculo: listaVeiculos){
+            info += veiculo.toString();
         }
         return info;
     }

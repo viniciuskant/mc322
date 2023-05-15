@@ -56,7 +56,7 @@ public class Date {
     }
 
     public static boolean mes30(int mes){
-        if(mes31(mes) || mes != 2){
+        if(mes31(mes) || mes == 2){
             return false;
         }
 
@@ -78,24 +78,26 @@ public class Date {
         if(dia < 1){
             return false;
         }
-        if(mes31(mes) && (dia > 31)){
-                return false;
-        }
-
         
-        else if (mes30(mes) && (dia > 30)){
-                return false;
-        }
-
-        else if (mes == 2){ // Fevereiro
-            if (ano % 4 == 0 && dia > 29){ //Ano bissexto
-                return false;
-            }
+        if (mes == 2){ // Fevereiro
+            if (ano % 4 == 0)
+                if(dia > 29) //Ano bissexto
+                    return false;
 
             if (dia > 28){
                 return false;
             }
         }
+
+        if(mes31(mes))
+            if((dia > 31))
+                return false;
+
+        
+        if (mes30(mes))
+            if (dia > 30)
+                return false;
+
 
         return true;
     }

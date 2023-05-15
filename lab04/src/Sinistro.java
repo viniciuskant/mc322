@@ -85,4 +85,7 @@ public class Sinistro{
         }
         
     }  
+    public String toStringBasico() {
+        return "ID " + Integer.toString(getid());
+    }
 }

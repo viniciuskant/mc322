@@ -198,19 +198,20 @@ public class Seguradora {
     }
     
     public boolean visualizarSinistro(String cliente){
+        boolean existe = false;
         for(int i = 0; i < nSinistro; i++){
             if(listaSinistros.get(i).getCliente().getNome() == cliente){
-                System.out.println(listaSinistros.get(i).toString());
-                return true;
+                System.out.println(Integer.toString(i) + " - "  + listaSinistros.get(i).toStringBasico());
+                existe = true;
             }
         }
-        return false;    
+        return existe;    
     }
 
     public String listarSinistros(){
         String info = "";
         for(int i = 0; i < nSinistro; i ++){
-            System.out.println(Integer.toString(i) + " - ID: " + Integer.toString(listaSinistros.get(i).getid()));
+            info += (Integer.toString(i) + " - ID: " + Integer.toString(listaSinistros.get(i).getid()));
         }
         return info;
     }
@@ -222,10 +223,12 @@ public class Seguradora {
         }
     }
 
-    public void listarVeiculos(){
+    public String listarVeiculos(){
+        String info = "";
         for(Cliente cliente: listaClientes){
-            cliente.listaVeiculos();
+            info += (cliente.listaVeiculos());
         }
+        return info;
     }
     
     public Boolean removerSinistro(int id){
