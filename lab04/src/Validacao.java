@@ -1,4 +1,4 @@
-public class Validacao {
+static class Validacao {
     
     private static boolean numeroIguais(String cpfTeste){
         int i, primeiroNumero = cpfTeste.charAt(0);
@@ -126,15 +126,25 @@ public class Validacao {
     
     public static boolean validarData(String data){
         String[] dataSeparada = data.split("/");
+        if(dataSeparada.length != 3)
+            return false;
+
+        for (String n: dataSeparada){
+            if(!ehInteiro(n))
+                return false;
+        }
+        
         return Date.dataValida(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
     }
 
     public static boolean ehInteiro(String numero){
-        for(int i = 0; i < numero.length(); i++){
-            if ( numero.charAt(i) < 48 || 57 < numero.charAt(i))
-                    return false;
+        try{
+            Integer.parseInt(numero);
+            return true;
         }
-        return true;
+        catch(NumberFormatException e){
+            return false;
+        } 
     }
 
 }

@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Seguradora {
@@ -67,6 +68,14 @@ public class Seguradora {
         this.listaClientes = listaClientes;
     }
 
+    public ArrayList<Sinistro> getListaSinistros() {
+        return listaSinistros;
+    }
+
+    public ArrayList<Cliente> getListaClientes() {
+        return listaClientes;
+    }
+    
     public boolean addCliente(Cliente cliente){
         return listaClientes.add(cliente);
     }
@@ -149,8 +158,39 @@ public class Seguradora {
         return info;
     }
 
+    public void listarTodosClientes(){
+        int i = 0;
+        for(Cliente cliente: listaClientes){
+            if(cliente instanceof ClientePF)
+                System.out.println(Integer.toString(i) +  " - " + cliente.getNome() + "(" + ((ClientePF)cliente).getCpf() + ")");
+
+            else
+                System.out.println(Integer.toString(i) +  " - " + cliente.getNome() + "(" + ((ClientePJ)cliente).getCnpj() + ")");
+
+        }
+    }
+
     public boolean gerarSinistro(){
-        Sinistro sinistro = Gerar.sinistro();
+        Date dataSinistro;
+        String endereco, data, dataSeparada[];
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Data do Sinistro(dd/MM/aaaa): ");
+        data = input.nextLine();
+
+        while(!Validacao.validarData(data)){
+            System.out.print("Data do Sinistro(dd/MM/aaaa): ");
+            data = input.nextLine();
+        }
+        
+        dataSeparada = data.split("/");
+        dataSinistro = new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
+
+        System.out.print("Endereco: ");
+        endereco = input.nextLine();
+
+        Sinistro sinistro = new Sinistro(dataSinistro, endereco);
+
         boolean alocou = listaSinistros.add(sinistro);
         if (alocou)
             nSinistro++;
@@ -170,9 +210,7 @@ public class Seguradora {
     public String listarSinistros(){
         String info = "";
         for(int i = 0; i < nSinistro; i ++){
-            info += "\n" + Integer.toString(i + 1);
-            info += "- ";
-            info += listaSinistros.get(i).toString() + "\n";
+            System.out.println(Integer.toString(i) + " - ID: " + Integer.toString(listaSinistros.get(i).getid()));
         }
         return info;
     }

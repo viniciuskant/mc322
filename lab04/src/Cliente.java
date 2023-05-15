@@ -53,9 +53,16 @@ public class Cliente{
     }
 
     //Métodos
-    public void addVeiculo(Veiculo veiculo){
+    public boolean addVeiculo(Veiculo veiculo){
+        for(Veiculo i: listaVeiculos){
+            if (i == veiculo)
+                return false;
+        }
+
         listaVeiculos.add(veiculo);
         quantidadeVeiculos++;
+        return true;
+
     }
 
     public String listaVeiculos(){
