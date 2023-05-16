@@ -8,8 +8,6 @@ public class Seguradora {
     private String endereco;
     private ArrayList<Sinistro> listaSinistros = new ArrayList<Sinistro>();
     private ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
-    private int nSinistro = 0;
-    private int nCliente = 0;
 
     //construtor
     public Seguradora(String nome, String telefone, String email, String endereco){
@@ -52,14 +50,6 @@ public class Seguradora {
         this.endereco = endereco;
     }
 
-    public int getnSinistro() {
-        return nSinistro;
-    }
-
-    public int getnCliente() {
-        return nCliente;
-    }
-
     public void setListaSinistros(ArrayList<Sinistro> listaSinistros) {
         this.listaSinistros = listaSinistros;
     }
@@ -100,9 +90,9 @@ public class Seguradora {
 
     public int indexCliente(String cliente){
         int i = 0;
-        for(; i < nCliente && listaClientes.get(i).getNome() != cliente; i ++);
+        for(; i < listaClientes.size() && listaClientes.get(i).getNome() != cliente; i ++);
         
-        if (i == nCliente)
+        if (i == listaClientes.size())
             return -1;
         
         return i;
@@ -110,9 +100,9 @@ public class Seguradora {
 
     public int indexSinistro(int id){
         int i = 0;
-        for(; i < nSinistro && listaSinistros.get(i).getid() != id; i ++);
+        for(; i < listaSinistros.size() && listaSinistros.get(i).getid() != id; i ++);
         
-        if (i == nSinistro)
+        if (i == listaSinistros.size())
             return -1;
         
         return i;
@@ -124,7 +114,6 @@ public class Seguradora {
             return false;
 
         listaClientes.remove(indice);
-        nCliente--;
         return true;
     }
 
@@ -140,7 +129,7 @@ public class Seguradora {
         String info = "";
         if(cliente.equals("PF")){
             int numeracao = 1;
-            for(int i = 0; i < nCliente; i ++){
+            for(int i = 0; i < listaClientes.size(); i ++){
                 if(listaClientes.get(i) instanceof ClientePF){
                     info += Integer.toString(numeracao++) + " - " + ((ClientePF)listaClientes.get(i)).toString() + "\n";
                 }
@@ -148,13 +137,12 @@ public class Seguradora {
         }
         else if(cliente.equals("PJ")){
             int numeracao = 1;
-            for(int i = 0; i < nCliente; i ++){
+            for(int i = 0; i < listaClientes.size(); i ++){
                 if(listaClientes.get(i) instanceof ClientePJ){
                     info += Integer.toString(numeracao++) + " - " + ((ClientePJ)listaClientes.get(i)).toString() + "\n";
                 }
             }
         }
-        System.out.println("AAAAAAAAAAAAAAAAAAA" + info);
         return info;
     }
 
@@ -192,14 +180,12 @@ public class Seguradora {
         Sinistro sinistro = new Sinistro(dataSinistro, endereco);
 
         boolean alocou = listaSinistros.add(sinistro);
-        if (alocou)
-            nSinistro++;
         return alocou;
     }
     
     public boolean visualizarSinistro(String cliente){
         boolean existe = false;
-        for(int i = 0; i < nSinistro; i++){
+        for(int i = 0; i < listaSinistros.size(); i++){
             if(listaSinistros.get(i).getCliente().getNome() == cliente){
                 System.out.println(Integer.toString(i) + " - "  + listaSinistros.get(i).toStringBasico());
                 existe = true;
@@ -210,7 +196,7 @@ public class Seguradora {
 
     public String listarSinistros(){
         String info = "";
-        for(int i = 0; i < nSinistro; i ++){
+        for(int i = 0; i < listaSinistros.size(); i ++){
             info += (Integer.toString(i) + " - ID: " + Integer.toString(listaSinistros.get(i).getid()));
         }
         return info;
@@ -237,7 +223,6 @@ public class Seguradora {
             return false;
         
         listaSinistros.remove(i);
-        nSinistro--;
         return true;
     }
 
