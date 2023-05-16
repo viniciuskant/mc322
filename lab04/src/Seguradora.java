@@ -137,12 +137,12 @@ public class Seguradora {
     }
 
     public String listarClientes(String cliente){
-        String info = "\n";
+        String info = "";
         if(cliente.equals("PF")){
             int numeracao = 1;
             for(int i = 0; i < nCliente; i ++){
                 if(listaClientes.get(i) instanceof ClientePF){
-                    info += Integer.toString(numeracao++) + "- " + ((ClientePF)listaClientes.get(i)).toString() + "\n";
+                    info += Integer.toString(numeracao++) + " - " + ((ClientePF)listaClientes.get(i)).toString() + "\n";
                 }
             }
         }
@@ -150,11 +150,11 @@ public class Seguradora {
             int numeracao = 1;
             for(int i = 0; i < nCliente; i ++){
                 if(listaClientes.get(i) instanceof ClientePJ){
-                    info += Integer.toString(numeracao++) + "- " + ((ClientePJ)listaClientes.get(i)).toString() + "\n";
+                    info += Integer.toString(numeracao++) + " - " + ((ClientePJ)listaClientes.get(i)).toString() + "\n";
                 }
             }
         }
-
+        System.out.println("AAAAAAAAAAAAAAAAAAA" + info);
         return info;
     }
 

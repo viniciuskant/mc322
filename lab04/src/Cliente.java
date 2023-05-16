@@ -46,6 +46,10 @@ public class Cliente{
         this.valorSeguro = valorSeguro;
     }
 
+    public ArrayList<Veiculo> getListaVeiculos() {
+        return listaVeiculos;
+    }
+    
     public String toString() {
         return "\nNome: " + getNome() +
                "\nEndereço: " + getEndereco() +
@@ -68,7 +72,7 @@ public class Cliente{
     public String listaVeiculos(){
         String info = "";
         for(Veiculo veiculo: listaVeiculos){
-            info += veiculo.toString();
+            info += veiculo.toStringBasico() + "\n";
         }
         return info;
     }

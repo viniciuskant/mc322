@@ -52,4 +52,8 @@ public class Veiculo {
                 "\nAno de Fabricacao: " + Integer.toString(getAnoFabricacao());
     }
 
+    public String toStringBasico(){
+        return getModelo() + " - " + getplaca();
+    }
+
 }

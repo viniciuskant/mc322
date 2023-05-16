@@ -9,7 +9,7 @@ public enum SubmenuOpcoes {
 	LISTAR_CLIENTES_PJ("Listar cliente PJ"),
 	LISTAR_SINISTROS_SEGURADORA("Listar sinistros por Seguradora"),
 	LISTAR_SINISTROS_CLIENTE("Listar sinistros por Cliente"),
-	LISTAR_VEICULOS_CLIENTE("Listar veiculo por Seguradora"),
+	LISTAR_VEICULOS_CLIENTE("Listar veiculo por Cliente"),
 	LISTAR_VEICULOS_SEGURADORA("Listar veiculo por Seguradora"),
 	EXCLUIR_CLIENTE("Excluir cliente"),
 	EXCLUIR_VEICULO("Excluir veiculo"),

@@ -3,21 +3,25 @@ import java.util.ArrayList;
 
 public class Main {
 
-	//Função que le o Terminal
+	//Metodo que le o Terminal
 	private static String lerString(){
 		Scanner input = new Scanner(System.in);
 		return input.nextLine();
 	}
 
-	//Função que interage com o usuário e retorna um ClientePF
+	//Metodo que converte String em inteiro
+	private static int INT(String string){
+		return Integer.parseInt(string);
+	} 
+
+	//Metodo que interage com o usuário e retorna um ClientePF
 	private static ClientePF lerPF(){
         String nome, endereco, data, educacao, genero, classeEconomica, cpf;
         Date dataLicenca;  
 
         System.out.print("Nome da Pessoa: ");
         nome = lerString();
-
-        while(!Validacao.validaNome(nome)){
+        while(!Validacao.validaNome(nome)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("Nome invalido!\nNome da Pessoa: ");
             nome = lerString();
         }
@@ -27,8 +31,7 @@ public class Main {
 
         System.out.print("Data de licença(dd/MM/aaaa): ");
         data = lerString();
-
-        while(!Validacao.validarData(data)){
+        while(!Validacao.validarData(data)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("Data invalida\nData de licença(dd/MM/aaaa): ");
             data = lerString();
         }
@@ -47,7 +50,7 @@ public class Main {
 
         System.out.print("CPF: ");
         cpf = lerString();
-        while(!Validacao.validarCPF(cpf)){
+        while(!Validacao.validarCPF(cpf)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("CPF inválido!\nCPF: ");
             cpf = lerString();
         }
@@ -55,14 +58,13 @@ public class Main {
         return new ClientePF(nome, endereco, dataLicenca, educacao, genero, classeEconomica, cpf, dataLicenca);
     }
 
-	//Função que interage com o usuário e retorna um ClientePJ
+	//Metodo que interage com o usuário e retorna um ClientePJ
     private static ClientePJ lerPJ(){
         String nome, endereco, data, cnpj, nFuncionarios;
         Date dataLicenca;
 
-        System.out.print("Nome da Empresa: ");
+        System.out.print("Nome da Empresa: "); //Não sai do loop enquanto a entrada não for valida
         nome = lerString();
-
         while(!Validacao.validaNome(nome)){
             System.out.print("Nome invalido!\nNome da Empresa: ");
             nome = lerString();
@@ -73,8 +75,7 @@ public class Main {
 
 		System.out.print("Data de licença(dd/MM/aaaa): ");
         data = lerString();
-
-        while(!Validacao.validarData(data)){
+        while(!Validacao.validarData(data)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("Data invalida\nData de licença(dd/MM/aaaa): ");
             data = lerString();
         }
@@ -84,32 +85,28 @@ public class Main {
 
         System.out.print("CNPJ: ");
         cnpj = lerString();
-
-		while(!Validacao.validarCNPJ(cnpj)){
+		while(!Validacao.validarCNPJ(cnpj)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("CNPJ inválido!\n CNPJ: ");
             cnpj = lerString();
         }
 
-        System.out.print("Número de Funcionarios");
+        System.out.print("Número de Funcionarios: ");
         nFuncionarios = lerString();
-
-		while(!Validacao.ehNatural(nFuncionarios)){
+		while(!Validacao.ehNatural(nFuncionarios)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("Número de Funcinários invalido!\nNúmero de Funcionarios: ");
             cnpj = lerString();
         }
 
-
-        return new ClientePJ(nome, endereco, cnpj, dataLicenca, Integer.parseInt(nFuncionarios));
+        return new ClientePJ(nome, endereco, cnpj, dataLicenca, INT(nFuncionarios));
     }
 
-	//Função que interage com o usuário e retorna um Cliente
+	//Metodo que interage com o usuário e retorna um Cliente
     private static Cliente lerCliente(){
         boolean opcaoIncorreta = true;
         
         System.out.print("Tipo de cliente:\n0 - Pessoa Fisica\n1 - Pessoa Juridica\nDigite uma opcao:\n");
         String tipoCadastro = lerString();
-
-        while(opcaoIncorreta){
+        while(opcaoIncorreta){ //Não sai do loop enquanto a entrada não for uma das opcoes
             if(tipoCadastro.equals("0")){
                 return lerPF();  
             }
@@ -117,22 +114,21 @@ public class Main {
                 return lerPJ();
             }
             else{
-                System.out.println("opcao invalida. Escolha uma opcao:\n.");
+                System.out.println("Opcao invalida.\nEscolha uma opcao:\n.");
 				tipoCadastro = lerString();
             }
         }
         return new Cliente();
     }
 
-	//Função que interage com o usuário e retorna um Sinistro
+	//Metodo que interage com o usuário e retorna um Sinistro
     private static Sinistro lerSinistro(){
         Date dataSinistro;
         String endereco, data, dataSeparada[];
 
         System.out.print("Data do Sinistro(dd/MM/aaaa): ");
         data = lerString();
-
-        while(!Validacao.validarData(data)){
+        while(!Validacao.validarData(data)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("Data invalida!\nData do Sinistro(dd/MM/aaaa): ");
             data = lerString();
         }
@@ -147,47 +143,51 @@ public class Main {
 
     }
 
-	//Função que interage com o usuário e retorna um Veiculo
+	//Metodo que interage com o usuário e retorna um Veiculo
     private static Veiculo lerVeiculo(){
         String placa, marca, modelo;
         String anoFabricacao;
 
         System.out.print("Placa do veículo: ");
         placa = lerString();
+
         System.out.print("Marca: ");
         marca = lerString();
+
         System.out.print("Modelo: ");
         modelo = lerString();
+
         System.out.print("Ano de fabricação do veículo: ");
         anoFabricacao = lerString();
-		while(!Validacao.ehInteiro(anoFabricacao)){
+		while(!Validacao.ehInteiro(anoFabricacao)){ //Não sai do loop enquanto a entrada não for valida
 			System.out.print("Ano de fabricação invalido!\nAno de fabricação:");
 			anoFabricacao = lerString();
 		}
 
-        return new Veiculo(placa, marca, modelo, Integer.parseInt(anoFabricacao));
+        return new Veiculo(placa, marca, modelo, INT(anoFabricacao));
     }
 
-	//Função que interage com o usuário e retorna uma Seguradora
+	//Metodo que interage com o usuário e retorna uma Seguradora
     private static Seguradora lerSeguradora(){
         String nome, telefone, email, endereco;
 
         System.out.print("Nome da Seguradora: ");
         nome = lerString();
-
-        while(!Validacao.validaNome(nome)){
+        while(!Validacao.validaNome(nome)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("Nome invalido!\nNome da Seguradora: ");
             nome = lerString();
         }
 		
         System.out.print("Telefone da Seguradora: ");
         telefone = lerString();
+
         System.out.print("Email da Seguradora: ");
         email = lerString();
+
         System.out.print("Endereço da Seguradora: ");
         endereco = lerString();
 
-        return new Seguradora(nome, telefone, email, endereco); //Cadastro a Seguradora
+        return new Seguradora(nome, telefone, email, endereco); //Cadastra a Seguradora
     }
 	
 	// Lista todas Seguradoras cadastradas e retorna o indice da seguradora escolhida
@@ -202,11 +202,11 @@ public class Main {
 		String indice = lerString();
 
 		// Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
-		while(!Validacao.ehInteiro(indice) && (0 > Integer.parseInt(indice) || Integer.parseInt(indice) > (listaSeguradoras.size() - 1))){
-			System.out.println("Escolha uma opcao:"); 
+		while(!Validacao.ehInteiro(indice) && !(0 <= INT(indice) && INT(indice) < (listaSeguradoras.size()))){
+			System.out.println("Opcao invalida.\nEscolha uma opcao:"); 
 			indice = lerString();
 		}
-		return Integer.parseInt(indice);
+		return INT(indice);
 	}
 
 	// Lista todos Clientes cadastrados e retorna o indice do cliente escolhido
@@ -221,26 +221,30 @@ public class Main {
 		String indice = lerString();
 
 		// Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
-		while(!Validacao.ehInteiro(indice) && !(0 <= Integer.parseInt(indice) || Integer.parseInt(indice) < (listaClientes.size()))){
-			System.out.println("Escolha uma opcao:"); 
+		while(!Validacao.ehInteiro(indice) && !(0 <= INT(indice) && INT(indice) < (listaClientes.size()))){
+			System.out.println("Opcao invalida.\nEscolha uma opcao:"); 
 			indice = lerString();
 		}
-		return Integer.parseInt(indice);
+		return INT(indice);
 	}
 
 	// Cadastra o cliente e o adiciona na lista de cliente e se pedido o adiciona a uma seguradora
 	private static void cadastrarCliente(ArrayList<Cliente> listaClientes, ArrayList<Seguradora> listaSeguradoras){
 		Cliente cliente = lerCliente();
-		listaClientes.add(cliente);
-		if(!(listaSeguradoras.size() == 0)){
+		listaClientes.add(cliente); // adiciona o cliente a lista com todos os clientes
+		if(listaSeguradoras.size() != 0){ //se houver uma seguradora já cadastrada
 			System.out.println("Deseja cadastar em um seguradora previamente cadastrada?\n0 - Sim\n1 - Nao\nEscolha uma opcao:");
 			String resposta = lerString();
 			boolean respostaIncorreta = true;
-			while(respostaIncorreta){
+			while(respostaIncorreta){ 
 				if(resposta.equals("0")){
 					int indice = escolhaSeguradora(listaSeguradoras);
-					if(listaSeguradoras.get(indice).addCliente(cliente))
+					if(listaSeguradoras.get(indice).addCliente(cliente)){ //se o objeto for adiconado na lista
 						System.out.println("Cliente" + cliente.getNome() + " cadastrado na Seguradora " + listaSeguradoras.get(indice).getNome() + ".");
+					}
+					else{
+						System.out.println("Não foi possível adicionar à seguradora.");
+					}
 					respostaIncorreta = false;
 				}
 				else if(resposta.equals("1")){
@@ -248,7 +252,8 @@ public class Main {
 					respostaIncorreta = false;
 				}
 				else{
-					System.out.println("Escolha uma opcao:");
+					System.out.println("Opcao invalida.\nEscolha uma opcao:");
+					resposta = lerString();
 				}
 			}
 		}
@@ -264,7 +269,7 @@ public class Main {
 			String resposta = lerString();
 			boolean respostaIncorreta = true;
 
-			while(respostaIncorreta){
+			while(respostaIncorreta){ //Não sai do loop enquanto a entrada não for no intevalo permitido
 				if(resposta.equals("0")){
 					int indice = escolhaCliente(listaClientes);
 					listaClientes.get(indice).addVeiculo(veiculo);
@@ -288,29 +293,31 @@ public class Main {
 	// Cadastra uma seguradora e adiciona na lista de seguradoras
 	private static void cadastrarSeguradora(ArrayList<Cliente> listaClientes, ArrayList<Sinistro> listaSinistros, ArrayList<Seguradora> listaSeguradoras){
 		Seguradora seguradora = lerSeguradora();
-		System.out.println("Seguradora " + seguradora.getNome() + " cadastrada com sucesso.");
-		listaSeguradoras.add(seguradora);
-		if (listaClientes.size() != 0){ //Deve atualizar a seguradora
+		listaSeguradoras.add(seguradora);  //adiciona a lista de seguradoras
+		
+		if (listaClientes.size() != 0){ // Significa que clientes já foram cadastrados
 			Boolean opcaoIncorreta = true;
-			System.out.println("DESEJA COPIAR OS CLIENTES:\n0 - SIM\n1 - NÃO");
+			System.out.println("Deseja copiar os clientes preciamente cadastrados:\n0 - Sim\n1 - Não");
 
-			while(opcaoIncorreta){
+			while(opcaoIncorreta){ //Não sai do loop enquanto a entrada não for no intevalo permitido
 				String resposta = lerString();
 				if(resposta.equals("0")){
-					int indice = listaSeguradoras.size() - 1;
+					int indice = listaSeguradoras.size() - 1; // o indice da seguradora atual na lista de seguradoras
 
 					// Adicionando os clientes
 					System.out.println("Clientes");
-					for(int i = 0; i < listaClientes.size(); i++){
+					for(int i = 0; i < listaClientes.size(); i++){ //lista os clientes
 						System.out.println(Integer.toString(i) + " - " + listaClientes.get(i).getNome());
 					}
-					System.out.println("Escolha as opcao(separar por virgula):"); 
+					System.out.println("Escolha as opcao(separar por virgula): "); 
 					String indices = lerString();
 					String indicesSeparados[] = indices.split(",");
 					for(int i = 0; i < indicesSeparados.length; i++){
 						String numero = indicesSeparados[i];
-						if(Validacao.ehInteiro(numero))
-							listaSeguradoras.get(indice).addCliente(listaClientes.get(Integer.parseInt(numero)));
+						if(Validacao.ehInteiro(numero)){
+							listaSeguradoras.get(indice).addCliente(listaClientes.get(INT(numero)));
+							System.out.println("Cliente" + listaClientes.get(INT(numero)).getNome() + "adicionado");
+						}
 						else
 							System.out.println("Indice inválido.");
 					}
@@ -320,30 +327,32 @@ public class Main {
 					opcaoIncorreta = false;
 				}
 				else{
-					System.out.println("OPÇÃO INVALIDA! TENTE NOVAMENTE.");
+					System.out.println("Opcao invalida\n! Tente Novamente: ");
+					resposta = lerString();
 				}
 			}
-			if(listaSinistros.size() != 0){
+			if(listaSinistros.size() != 0){ //Significa que há sinistros previamente cadastrados
 				opcaoIncorreta = true;
-				System.out.println("DESEJA COPIAR OS SINISTROS:\n0 - SIM\n1 - NÃO");
+				System.out.println("Deseja copiar os sinistros preciamente cadastrados:\n0 - Sim\n1 - Não");
 
-				while(opcaoIncorreta){
+				while(opcaoIncorreta){ //Não sai do loop enquanto a entrada não for dentro do intelavo permitido
 					String resposta = lerString();
 					if(resposta.equals("0")){
 						int indice = listaSeguradoras.size() - 1;
 
 						// Adicionando os sinistros
 						System.out.println("Sinistros");
-						for(int i = 0; i < listaSinistros.size(); i++){
+						for(int i = 0; i < listaSinistros.size(); i++){ //lista os sinistros
 							System.out.println(Integer.toString(i) + " - " + listaSinistros.get(i).getid());
 						}
-						System.out.println("Escolha as opcao(separar por virgula):"); 
+
+						System.out.println("Escolha as opcao(separar por virgula): "); 
 						String indices = lerString();
 						String indicesSeparados[] = indices.split(",");
 						for(int i = 0; i < indicesSeparados.length; i++){
 							String numero = indicesSeparados[i];
 							if(Validacao.ehInteiro(numero))
-								listaSeguradoras.get(indice).addSinistro(listaSinistros.get(Integer.parseInt(numero)));
+								listaSeguradoras.get(indice).addSinistro(listaSinistros.get(INT(numero)));
 							else
 								System.out.println("Indice inválido.");
 						}
@@ -353,17 +362,19 @@ public class Main {
 						opcaoIncorreta = false;
 					}
 					else{
-						System.out.println("OPÇÃO INVALIDA! TENTE NOVAMENTE.");
+						System.out.println("Opcao invalida\n! Tente Novamente: ");
+					resposta = lerString();
 					}
 				}
 			}
+			System.out.println("Seguradora " + seguradora.getNome() + " cadastrada com sucesso.");
 		}
 	}
 	
 	// Lista todos os clientes do tipo PF da seguradora desejada
 	private static void listarClientesPF(ArrayList<Seguradora> listaSeguradoras){
 		if (listaSeguradoras.size() == 0){
-			System.out.println("AINDA NÃO HÁ SEGURADORA CADASTRADA!");
+			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
 			int indice = escolhaSeguradora(listaSeguradoras);
@@ -379,7 +390,7 @@ public class Main {
 	// Lista todos os clientes do tipo PJ da seguradora desejada
 	private static void listaClientesPJ(ArrayList<Seguradora> listaSeguradoras){
 		if (listaSeguradoras.size() == 0){
-			System.out.println("AINDA NÃO HÁ SEGURADORA CADASTRADA!");
+			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
 			int indice = escolhaSeguradora(listaSeguradoras);
@@ -395,7 +406,7 @@ public class Main {
 	// Lista todos os sinistros da seguradora desejada
 	private static void listarSinistrosSeguradora(ArrayList<Seguradora> listaSeguradoras){
 		if (listaSeguradoras.size() == 0){
-			System.out.println("AINDA NÃO HÁ SEGURADORA CADASTRADA!");
+			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
 			int indice = escolhaSeguradora(listaSeguradoras);
@@ -408,23 +419,27 @@ public class Main {
 		}
 	}
 
-	// Lista todos os sinistros dp cliente desejado
+	// Lista todos os sinistros do cliente desejado
 	private static void listaSinistrosCliente(ArrayList<Seguradora> listaSeguradoras){
-		int indice = escolhaSeguradora(listaSeguradoras);
-		System.out.print("Clientes: ");
-		listaSeguradoras.get(indice).listarTodosClientes();
-		System.out.println("Escolha uma opcao:");
-		String resposta = lerString();
-
-		while(!Validacao.ehInteiro(resposta) && (Integer.parseInt(resposta) < 0 || Integer.parseInt(resposta) > listaSeguradoras.get(indice).getnCliente())){
-			System.out.println("Escolha invalida!\nEscolha uma opcao:");
-			resposta = lerString();
+		if (listaSeguradoras.size() == 0){
+			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
+		else{
+			int indice = escolhaSeguradora(listaSeguradoras);
+			System.out.print("Clientes: ");
+			listaSeguradoras.get(indice).listarTodosClientes();
+			System.out.println("Escolha uma opcao:");
+			String resposta = lerString();
 
-		String nome = listaSeguradoras.get(indice).getListaClientes().get(Integer.parseInt(resposta)).getNome();
-		if (!listaSeguradoras.get(indice).visualizarSinistro(nome))
-			System.out.println("Não há sinistros desse cliente.");
-	
+			while(!Validacao.ehInteiro(resposta) && (INT(resposta) < 0 || INT(resposta) > listaSeguradoras.get(indice).getnCliente())){
+				System.out.println("Escolha invalida!\nEscolha uma opcao:");
+				resposta = lerString();
+			}
+
+			String nome = listaSeguradoras.get(indice).getListaClientes().get(INT(resposta)).getNome();
+			if (!listaSeguradoras.get(indice).visualizarSinistro(nome))
+				System.out.println("Não há sinistros desse cliente.");
+		}
 	}
 
 	// Lista todos os veiculos de cliente desejado
@@ -441,7 +456,7 @@ public class Main {
 	// Lista todos os veiculos da seguradora desejada
 	private static void listarVeiculosSeguradora(ArrayList<Seguradora> listaSeguradoras){
 		if (listaSeguradoras.size() == 0){
-			System.out.println("AINDA NÃO HÁ SEGURADORA CADASTRADA!");
+			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
 			int indice = escolhaSeguradora(listaSeguradoras);
@@ -461,11 +476,11 @@ public class Main {
 		String resposta;
 		boolean respostaIncorreta = true;
 		// Adicinado ao sinistro o cliente que o sofreu
-		if(listaClientes.size() != 0){
+		if(listaClientes.size() != 0){ //Já ha clientes cadastrados
 			System.out.println("Opcoes:\n0 - Novo cliente\n1 - Cliente ja cadastrado");
 			resposta = lerString();
 
-			while(respostaIncorreta){
+			while(respostaIncorreta){ //Não sai do loop enquanto a entrada não for dentro do intevalo permitido
 				if(resposta.equals("0")){
 					cliente = lerCliente();
 					sinistro.setCliente(cliente);
@@ -510,8 +525,8 @@ public class Main {
 				System.out.println("Escolha uma opcao:"); 
 				indice = lerString();
 			}
-			sinistro.setVeiculo(listaVeiculos.get(Integer.parseInt(indice)));
-			cliente.addVeiculo(listaVeiculos.get(Integer.parseInt(indice))); // Adiciona implicitamnete o veiculo ao cliente
+			sinistro.setVeiculo(listaVeiculos.get(INT(indice)));
+			cliente.addVeiculo(listaVeiculos.get(INT(indice))); // Adiciona implicitamnete o veiculo ao cliente
 
 		}
 
@@ -521,7 +536,7 @@ public class Main {
 	// Exclui um cliente desejado
 	private static void excluirCliente(ArrayList<Seguradora> listaSeguradoras){
 		if (listaSeguradoras.size() == 0){
-			System.out.println("AINDA NÃO HÁ SEGURADORA CADASTRADA!");
+			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
 			int indice = escolhaSeguradora(listaSeguradoras);
@@ -530,31 +545,59 @@ public class Main {
 			System.out.println("Escolha uma opcao:");
 			String resposta = lerString();
 	
-			while(!Validacao.ehInteiro(resposta) && (Integer.parseInt(resposta) < 0 || Integer.parseInt(resposta) > listaSeguradoras.get(indice).getnCliente())){
+			while(!Validacao.ehInteiro(resposta) && (INT(resposta) < 0 || INT(resposta) > listaSeguradoras.get(indice).getnCliente())){
 				System.out.println("Escolha invalida!\nEscolha uma opcao:");
 				resposta = lerString();
 			}
-			String nome = listaSeguradoras.get(indice).getListaClientes().get(Integer.parseInt(resposta)).getNome();
+			String nome = listaSeguradoras.get(indice).getListaClientes().get(INT(resposta)).getNome();
 			listaSeguradoras.get(indice).removeCliente(nome);
 		}
+	}
+
+	private static String formatarString(String string){
+		String separado[] = string.split("\n"), retorno = "";
+		for(int i = 0; i < separado.length; i++){
+			retorno += Integer.toString(i) + " - " + separado[i] + "\n";
+		}
+		return retorno;
 	}
 
 	// Exclui o veiculo de um determinado cliente
 	private static void excluirVeiculo(ArrayList<Seguradora> listaSeguradoras){
 		if (listaSeguradoras.size() == 0){
-			System.out.println("AINDA NÃO HÁ SEGURADORA CADASTRADA!");
+			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
-			int indice = escolhaSeguradora(listaSeguradoras);
-			System.out.print("Nome do Cliente: ");
-			String nome = lerString();
-			System.out.print("Placa do Veiculo: ");
-			String placa = lerString();
-			if (listaSeguradoras.get(indice).removerVeiculo(nome, placa)){
-				System.out.println("VEICULO REMOVIDO.");
+			int indiceSeguradora = escolhaSeguradora(listaSeguradoras);
+			System.out.print("Clientes: ");
+			listaSeguradoras.get(indiceSeguradora).listarTodosClientes();
+			System.out.println("Escolha uma opcao:");
+			String indiceCliente = lerString();
+	
+			//Não sai do loop enquanto a entrada não for valida
+			while(!Validacao.ehInteiro(indiceCliente) && (INT(indiceCliente) < 0 || INT(indiceCliente) > listaSeguradoras.get(indiceSeguradora).getnCliente())){
+				System.out.println("Escolha invalida!\nEscolha uma opcao:");
+				indiceCliente = lerString();
 			}
+			String preLista = listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceCliente)).listaVeiculos();
+			String listaFormatada = formatarString(preLista);
+
+			System.out.print("Veiculos:\n" + listaFormatada + "\nEscolha um opcao:\n");
+			String indiceVeiculo = lerString();
+
+			//Não sai do loop enquanto a entrada não for valida
+			while(!Validacao.ehInteiro(indiceVeiculo) && (INT(indiceVeiculo) < 0 || INT(indiceVeiculo) > preLista.split("\n").length)){
+				System.out.println("Escolha invalida!\nEscolha uma opcao:");
+				indiceVeiculo = lerString();
+			}
+			String modelo = listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceCliente)).getListaVeiculos().get(INT(indiceVeiculo)).getModelo();
+			String placa = listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceCliente)).getListaVeiculos().get(Integer
+			.parseInt(indiceVeiculo)).getplaca();
+			if (listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceCliente)).removerVeiculo(placa)){
+				System.out.println("Veiculo (" + modelo + ")" + placa + " removido.");
+			} 
 			else{
-				System.out.println("NÃO FOI POSSÍVEL REMOVER.");
+				System.out.println("Não foi possivel remover o veiculo.");
 			}
 		}
 	}
@@ -562,21 +605,28 @@ public class Main {
 	// Excluir o sinistro de um determinado cliente
 	private static void excluirSinistro(ArrayList<Seguradora> listaSeguradoras){
 		if (listaSeguradoras.size() == 0){
-			System.out.println("AINDA NÃO HÁ SEGURADORA CADASTRADA!");
+			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
 			int indice = escolhaSeguradora(listaSeguradoras);
 			System.out.print("ID do Sinistro: ");
 			listaSeguradoras.get(indice).listarSinistros();
 			System.out.println("Escolha uma opcao:");
-			String resposta = lerString();
+			String indiceSinistro = lerString();
 
-			while(!Validacao.ehInteiro(resposta) && (Integer.parseInt(resposta) < 0 || Integer.parseInt(resposta) > listaSeguradoras.get(indice).getnSinistro())){
+			//Não sai do loop enquanto a entrada não for valida
+			while(!Validacao.ehInteiro(indiceSinistro) && (INT(indiceSinistro) < 0 || INT(indiceSinistro) > listaSeguradoras.get(indice).getnSinistro())){
 				System.out.println("Escolha invalida!\nEscolha uma opcao:");
-				resposta = lerString();
+				indiceSinistro = lerString();
 			}
-			int id = listaSeguradoras.get(indice).getListaSinistros().get(Integer.parseInt(resposta)).getid();
-			listaSeguradoras.get(indice).removerSinistro(id);
+			int id = listaSeguradoras.get(indice).getListaSinistros().get(INT(indiceSinistro)).getid();
+			if(listaSeguradoras.get(indice).removerSinistro(id)){
+				System.out.println("Sinistro " + Integer.toString(id) + " removido.");
+			}
+
+			else{
+				System.out.println("Não foi possível remover o sinistro.");
+			}
 		}
 	}
 
