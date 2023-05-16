@@ -1,6 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/*O Menu e submenus desse lab foram baseados no disponível em https://github.com/rebecapadovani/ExemploEnumMenu*/
+
 public class Main {
 	private static ArrayList<Seguradora> listaSeguradoras = new ArrayList<Seguradora>();
 	private static ArrayList<Sinistro> listaSinistros = new ArrayList<Sinistro>();
@@ -43,6 +45,12 @@ public class Main {
 		seguradora.listarTodosClientes();
 		seguradora.visualizarSinistro("PF");
 		seguradora.listarSinistros();
+		double receita = seguradora.calcularReceita();
+
+		seguradora.calcularPrecoSeguroCliente(clientepj);
+		seguradora.calcularPrecoSeguroCliente(clientepf);
+
+		System.out.println(Double.toString(receita));
 
 		listaClientes.add(clientepf);
 		listaClientes.add(clientepj);
