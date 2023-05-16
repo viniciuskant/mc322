@@ -83,8 +83,6 @@ public class Seguradora {
     //Métodos
     public boolean cadastrarCliente(Cliente cliente){
         boolean alocou = listaClientes.add(cliente);
-        if (alocou)
-            nCliente++;
         return alocou;
     }
 
@@ -140,6 +138,26 @@ public class Seguradora {
             for(int i = 0; i < listaClientes.size(); i ++){
                 if(listaClientes.get(i) instanceof ClientePJ){
                     info += Integer.toString(numeracao++) + " - " + ((ClientePJ)listaClientes.get(i)).toString() + "\n";
+                }
+            }
+        }
+        return info;
+    }
+
+    public String listarClientesBasicos(String cliente){
+        String info = "";
+        if(cliente.equals("PF")){
+            for(int i = 0; i < listaClientes.size(); i ++){
+                if(listaClientes.get(i) instanceof ClientePF){
+                    info += "- " + listaClientes.get(i).getNome() + " - " +((ClientePF)listaClientes.get(i)).getCpf() + "\n";
+                }
+            }
+        }
+        else if(cliente.equals("PJ")){
+            for(int i = 0; i < listaClientes.size(); i ++){
+                if(listaClientes.get(i) instanceof ClientePJ){
+                    info += "- " + listaClientes.get(i).getNome() + " - " + ((ClientePJ)listaClientes.get(i)).getCnpj() + "\n";
+
                 }
             }
         }
