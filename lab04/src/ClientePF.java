@@ -64,7 +64,6 @@ public class ClientePF extends Cliente{
         this.dataNascimento = dataNascimento;
     }
 
-    @Override
     public double calculaScore(){
         int idade = dataNascimento.idade().getAno();
         double fatorIdade;

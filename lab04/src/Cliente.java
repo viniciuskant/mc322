@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Cliente{
+public class Cliente{
     private String nome;
     private String endereco;
     private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
@@ -35,6 +35,7 @@ public abstract class Cliente{
     }
 
     public int getQuantidadeVeiculos() {
+        quantidadeVeiculos = listaVeiculos.size();
         return quantidadeVeiculos;
     }
 
@@ -69,6 +70,17 @@ public abstract class Cliente{
 
     }
 
+    public boolean addVeiculo(ArrayList<Veiculo> lista){
+        ArrayList<Veiculo> copiaSeguranca = new ArrayList<>(this.listaVeiculos);
+        for(Veiculo veiculo: lista){
+            if(this.listaVeiculos.add(veiculo) == false){
+                this.listaVeiculos = copiaSeguranca; // Caso ocorra um erro ao adiconar retorno a lista na situacao inicial
+                return false;
+            }
+        }
+        return true;
+    }
+
     public String listaVeiculos(){
         String info = "";
         for(Veiculo veiculo: listaVeiculos){
@@ -98,5 +110,8 @@ public abstract class Cliente{
         return true;
     }
 
-    public abstract double calculaScore();
+    public void removerTodosVeiculos(){
+        quantidadeVeiculos = 0;
+        listaVeiculos = new ArrayList<Veiculo>();
+    }
 }

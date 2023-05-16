@@ -1,11 +1,13 @@
 public class Validacao {
     
-    private static boolean numeroIguais(String cpfTeste){
-        int i, primeiroNumero = cpfTeste.charAt(0);
-        for (i = 0; i < 9  && primeiroNumero == cpfTeste.charAt(i) ; i++)
+    private static boolean numeroIguais(String cpfTeste, int limite ){
+        int i, primeiroNumero = cpfTeste.charAt(0), nIguais = 0;
+        for (i = 0; i < limite; i++)
+            if (primeiroNumero == cpfTeste.charAt(i))
+                nIguais++;
 
         //Testo se todos os numeros são iguais
-        if (i == 9)
+        if (nIguais == limite)
             return true;
 
         return false;
@@ -19,7 +21,7 @@ public class Validacao {
         if (cpfTeste.length() != 11) //Verifica se o tamanho está correto
             return false;
 
-        if(numeroIguais(cpfTeste)) //Verifica se os digitos são iguais
+        if(numeroIguais(cpfTeste, 9)) //Verifica se os digitos são iguais
             return false;
 
         int[] digitos = new int[11];
@@ -62,6 +64,9 @@ public class Validacao {
         int somatorio, i, primeiroDigito, segundoDigito, resto, digito;
         cnpjTeste = cnpjTeste.replace(".", "");
         cnpjTeste = cnpjTeste.replace("-", "");
+
+        if(numeroIguais(cnpjTeste, 13))
+            return false;
 
         if (cnpjTeste.length() != 14) //Verifica se o tamanho está correto
             return false;

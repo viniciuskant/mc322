@@ -182,7 +182,7 @@ public class Seguradora {
 
             else
                 System.out.println(Integer.toString(i) +  " - " + cliente.getNome() + "(" + ((ClientePJ)cliente).getCnpj() + ")");
-
+            i++;
         }
     }
 
@@ -259,9 +259,16 @@ public class Seguradora {
     }
 
     public double calcularPrecoSeguroCliente(Cliente cliente){
-        double preco = cliente.calculaScore() * (1 + quantSinistros(cliente));
-        cliente.setValorSeguro(preco); // Atualiza implicitamente o valor do seguro
-        return preco;
+        if(cliente instanceof ClientePF){
+            double preco = ((ClientePF)cliente).calculaScore() * (1 + quantSinistros(cliente));
+            cliente.setValorSeguro(preco); // Atualiza implicitamente o valor do seguro
+            return preco;
+        }
+        else{
+            double preco = ((ClientePJ)cliente).calculaScore() * (1 + quantSinistros(cliente));
+            cliente.setValorSeguro(preco); // Atualiza implicitamente o valor do seguro
+            return preco;
+        }
     }
 
     public double calcularReceita(){
