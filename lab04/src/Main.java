@@ -518,7 +518,7 @@ public class Main {
 	// Gera um sinisto e o vincula a um cliente
 	private static void gerarSinistro(ArrayList<Cliente> listaClientes, ArrayList<Sinistro> listaSinistros, ArrayList<Veiculo> listaVeiculos, ArrayList<Seguradora> listaSeguradoras){
 		Sinistro sinistro = lerSinistro();
-		Cliente cliente = new Cliente(null, null);
+		Cliente cliente = new Cliente();
 		String resposta;
 		boolean respostaIncorreta = true;
 
@@ -760,6 +760,18 @@ public class Main {
 		}
 	}
 
+	// Calcula a receita da segurado escolhida e a imprimi
+	private static void calcularReceira(ArrayList<Seguradora> listaSeguradoras){
+		int indiceSeguradora = escolhaSeguradora(listaSeguradoras);
+		double receita = listaSeguradoras.get(indiceSeguradora).calcularReceita();
+		System.out.println("Receita da Seguradora " + listaSeguradoras.get(indiceSeguradora).getNome() + ": R$ " + Double.toString(receita));
+	}
+
+	// Transfere a lista de veiculos de um cliente para outro
+	private static void transferirSeguro(ArrayList<Cliente> listaClientes){
+
+	}
+
 	//exibir menu externo
 	private static void exibirMenuExterno() {
 		MenuOpcoes menuOpcoes[] = MenuOpcoes.values();
@@ -821,10 +833,10 @@ public class Main {
 				gerarSinistro(listaClientes, listaSinistros, listaVeiculos, listaSeguradoras);
 				break;
 			case TRANSFERIR_SEGURO:
-				System.out.println("Executar metodo tranferir seguro");
+				transferirSeguro(listaClientes);
 				break;
 			case CALCULAR_RECEITA:
-				System.out.println("Executar metodo calcular receita");
+				calcularReceira(listaSeguradoras);
 				break;
 			//case SAIR:
 		}

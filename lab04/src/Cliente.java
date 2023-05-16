@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public class Cliente{
+public abstract class Cliente{
     private String nome;
     private String endereco;
     private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
-    private int valorSeguro; 
+    private double valorSeguro; 
     private int quantidadeVeiculos = 0;
 
     //construtor
@@ -38,11 +38,11 @@ public class Cliente{
         return quantidadeVeiculos;
     }
 
-    public int getValorSeguro() {
+    public double getValorSeguro() {
         return valorSeguro;
     }
 
-    public void setValorSeguro(int valorSeguro) {
+    public void setValorSeguro(double valorSeguro) {
         this.valorSeguro = valorSeguro;
     }
 
@@ -97,4 +97,6 @@ public class Cliente{
         quantidadeVeiculos--;
         return true;
     }
+
+    public abstract double calculaScore();
 }

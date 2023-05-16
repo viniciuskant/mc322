@@ -164,6 +164,16 @@ public class Seguradora {
         return info;
     }
 
+    public int quantSinistros(Cliente cliente){
+        int nSinistros = 0;
+        for(Sinistro sinistro: listaSinistros){
+            if(sinistro.getCliente() == cliente){
+                nSinistros++;
+            }
+        }
+        return nSinistros;
+    }
+
     public void listarTodosClientes(){
         int i = 0;
         for(Cliente cliente: listaClientes){
@@ -246,5 +256,19 @@ public class Seguradora {
 
     public Boolean removerSinistro(String id){
         return removerSinistro(Integer.parseInt(id));
+    }
+
+    public double calcularPrecoSeguroCliente(Cliente cliente){
+        double preco = cliente.calculaScore() * (1 + quantSinistros(cliente));
+        cliente.setValorSeguro(preco); // Atualiza implicitamente o valor do seguro
+        return preco;
+    }
+
+    public double calcularReceita(){
+        double receita = 0;
+        for(Cliente cliente: listaClientes){
+            receita += calcularPrecoSeguroCliente(cliente);
+        }
+        return receita;
     }
 }

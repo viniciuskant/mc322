@@ -46,7 +46,6 @@ public class ClientePJ extends Cliente{
         return false;
     }
 
-
     @Override
     public String toString(){
         return "\nCNPJ: " + getCnpj() +
@@ -55,6 +54,7 @@ public class ClientePJ extends Cliente{
                super.toString();
     }
 
+    @Override
     public double calculaScore() {
         return CalcSeguro.VALOR_BASE.getConstante() * (1 + qtdeFuncionarios/100) * this.getQuantidadeVeiculos(); 
     }
