@@ -265,7 +265,6 @@ public class Main {
 		else{
 			int indice = escolhaSeguradora();
 			String lista = listaSeguradoras.get(indice).listarClientesBasicos("PJ");
-
 			if(lista.equals(""))
 				System.out.println("Não há clientes PJ cadastrados.");
 			else
