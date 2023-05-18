@@ -113,7 +113,7 @@ public class Leitura {
                 return lerPJ();
             }
             else{
-                System.out.println("Opcao invalida.\nEscolha uma opcao:\n.");
+                System.out.println("Opcao invalida.\nEscolha uma opcao:\n");
 				tipoCadastro = lerString();
             }
         }
