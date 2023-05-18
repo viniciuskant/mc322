@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 
 /*O Menu e submenus desse lab foram baseados no disponível em https://github.com/rebecapadovani/ExemploEnumMenu*/
@@ -32,6 +31,10 @@ public class Main {
 		// Instancio dois sinistros
 		Sinistro sinistro1 = new Sinistro(data, "Dom Pedro", chevette, clientepj);
 		Sinistro sinistro2 = new Sinistro(data, "Fernao Dias", gol, clientepf);
+
+		//Adiciono os sinistros a seguradora:
+		seguradora.addSinistro(sinistro1);
+		seguradora.addSinistro(sinistro2);
 
 		// Adicionadno veiculos aos clientes
 		clientepf.addVeiculo(gol);
@@ -67,9 +70,8 @@ public class Main {
 		return Integer.parseInt(string);
 	} 
 
-
-	// Lista todas Seguradoras cadastradas e retorna o indice da seguradora escolhida
-	private static int escolhaSeguradora(){
+	// Lista todas Seguradoras cadastradas e retorna a seguradora escolhida
+	private static Seguradora escolhaSeguradora(){
 		System.out.println("Seguradoras:");
 
 		// Imprimi todas as seguradoras
@@ -80,15 +82,19 @@ public class Main {
 		String indice = Leitura.lerString();
 
 		// Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
-		while(!Validacao.ehInteiro(indice) && !(0 <= INT(indice) && INT(indice) < (listaSeguradoras.size()))){
-			System.out.println("Opcao invalida.\nEscolha uma opcao:"); 
-			indice = Leitura.lerString();
+		while(true){
+			try{
+				return listaSeguradoras.get(INT(indice));
+			}
+			catch(Exception e){
+				System.out.println("Escolha uma opcao valida:"); 
+				indice = Leitura.lerString();
+			}
 		}
-		return INT(indice);
 	}
 
-	// Lista todos Clientes cadastrados e retorna o indice do cliente escolhido
-	private static int escolhaCliente(){
+	// Lista todos Clientes cadastrados e retorna o cliente escolhido
+	private static Cliente escolhaCliente(){
 		System.out.println("Clientes:");
 
 		// Imprimi todos os clientes
@@ -99,33 +105,42 @@ public class Main {
 		String indice = Leitura.lerString();
 
 		// Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
-		while(!Validacao.ehInteiro(indice) && !(0 <= INT(indice) && INT(indice) < (listaClientes.size()))){
-			System.out.println("Opcao invalida.\nEscolha uma opcao:"); 
-			indice = Leitura.lerString();
+				// Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
+		while(true){
+			try{
+				return listaClientes.get(INT(indice));
+			}
+			catch(Exception e){
+				System.out.println("Escolha uma opcao valida:"); 
+				indice = Leitura.lerString();
+			}
 		}
-		return INT(indice);
 	}
 
 	// Cadastra o cliente e o adiciona na lista de cliente e se pedido o adiciona a uma seguradora
 	private static void cadastrarCliente(){
 		Cliente cliente = Leitura.lerCliente();
 		listaClientes.add(cliente); // adiciona o cliente a lista com todos os clientes
+
 		if(listaSeguradoras.size() != 0){ //se houver uma seguradora já cadastrada
 			System.out.println("Deseja cadastar em um seguradora previamente cadastrada?\n0 - Sim\n1 - Nao\nEscolha uma opcao:");
 			String resposta = Leitura.lerString();
 			boolean respostaIncorreta = true;
-			while(respostaIncorreta){ 
-				if(resposta.equals("0")){
-					int indice = escolhaSeguradora();
-					if(listaSeguradoras.get(indice).addCliente(cliente)){ //se o objeto for adiconado na lista
-						System.out.println("Cliente " + cliente.getNome() + " cadastrado na Seguradora " + listaSeguradoras.get(indice).getNome() + ".");
+
+			while(respostaIncorreta){  // enquanto não for escolhido ou '0' ou '1'
+
+				if(resposta.equals("0")){ //cadastrar em um seguradora ja cadastrada
+					Seguradora seguradora = escolhaSeguradora();
+					if(seguradora.addCliente(cliente)){ //se o objeto for adiconado na lista
+						System.out.println("Cliente " + cliente.getNome() + " cadastrado na Seguradora " + seguradora.getNome() + ".");
 					}
 					else{
 						System.out.println("Não foi possível adicionar à seguradora.");
 					}
 					respostaIncorreta = false;
 				}
-				else if(resposta.equals("1")){
+
+				else if(resposta.equals("1")){ // apenas add na listaClientes
 					System.out.println("Cliente " + cliente.getNome() + " cadastrado com sucesso.");
 					respostaIncorreta = false;
 				}
@@ -135,6 +150,10 @@ public class Main {
 				}
 			}
 		}
+
+		else{
+			System.out.println("Cliente " + cliente.getNome() + " cadastrado com sucesso.");
+		}
 	}
 
 	// Cadastra o veiculo e o adiciona na lista de veiculos e se pedido o adiciona a um cliente
@@ -142,20 +161,20 @@ public class Main {
 		Veiculo veiculo = Leitura.lerVeiculo();
 		listaVeiculos.add(veiculo);
 
-		if(listaClientes.size() != 0){
+		if(listaClientes.size() != 0){ // caso ja exista clientes no sistema
 			System.out.println("Deseja cadastar em um cliente previamente cadastrado?\n0 - Sim\n1 - Nao\nEscolha uma opcao:");
 			String resposta = Leitura.lerString();
 			boolean respostaIncorreta = true;
 
-			while(respostaIncorreta){ //Não sai do loop enquanto a entrada não for no intevalo permitido
-				if(resposta.equals("0")){
-					int indice = escolhaCliente();
-					listaClientes.get(indice).addVeiculo(veiculo);
-					System.out.println("Veiculo " + veiculo.getModelo() + " cadastrado no Cliente " + listaClientes.get(indice).getNome() + ".");
+			while(respostaIncorreta){ //Não sai do loop enquanto a entrada não for '0' ou '1'
+				if(resposta.equals("0")){ // cadastar em um cliente ja cadastrado
+					Cliente cliente = escolhaCliente();
+					cliente.addVeiculo(veiculo);
+					System.out.println("Veiculo " + veiculo.getModelo() + " cadastrado no Cliente " + cliente.getNome() + ".");
 
 					respostaIncorreta = false;
 				}
-				else if(resposta.equals("1")){
+				else if(resposta.equals("1")){ // apenas adiciona na lista
 					System.out.println("Veiculo " + veiculo.getModelo() + " cadastrado com sucesso.");
 					respostaIncorreta = false;
 				}
@@ -165,6 +184,10 @@ public class Main {
 
 				}
 			}
+		}
+
+		else{ // apenas adiciona na lista
+			System.out.println("Veiculo " + veiculo.getModelo() + " cadastrado com sucesso.");
 		}
 	}
 
@@ -177,10 +200,10 @@ public class Main {
 			Boolean opcaoIncorreta = true;
 			System.out.println("Deseja copiar os clientes preciamente cadastrados:\n0 - Sim\n1 - Não");
 
-			while(opcaoIncorreta){ //Não sai do loop enquanto a entrada não for no intevalo permitido
+			while(opcaoIncorreta){ //Não sai do loop enquanto a entrada não for '0' ou '1'
 				String resposta = Leitura.lerString();
-				if(resposta.equals("0")){
-					int indice = listaSeguradoras.size() - 1; // o indice da seguradora atual na lista de seguradoras
+
+				if(resposta.equals("0")){ //copiar clientes
 
 					// Adicionando os clientes
 					System.out.println("Clientes");
@@ -192,12 +215,13 @@ public class Main {
 					String indicesSeparados[] = indices.split(",");
 					for(int i = 0; i < indicesSeparados.length; i++){
 						String numero = indicesSeparados[i];
-						if(Validacao.ehInteiro(numero)){
-							listaSeguradoras.get(indice).addCliente(listaClientes.get(INT(numero)));
+						try{
+							seguradora.addCliente(listaClientes.get(INT(numero)));
 							System.out.println("Cliente" + listaClientes.get(INT(numero)).getNome() + "adicionado");
 						}
-						else
-							System.out.println("Indice inválido.");
+						catch(Exception e){
+							System.out.println(Integer.toString(i + 1) + "° indice inválido.");
+						}
 					}
 					opcaoIncorreta = false;
 				}
@@ -209,14 +233,15 @@ public class Main {
 					resposta = Leitura.lerString();
 				}
 			}
+			
 			if(listaSinistros.size() != 0){ //Significa que há sinistros previamente cadastrados
 				opcaoIncorreta = true;
 				System.out.println("Deseja copiar os sinistros preciamente cadastrados:\n0 - Sim\n1 - Não");
 
-				while(opcaoIncorreta){ //Não sai do loop enquanto a entrada não for dentro do intelavo permitido
+				while(opcaoIncorreta){ //Não sai do loop enquanto a entrada não for '0' ou '1'
 					String resposta = Leitura.lerString();
-					if(resposta.equals("0")){
-						int indice = listaSeguradoras.size() - 1;
+
+					if(resposta.equals("0")){ //copiar os sinistros
 
 						// Adicionando os sinistros
 						System.out.println("Sinistros");
@@ -229,11 +254,13 @@ public class Main {
 						String indicesSeparados[] = indices.split(",");
 						for(int i = 0; i < indicesSeparados.length; i++){
 							String numero = indicesSeparados[i];
-							if(Validacao.ehInteiro(numero))
-								listaSeguradoras.get(indice).addSinistro(listaSinistros.get(INT(numero)));
-							else
-								System.out.println("Indice inválido.");
-						}
+							try{
+								seguradora.addSinistro(listaSinistros.get(INT(numero)));
+							}
+							catch (Exception e){
+								System.out.println(Integer.toString(i + 1) + "° indice inválido.");
+							}
+					}
 						opcaoIncorreta = false;
 					}
 					else if(resposta.equals("1")){
@@ -245,8 +272,8 @@ public class Main {
 					}
 				}
 			}
-			System.out.println("Seguradora " + seguradora.getNome() + " cadastrada com sucesso.");
 		}
+		System.out.println("Seguradora " + seguradora.getNome() + " cadastrada com sucesso.");
 	}
 	
 	// Lista todos os clientes do tipo PF da seguradora desejada
@@ -255,8 +282,8 @@ public class Main {
 			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
-			int indice = escolhaSeguradora();
-			String lista = listaSeguradoras.get(indice).listarClientesBasicos("PF");
+			Seguradora seguradora = escolhaSeguradora();
+			String lista = seguradora.listarClientesBasicos("PF");
 
 			if(lista.equals(""))
 				System.out.println("Não há clientes PF cadastrados.");
@@ -271,8 +298,8 @@ public class Main {
 			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
-			int indice = escolhaSeguradora();
-			String lista = listaSeguradoras.get(indice).listarClientesBasicos("PJ");
+			Seguradora seguradora = escolhaSeguradora();
+			String lista = seguradora.listarClientesBasicos("PJ");
 			if(lista.equals(""))
 				System.out.println("Não há clientes PJ cadastrados.");
 			else
@@ -286,8 +313,8 @@ public class Main {
 			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
-			int indice = escolhaSeguradora();
-			String lista = listaSeguradoras.get(indice).listarSinistros();
+			Seguradora seguradora = escolhaSeguradora();
+			String lista = seguradora.listarSinistros();
 
 			if(lista.equals(""))
 				System.out.println("Não há Sinistros nessa seguradora.");
@@ -302,27 +329,33 @@ public class Main {
 			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
-			int indice = escolhaSeguradora();
+			Seguradora seguradora = escolhaSeguradora();
 			System.out.println("Clientes: ");
-			listaSeguradoras.get(indice).listarTodosClientes();
+			seguradora.listarTodosClientes();
 			System.out.println("Escolha uma opcao:");
 			String resposta = Leitura.lerString();
 
-			while(!Validacao.ehInteiro(resposta) && (INT(resposta) < 0 || INT(resposta) > listaSeguradoras.get(indice).getListaClientes().size())){
-				System.out.println("Escolha invalida!\nEscolha uma opcao:");
-				resposta = Leitura.lerString();
+			while(true){
+				try{
+					String nome = seguradora.getListaClientes().get(INT(resposta)).getNome();
+					if (!seguradora.visualizarSinistro(nome)) // o proprio metodo ja imprimi
+						System.out.println("Não há sinistros desse cliente.");
+					break;
+				}
+				catch(Exception e){
+					System.out.println("Escolha invalida!\nEscolha uma opcao:");
+					resposta = Leitura.lerString();
+				}
 			}
 
-			String nome = listaSeguradoras.get(indice).getListaClientes().get(INT(resposta)).getNome();
-			if (!listaSeguradoras.get(indice).visualizarSinistro(nome))
-				System.out.println("Não há sinistros desse cliente.");
+
 		}
 	}
 
 	// Lista todos os veiculos de cliente desejado
 	private static void listarVeiculosCliente(){
-		int indice = escolhaCliente();
-		String lista = listaClientes.get(indice).listaVeiculos();
+		Cliente cliente = escolhaCliente();
+		String lista = cliente.listaVeiculos();
 
 		if (lista.equals(""))
 			System.out.println("Não há veiculos para serem listados.");
@@ -336,8 +369,8 @@ public class Main {
 			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
-			int indice = escolhaSeguradora();
-			String lista = listaSeguradoras.get(indice).listarVeiculos();
+			Seguradora seguradora = escolhaSeguradora();
+			String lista = seguradora.listarVeiculos();
 
 			if (lista.equals(""))
 				System.out.println("Não há veiculos para serem listados.");
@@ -351,27 +384,25 @@ public class Main {
 		Sinistro sinistro = Leitura.lerSinistro();
 		Cliente cliente = new Cliente(null, null);
 		String resposta;
-		boolean respostaIncorreta = true;
 
 		// Adicinado ao sinistro o cliente que o sofreu **************************************************************************
 		if(listaClientes.size() != 0){ //Já ha clientes cadastrados
 			System.out.println("Opcoes:\n0 - Novo cliente\n1 - Cliente ja cadastrado");
 			resposta = Leitura.lerString();
 
-			while(respostaIncorreta){ //Não sai do loop enquanto a entrada não for dentro do intevalo permitido
+			while(true){ //Não sai do loop enquanto a entrada não for dentro do intevalo permitido
 				if(resposta.equals("0")){
 					cliente = Leitura.lerCliente();
 					listaClientes.add(cliente); // Adiciona o novo cliente a lista de cliente
 					sinistro.setCliente(cliente);
-					respostaIncorreta = false;
+					break;
 				}
 				else if (resposta.equals("1")){
 					System.out.println("Clientes:");
-					int indice = escolhaCliente();
-					cliente = listaClientes.get(indice);
+					cliente = escolhaCliente();
 					System.out.println("Cliente escolhido com sucesso.");
 					sinistro.setCliente(cliente);
-					respostaIncorreta = false;
+					break;
 				}
 				else{
 					System.out.println("Opcao invalida! Escolha outra:\n");
@@ -387,19 +418,17 @@ public class Main {
 			System.out.println("Sinistro " + sinistro.getid() + " cadastrado com sucesso.");
 		}
 
-		respostaIncorreta = true;
-
 		// Adiconando ao sinistro o veiculo que o sofreu************************************************************************************
 		if(listaVeiculos.size() != 0){
 			System.out.println("Opcoes:\n0 - Novo Veiculo\n1 - Veiculo ja cadastrado");
 			resposta = Leitura.lerString();
-			while(respostaIncorreta){
+			while(true){
 				if(resposta.equals("0")){
 					Veiculo veiculo = Leitura.lerVeiculo();
 					sinistro.setVeiculo(veiculo);
 					cliente.addVeiculo(veiculo); // Adiciona implicitamnete o veiculo ao cliente
 					listaVeiculos.add(veiculo); 
-					respostaIncorreta = false;
+					break;
 				}
 				else if (resposta.equals("1")){
 					System.out.println("Veiculos:");
@@ -414,7 +443,7 @@ public class Main {
 					}
 					sinistro.setVeiculo(listaVeiculos.get(INT(indice)));
 					cliente.addVeiculo(listaVeiculos.get(INT(indice))); // Adiciona implicitamnete o veiculo ao cliente
-					respostaIncorreta = false;
+					break;
 
 				}
 				else{
@@ -432,13 +461,11 @@ public class Main {
 		}
 		listaSinistros.add(sinistro);
 
-		respostaIncorreta = true;
-
 		// Adicionar a uma seguradora************************************************************************************
 		if(listaSeguradoras.size() != 0){
 			System.out.println("Escolha uma opcao de seguradora vincular:\n0 - Nova\n1 - Ja cadastrado");
 			resposta = Leitura.lerString();
-			while(respostaIncorreta){
+			while(true){
 				if(resposta.equals("0")){
 					Seguradora seguradora = Leitura.lerSeguradora();
 					sinistro.setSeguradora(seguradora);
@@ -452,21 +479,21 @@ public class Main {
 					else
 						System.out.println("Não foi possivel adicionar.");
 					
-					respostaIncorreta = false;
+					break;
 				}
 				else if(resposta.equals("1")){
 					System.out.println("Escolha uma seguradora ja cadastrada para vincular.");
-					int indiceSeguradora = escolhaSeguradora();
-					listaSeguradoras.get(indiceSeguradora).addCliente(cliente);
+					Seguradora seguradora = escolhaSeguradora();
+					seguradora.addCliente(cliente);
 
-					if(listaSeguradoras.get(indiceSeguradora).addSinistro(sinistro)){
-						System.out.println("Sinistro " + sinistro.getid() + " adicionado a Seguradora " + listaSeguradoras.get(indiceSeguradora).getNome() + ".");
-						sinistro.setSeguradora(listaSeguradoras.get(indiceSeguradora));
+					if(seguradora.addSinistro(sinistro)){
+						System.out.println("Sinistro " + sinistro.getid() + " adicionado a Seguradora " + seguradora.getNome() + ".");
+						sinistro.setSeguradora(seguradora);
 					}
 					else
 						System.out.println("Não foi possivel adicionar.");
 
-					respostaIncorreta = false;
+					break;
 				}
 				else{
 					System.out.println("Opcao invalida. Escolja uma opcao:\n");
@@ -500,18 +527,26 @@ public class Main {
 			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
-			int indice = escolhaSeguradora();
+			Seguradora seguradora = escolhaSeguradora();
 			System.out.println("Clientes:");
-			listaSeguradoras.get(indice).listarTodosClientes();
+			seguradora.listarTodosClientes();
 			System.out.println("Escolha uma opcao:");
 			String resposta = Leitura.lerString();
-	
-			while(!Validacao.ehInteiro(resposta) && (INT(resposta) < 0 || INT(resposta) > listaSeguradoras.get(indice).getListaClientes().size())){
-				System.out.println("Escolha invalida!\nEscolha uma opcao:");
-				resposta = Leitura.lerString();
+			
+			while(true){
+				try{
+					String nome = seguradora.getListaClientes().get(INT(resposta)).getNome();
+					if(seguradora.removeCliente(nome))
+						System.out.println("Cliente " + nome + " removido.");
+					else
+						System.out.println("Não foi possivel remover.");
+					break;
+				}
+				catch (Exception e){
+					System.out.println("Escolha invalida!\nEscolha uma opcao:");
+					resposta = Leitura.lerString();
+				}
 			}
-			String nome = listaSeguradoras.get(indice).getListaClientes().get(INT(resposta)).getNome();
-			listaSeguradoras.get(indice).removeCliente(nome);
 		}
 	}
 
@@ -529,38 +564,50 @@ public class Main {
 			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
-			int indiceSeguradora = escolhaSeguradora();
+			Seguradora seguradora = escolhaSeguradora();
 			System.out.println("Clientes:");
-			listaSeguradoras.get(indiceSeguradora).listarTodosClientes();
+			seguradora.listarTodosClientes();
 			System.out.println("Escolha uma opcao:");
-			String indiceCliente = Leitura.lerString();
+			String indiceCliente = Leitura.lerString(), preLista, listaFormatada;
+			Veiculo veiculo;
 	
 			//Não sai do loop enquanto a entrada não for valida
-			while(!Validacao.ehInteiro(indiceCliente) && (INT(indiceCliente) < 0 || INT(indiceCliente) > listaSeguradoras.get(indiceSeguradora).getListaClientes().size())){
-				System.out.println("Escolha invalida!\nEscolha uma opcao:");
-				indiceCliente = Leitura.lerString();
+			while(true){
+				try{
+					preLista = seguradora.getListaClientes().get(INT(indiceCliente)).listaVeiculos();
+					break;
+				}
+				catch(Exception e){
+					System.out.println("Escolha invalida!\nEscolha uma opcao:");
+					indiceCliente = Leitura.lerString();
+				}
 			}
-			String preLista = listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceCliente)).listaVeiculos();
-			String listaFormatada = formatarString(preLista);
-
-			System.out.print("Veiculos:\n" + listaFormatada + "\nEscolha um opcao:\n");
+			
+			listaFormatada = formatarString(preLista);
+			System.out.println("Veiculos:\n" + listaFormatada + "\nEscolha um opcao:");
 			String indiceVeiculo = Leitura.lerString();
 
 			//Não sai do loop enquanto a entrada não for valida
-			while(!Validacao.ehInteiro(indiceVeiculo) && (INT(indiceVeiculo) < 0 || INT(indiceVeiculo) > preLista.split("\n").length)){
-				System.out.println("Escolha invalida!\nEscolha uma opcao:");
-				indiceVeiculo = Leitura.lerString();
+			while(true){
+				try {
+					veiculo = seguradora.getListaClientes().get(INT(indiceCliente)).getListaVeiculos().get(INT(indiceVeiculo));
+					break;
+				}
+				catch (Exception e) {
+					System.out.println("Escolha invalida!\nEscolha uma opcao:");
+					indiceVeiculo = Leitura.lerString();
+				}
 			}
-			String modelo = listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceCliente)).getListaVeiculos().get(INT(indiceVeiculo)).getModelo();
-			String placa = listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceCliente)).getListaVeiculos().get(Integer
-			.parseInt(indiceVeiculo)).getplaca();
-			if (listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceCliente)).removerVeiculo(placa)){
+			String modelo = veiculo.getModelo();
+			String placa = veiculo.getplaca();
+			if (seguradora.getListaClientes().get(INT(indiceCliente)).removerVeiculo(placa)){
 				System.out.println("Veiculo (" + modelo + ")" + placa + " removido.");
 			} 
 			else{
 				System.out.println("Não foi possivel remover o veiculo.");
 			}
 		}
+		
 	}
 
 	// Excluir o sinistro de um determinado cliente
@@ -569,78 +616,90 @@ public class Main {
 			System.out.println("Ainda não há seguradora cadastrada no sistema!");
 		}
 		else{
-			int indice = escolhaSeguradora();
+			Seguradora seguradora = escolhaSeguradora();
 			System.out.print("ID do Sinistro: ");
-			listaSeguradoras.get(indice).listarSinistros();
+			seguradora.listarSinistros();
 			System.out.println("Escolha uma opcao:");
 			String indiceSinistro = Leitura.lerString();
 
 			//Não sai do loop enquanto a entrada não for valida
-			while(!Validacao.ehInteiro(indiceSinistro) && (INT(indiceSinistro) < 0 || INT(indiceSinistro) > listaSeguradoras.get(indice).getListaSinistros().size())){
-				System.out.println("Escolha invalida!\nEscolha uma opcao:");
-				indiceSinistro = Leitura.lerString();
+			int id;
+			while(true){
+				try {
+					id = seguradora.getListaSinistros().get(INT(indiceSinistro)).getid();
+					break;			
+				}
+				catch (Exception e) {
+					System.out.println("Escolha invalida!\nEscolha uma opcao:");
+					indiceSinistro = Leitura.lerString();
+				}
+
 			}
-			int id = listaSeguradoras.get(indice).getListaSinistros().get(INT(indiceSinistro)).getid();
-			if(listaSeguradoras.get(indice).removerSinistro(id)){
+			if(seguradora.removerSinistro(id)){
 				System.out.println("Sinistro " + Integer.toString(id) + " removido.");
 			}
-
 			else{
 				System.out.println("Não foi possível remover o sinistro.");
 			}
 		}
 	}
 
-	// Calcula a receita da segurado escolhida e a imprimi
+	//Imprimi a receita da seguradora escolhida
 	private static void calcularReceira(){
-		int indiceSeguradora = escolhaSeguradora();
-		double receita = listaSeguradoras.get(indiceSeguradora).calcularReceita();
-		System.out.println("Receita da Seguradora " + listaSeguradoras.get(indiceSeguradora).getNome() + ": R$ " + Double.toString(receita));
+		Seguradora seguradora = escolhaSeguradora();
+		double receita = seguradora.calcularReceita();
+		System.out.println("Receita da Seguradora " + seguradora.getNome() + ": R$ " + Double.toString(receita));
 	}
 
 	// Transfere a lista de veiculos de um cliente para outro
 	private static void transferirSeguro(){
-		int indiceSeguradora = escolhaSeguradora();
+		Seguradora seguradora = escolhaSeguradora();
 		System.out.println("Escolha o Cliente Remetente:");
-		listaSeguradoras.get(indiceSeguradora).listarTodosClientes();
+		seguradora.listarTodosClientes();
 		String indiceClienteRemetente = Leitura.lerString();
 
-		while(!Validacao.ehInteiro(indiceClienteRemetente) && (INT(indiceClienteRemetente) < 0 || INT(indiceClienteRemetente) > listaSeguradoras.get(indiceSeguradora).getListaClientes().size())){
-			System.out.println("Escolha invalida!\nEscolha uma opcao:");
-			indiceClienteRemetente = Leitura.lerString();
-		}
-
-		if(listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceClienteRemetente)).getListaVeiculos().size() != 0){
-			listaSeguradoras.get(indiceSeguradora).listarTodosClientes();
-			System.out.println("Escolha o Cliente Destinatario:");
-			String indiceClienteDestinatario = Leitura.lerString();
-	
-			while(!Validacao.ehInteiro(indiceClienteDestinatario) && !(INT(indiceClienteDestinatario) >= 0 && INT(indiceClienteDestinatario) < listaSeguradoras.get(indiceSeguradora).getListaClientes().size())){
-				System.out.println("Escolha invalida!\nEscolha uma opcao:");
-				indiceClienteDestinatario = Leitura.lerString();
-			}
-
-			if(indiceClienteRemetente == indiceClienteDestinatario)
-				System.out.println("Operacao abortada. O cliente possui 0 veiculos.");
-			else{
-				Cliente remetente = listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceClienteRemetente));
-				Cliente destinatario = listaSeguradoras.get(indiceSeguradora).getListaClientes().get(INT(indiceClienteDestinatario));
-
-				if (destinatario.addVeiculo(remetente.getListaVeiculos())){
-					System.out.println("Tranferencia ocorrida com sucesso.");
-					listaSeguradoras.get(indiceSeguradora).calcularPrecoSeguroCliente(destinatario);
-					listaSeguradoras.get(indiceSeguradora).calcularPrecoSeguroCliente(remetente);
-					remetente.removerTodosVeiculos();
+		while(true){
+			try {
+				if(seguradora.getListaClientes().get(INT(indiceClienteRemetente)).getListaVeiculos().size() != 0){
+					seguradora.listarTodosClientes();
+					System.out.println("Escolha o Cliente Destinatario:");
+					String indiceClienteDestinatario = Leitura.lerString();
+			
+					while(true){
+						try {
+							if(indiceClienteRemetente == indiceClienteDestinatario)
+								System.out.println("Operacao abortada. O cliente possui 0 veiculos.");
+							else{
+								Cliente remetente = seguradora.getListaClientes().get(INT(indiceClienteRemetente));
+								Cliente destinatario = seguradora.getListaClientes().get(INT(indiceClienteDestinatario));
+				
+								if (destinatario.addVeiculo(remetente.getListaVeiculos())){
+									System.out.println("Tranferencia ocorrida com sucesso.");
+									seguradora.calcularPrecoSeguroCliente(destinatario);
+									seguradora.calcularPrecoSeguroCliente(remetente);
+									remetente.removerTodosVeiculos();
+								}
+								else{
+									System.out.println("Ocorreu um erro ao transferir os veiculos");
+								}
+								break;
+							}
+						}
+						catch (Exception e) {
+							System.out.println("Escolha invalida!\nEscolha uma opcao:");
+							indiceClienteDestinatario = Leitura.lerString();
+						}
+					}
 				}
 				else{
-					System.out.println("Ocorreu um erro ao transferir os veiculos");
+					System.out.println("Operacao abortada. O cliente possui 0 veiculos.");
 				}
+				break;
 			}
-
-
-		}
-		else{
-			System.out.println("Operacao abortada. O cliente possui 0 veiculos.");
+			catch (Exception e) {
+				System.out.println("Escolha invalida!\nEscolha uma opcao:");
+				indiceClienteRemetente = Leitura.lerString();
+			}
 		}
 	}
 
@@ -669,27 +728,25 @@ public class Main {
 	
 	//ler opções do menu externo
 	private static MenuOpcoes lerOpcaoMenuExterno() {
-		Scanner scanner = new Scanner(System.in);
-		int opUsuario;
+		String opUsuario;
 		MenuOpcoes opUsuarioConst;
 		do {
 			System.out.println("Digite uma opcao: ");
-			opUsuario = scanner.nextInt();
-		}while(opUsuario < 0 || opUsuario > MenuOpcoes.values().length - 1);
-		opUsuarioConst = MenuOpcoes.values()[opUsuario];
+			opUsuario = Leitura.lerString();
+		}while(!Validacao.ehInteiro(opUsuario) || (INT(opUsuario) < 0 || INT(opUsuario) > MenuOpcoes.values().length - 1));
+		opUsuarioConst = MenuOpcoes.values()[INT(opUsuario)];
 		return opUsuarioConst;
 	}
 	
 	//ler opção dos submenus
 	private static SubmenuOpcoes lerOpcaoSubmenu(MenuOpcoes op) {
-		Scanner scanner = new Scanner(System.in);
-		int opUsuario;
+		String opUsuario;
 		SubmenuOpcoes opUsuarioConst;
 		do {
 			System.out.println("Digite uma opcao: ");
-			opUsuario = scanner.nextInt();
-		}while(opUsuario < 0 || opUsuario > op.getSubmenu().length - 1);
-		opUsuarioConst = op.getSubmenu()[opUsuario];
+			opUsuario = Leitura.lerString();
+		}while(!Validacao.ehInteiro(opUsuario) || (INT(opUsuario) < 0 || INT(opUsuario) > op.getSubmenu().length - 1));
+		opUsuarioConst = op.getSubmenu()[INT(opUsuario)];
 		return opUsuarioConst;
 	}
 	

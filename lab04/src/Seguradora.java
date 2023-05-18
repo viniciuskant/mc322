@@ -225,7 +225,7 @@ public class Seguradora {
     public String listarSinistros(){
         String info = "";
         for(int i = 0; i < listaSinistros.size(); i ++){
-            info += (Integer.toString(i) + " - ID: " + Integer.toString(listaSinistros.get(i).getid()));
+            info += (Integer.toString(i) + " - ID: " + Integer.toString(listaSinistros.get(i).getid()) + "\n");
         }
         return info;
     }

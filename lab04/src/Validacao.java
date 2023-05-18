@@ -142,20 +142,14 @@ public class Validacao {
         return Date.dataValida(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
     }
 
-    public static boolean ehInteiro(String n){
-        try{
-            Integer.parseInt(n);
+    public static boolean ehInteiro(String string){
+        try {
+            Integer.parseInt(string);
             return true;
         }
-        catch(NumberFormatException e){
+        catch (Exception e) {
             return false;
-        } 
-    }
+        }
 
-    public static boolean ehNatural(String n){
-        if(!ehInteiro(n))
-            return false;
-
-        return Integer.parseInt(n) >= 0;
     }
 }

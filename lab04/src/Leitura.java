@@ -91,9 +91,9 @@ public class Leitura {
 
         System.out.print("Número de Funcionarios: ");
         nFuncionarios = lerString();
-		while(!Validacao.ehNatural(nFuncionarios)){ //Não sai do loop enquanto a entrada não for valida
+		while(!Validacao.ehInteiro(nFuncionarios) && INT(nFuncionarios) < 0){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("Número de Funcinários invalido!\nNúmero de Funcionarios: ");
-            cnpj = lerString();
+            nFuncionarios = lerString();
         }
 
         return new ClientePJ(nome, endereco, cnpj, dataLicenca, INT(nFuncionarios));
