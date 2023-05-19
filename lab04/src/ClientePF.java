@@ -75,7 +75,7 @@ public class ClientePF extends Cliente{
             fatorIdade = CalcSeguro.FATOR_30_60.getConstante();
         }
         else if (60 <= idade && idade < 80){
-            fatorIdade = CalcSeguro.FATOR_30_60.getConstante();
+            fatorIdade = CalcSeguro.FATOR_60_90.getConstante();
         }
         
         else{
