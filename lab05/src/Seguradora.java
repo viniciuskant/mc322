@@ -133,17 +133,26 @@ public class Seguradora {
         return new ArrayList<Sinistro>();
     }
 
-    public ArrayList<Seguro> getSeguroPorCliente() { // Ainda não entendi o que essa função irá retornar
-        return new ArrayList<Seguro>();
+    public ArrayList<Seguro> getSeguroPorCliente(String CadastroNacional) {
+        ArrayList<Seguro> lista = new ArrayList<Seguro>();
+        for (Seguro seguro : listaSeguros) {
+            if (seguro instanceof SeguroPF) {
+                if (((SeguroPF) seguro).getCliente().getCpf().equals(CadastroNacional)) {
+                    lista.add(seguro);
+                }
+            } else {
+                if (((SeguroPJ) seguro).getCliente().getCnpj().equals(CadastroNacional)) {
+                    lista.add(seguro);
+                }
+            }
+        }
+        return lista;
     }
 
     public double calcularReceita() {
         double receita = 0;
         for (Seguro seguro : listaSeguros) {
-            if (seguro instanceof SeguroPF)
-                receita += ((SeguroPF) seguro).getValorMensal();
-            else
-                receita += ((SeguroPJ) seguro).getValorMensal();
+            receita += seguro.getValorMensal();
         }
         return receita;
     }
