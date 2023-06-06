@@ -1,4 +1,4 @@
-public class Sinistro{
+public class Sinistro {
     private final int ID;
     private Date data;
     private String endereco;
@@ -6,8 +6,8 @@ public class Sinistro{
     private Veiculo veiculo;
     private Cliente cliente;
 
-    //construtor
-    public Sinistro(Date data, String endereco, Veiculo veiculo, Cliente cliente){
+    // construtor
+    public Sinistro(Date data, String endereco, Veiculo veiculo, Cliente cliente) {
         this.data = data;
         this.endereco = endereco;
         this.ID = Integer.parseInt(super.toString().replace("Sinistro@", ""), 16);
@@ -15,30 +15,30 @@ public class Sinistro{
         this.cliente = cliente;
     }
 
-    public Sinistro(Date data, String endereco){
+    public Sinistro(Date data, String endereco) {
         this.data = data;
         this.endereco = endereco;
         this.ID = Integer.parseInt(super.toString().replace("Sinistro@", ""), 16);
     }
 
-    //getters e setters
-    public int getid(){
+    // getters e setters
+    public int getid() {
         return ID;
     }
-    
-    public Date getData(){
+
+    public Date getData() {
         return data;
     }
 
-    public void setData(Date data){
+    public void setData(Date data) {
         this.data = data;
     }
-    
-    public String getEndereco(){
+
+    public String getEndereco() {
         return endereco;
     }
-    
-    public void setEndereco(String endereco){
+
+    public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
@@ -67,24 +67,24 @@ public class Sinistro{
     }
 
     public String toString() {
-        if (this.cliente instanceof ClientePF){
-            return "ID: " + Integer.toString(getid()) + 
-            "\nCliente: " + ((ClientePF)cliente).toString()+
-            "\nData: " + getData() + 
-            "\nEndereco: " + getEndereco() +
-            "\nSeguradora: " + seguradora.getNome() +
-            "\nPlaca do veículo: " + veiculo.getplaca();
+        if (this.cliente instanceof ClientePF) {
+            return "ID: " + Integer.toString(getid()) +
+                    "\nCliente: " + ((ClientePF) cliente).toString() +
+                    "\nData: " + getData() +
+                    "\nEndereco: " + getEndereco() +
+                    "\nSeguradora: " + seguradora.getNome() +
+                    "\nPlaca do veículo: " + veiculo.getplaca();
+        } else {
+            return "ID: " + Integer.toString(getid()) +
+                    "\nCliente: " + ((ClientePJ) cliente).toString() +
+                    "\nData: " + getData() +
+                    "\nEndereco: " + getEndereco() +
+                    "\nSeguradora: " + seguradora.getNome() +
+                    "\nPlaca do veículo: " + veiculo.getplaca();
         }
-        else{
-            return "ID: " + Integer.toString(getid()) + 
-            "\nCliente: " + ((ClientePJ)cliente).toString()+
-            "\nData: " + getData() + 
-            "\nEndereco: " + getEndereco() +
-            "\nSeguradora: " + seguradora.getNome() +
-            "\nPlaca do veículo: " + veiculo.getplaca();
-        }
-        
-    }  
+
+    }
+
     public String toStringBasico() {
         return "ID " + Integer.toString(getid());
     }
