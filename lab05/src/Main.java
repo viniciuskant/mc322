@@ -93,12 +93,14 @@ public class Main {
 		seguroPF.gerarSinistro(sinistro4);
 		seguroPF.autorizarCondutor(condutor2);
 		seguroPF.autorizarCondutor(condutor3);
+		seguradora.gerarSeguro(seguroPF);
 
 		// Instancio um seguro PJ
 		SeguroPJ seguroPJ = new SeguroPJ(new Date(4, 6, 2023), new Date(4, 6, 2024), seguradora, frota1, clientepj);
 		seguroPJ.gerarSinistro(sinistro1);
 		seguroPJ.gerarSinistro(sinistro2);
 		seguroPJ.autorizarCondutor(condutor1);
+		seguradora.gerarSeguro(seguroPJ);
 
 		System.out.println("\nFrota 1" + frota1.toString() + "\n");
 		System.out.println("Veiculo 1:\n" + veiculo1.toString() + "\n");
@@ -116,14 +118,19 @@ public class Main {
 		return Integer.parseInt(string);
 	}
 
-	// Lista todas Seguradoras cadastradas e retorna a seguradora escolhida
-	private static Seguradora escolherSeguradora(ArrayList<Seguradora> listaSeguradoras){
+	// Listar todas as Seguradoras
+	private static void listar(ArrayList<Seguradora> listaSeguradoras){
 		System.out.println("Seguradoras:");
 
 		// Imprimi todas as seguradoras
 		for(int i = 0; i < listaSeguradoras.size(); i++){
 			System.out.println(Integer.toString(i) + " - " + listaSeguradoras.get(i).getNome());
 		}
+	}
+
+	// Lista todas Seguradoras cadastradas e retorna a seguradora escolhida
+	private static Seguradora escolherSeguradora(ArrayList<Seguradora> listaSeguradoras){
+		listar(listaSeguradoras);
 		System.out.println("Escolha uma opcao:"); 
 		String indice = Leitura.lerString();
 
@@ -198,19 +205,27 @@ public class Main {
 			case SEGURADORAS:
 				Seguradora seguradora = escolherSeguradora(listaSeguradoras);
 				executarSubmenu(op, seguradora);
+				break;
 			case CONFIGURACOES:
-				executarSubmenu(op);
+				executarSubmenu(op, listaSeguradoras);
+				break;
 			case SAIR:
 		}
 	}
 
-	public static void executarOpcaoSubMenu(SubmenuOpcoes opSubmenu) {
+	public static void executarOpcaoSubMenu(SubmenuOpcoes opSubmenu,  ArrayList<Seguradora> listaSeguradoras) {
 		switch (opSubmenu) {
 			case CADASTRAR_SEGURADORA:
+				Seguradora seguradora = Leitura.lerSeguradora();
+				if(listaSeguradoras.add(seguradora)){
+					System.out.println("Seguradora adicionda com sucesso");
+				}
+				else{
+					System.out.println("Falha ao adiconar!");
+				}
 				break;
 			case LISTAR_SEGURADORAS:
-				break;
-			case VOLTAR:
+				listar(listaSeguradoras);
 			break;
 		}
 	}
@@ -220,7 +235,7 @@ public class Main {
 			case CADASTAR_SEGURO:
 				seguradora.gerarSeguro();
 				break;
-			case REMOVER_SEGURO:
+			case CANCELAR_SEGURO:
 				if(seguradora.cancelarSeguro())
 					System.out.println("Seguro cancelado com sucesso!");
 				else
@@ -262,22 +277,18 @@ public class Main {
 				}
 				else
 					System.out.println("Nao ha sinistros para listar.");
-				break;
-			case VOLTAR:
-				break;
-			
+			break;		
 		}
 	}
 
 
-	// executa os submenus: exibição do menu, leitura da opção e execução dos
-	// métodos
-	private static void executarSubmenu(MenuOpcoes op) {
+	// executa os submenus: exibição do menu, leitura da opção e execução dos métodos
+	private static void executarSubmenu(MenuOpcoes op,   ArrayList<Seguradora> listaSeguradoras) {
 		SubmenuOpcoes opSubmenu;
 		do {
 			exibirSubmenu(op);
 			opSubmenu = lerOpcaoSubmenu(op);
-			executarOpcaoSubMenu(opSubmenu);
+			executarOpcaoSubMenu(opSubmenu, listaSeguradoras);
 		} while (opSubmenu != SubmenuOpcoes.VOLTAR);
 	}
 
@@ -290,8 +301,7 @@ public class Main {
 		} while (opSubmenu != SubmenuOpcoes.VOLTAR);
 	}
 
-	// executa o menu externo: exibição do menu, leitura da opção e execução da
-	// opção
+	// executa o menu externo: exibição do menu, leitura da opção e execução da opção
 	public static void main(String[] args) {
 		ArrayList<Seguradora> listaSeguradoras =  new ArrayList<Seguradora>();
 		instanciar(listaSeguradoras);

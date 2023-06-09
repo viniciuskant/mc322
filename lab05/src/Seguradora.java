@@ -181,6 +181,8 @@ public class Seguradora {
     }
 
     public boolean cancelarSeguro(){
+        if (listaSeguros.size() == 0)
+            return false;
         return cancelarSeguro(escolhaSeguro());
     }
 

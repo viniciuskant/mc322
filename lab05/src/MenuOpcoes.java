@@ -6,7 +6,7 @@ new SubmenuOpcoes[]{} cria uma lista de constantes do submenu.
 public enum MenuOpcoes {
 	SEGURADORAS("Seguradoras", new SubmenuOpcoes[] {
 		SubmenuOpcoes.CADASTAR_SEGURO,
-		SubmenuOpcoes.REMOVER_SEGURO,
+		SubmenuOpcoes.CANCELAR_SEGURO,
 		SubmenuOpcoes.LISTAR_SEGUROS_CLIENTE,
 		SubmenuOpcoes.CADASTAR_CLIENTE,
 		SubmenuOpcoes.REMOVER_CLIENTE,

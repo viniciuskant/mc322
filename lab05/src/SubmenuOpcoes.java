@@ -5,7 +5,7 @@ public enum SubmenuOpcoes {
 	CADASTRAR_SEGURADORA("Cadastrar Seguradoras"),
 	LISTAR_SEGURADORAS("Listar Seguradoras"),
 	CADASTAR_SEGURO("Cadastar Seguro"),
-	REMOVER_SEGURO("Remover Seguro"),
+	CANCELAR_SEGURO("Cancelar Seguro"),
 	LISTAR_SEGUROS_CLIENTE("Listar Seguros por Cliente"),
 	CADASTAR_CLIENTE("Cadastar Cliente"),
 	REMOVER_CLIENTE("Remover Cliente"),
