@@ -10,6 +10,12 @@ public class SeguroPJ extends Seguro {
         this.setValorMensal(calcularValor());
     }
 
+    public SeguroPJ(Date dataInicio, Date dataFim, Seguradora seguradora, ClientePJ cliente) {
+        super(dataInicio, dataFim, seguradora);
+        this.cliente = cliente;
+        this.setValorMensal(calcularValor());
+    }
+
     // getters e setters
     public Frota getFrota() {
         return frota;
@@ -36,6 +42,24 @@ public class SeguroPJ extends Seguro {
     // metodos
     public boolean autorizarCondutor(Condutor condutor) {
         return getListaCondutores().add(condutor);
+    }
+
+    public boolean autorizarCondutor(){
+        String nome = Leitura.lerNome("Nome");
+        String cpf = Leitura.lerCPF();
+
+        System.out.print("Telefone: ");
+        String telefone = Leitura.lerString();
+
+        System.out.print("Endereco: ");
+        String endereco = Leitura.lerString();
+
+        System.out.print("Email: ");
+        String email = Leitura.lerString();
+
+        Date dataNascimento = Leitura.lerData("Data de nascimento");
+
+        return getListaCondutores().add(new Condutor(nome, cpf, telefone, endereco, email, dataNascimento));
     }
 
     public boolean desautorizarCondutor() {

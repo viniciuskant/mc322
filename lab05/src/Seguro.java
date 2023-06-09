@@ -108,4 +108,7 @@ public abstract class Seguro {
     public abstract double calcularValor();
 
     public abstract void gerarSinistro();
+
+    public abstract Cliente getCliente();
+    
 }

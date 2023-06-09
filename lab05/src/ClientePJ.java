@@ -50,11 +50,19 @@ public class ClientePJ extends Cliente {
         return getNome() + " - " + getCnpj() + "\n";
     }
 
+    public String listarFrotas(){
+        String info = "";
+        for(int i = 0; i < listaFrota.size(); i++)
+            info+= listaFrota.get(i).getCode() + "\n";
+        
+            return info;
+    }
+
     public boolean cadastarFrota(Frota frota) {
         return listaFrota.add(frota);
     }
 
-    private int indiceFrota(int code) {
+    private int indiceFrota(String code) {
         for (int i = 0; i < listaFrota.size(); i++) {
             if (listaFrota.get(i).getCode().equals(code))
                 return i;
@@ -62,7 +70,7 @@ public class ClientePJ extends Cliente {
         return -1;
     }
 
-    public boolean atualizarFrota(int code, Veiculo veiculo) { // Adiciona o veiculo da frota do codigo desejado
+    public boolean atualizarFrota(String code, Veiculo veiculo) { // Adiciona o veiculo da frota do codigo desejado
         int indice = indiceFrota(code);
         if (indice == -1)
             return false;
@@ -76,7 +84,7 @@ public class ClientePJ extends Cliente {
         return false;
     }
 
-    public boolean atualizarFrota(int code, ArrayList<Veiculo> listaVeiculos) { // Troca a lista de veiculo da frota do codigo desejado
+    public boolean atualizarFrota(String code, ArrayList<Veiculo> listaVeiculos) { // Troca a lista de veiculo da frota do codigo desejado
         int indice = indiceFrota(code);
         if (indice == -1)
             return false;

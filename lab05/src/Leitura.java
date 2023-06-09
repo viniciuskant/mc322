@@ -45,6 +45,17 @@ public class Leitura {
         return cpf;
     }
     
+    // Metodo  que le um cpf valido do terminal
+    public static String lerCNPJ(){
+        System.out.print("CNPJ: ");
+        String  cnpj = lerString();
+        while (!Validacao.validarCNPJ(cnpj)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("CPF inválido!\nCNPJ: ");
+            cnpj = lerString();
+        }
+        return cnpj;
+    }
+    
     // Metodo que converte String em inteiro
     public static int INT(String string) {
         return Integer.parseInt(string);
@@ -100,12 +111,8 @@ public class Leitura {
 
         dataFundacao = lerData("Data de lincenca");
 
-        System.out.print("CNPJ: ");
-        cnpj = lerString();
-        while (!Validacao.validarCNPJ(cnpj)) { // Não sai do loop enquanto a entrada não for valida
-            System.out.print("CNPJ inválido!\n CNPJ: ");
-            cnpj = lerString();
-        }
+        cnpj = lerCNPJ();
+
         return new ClientePJ(nome, endereco, telefone, email, cnpj, dataFundacao);
     }
 
@@ -155,12 +162,7 @@ public class Leitura {
 
         nome = lerNome("Nome da Seguradora");
 
-        System.out.print("CNPJ: ");
-        cnpj = lerString();
-        while (!Validacao.validarCNPJ(cnpj)) { // Não sai do loop enquanto a entrada não for valida
-            System.out.print("CNPJ inválido!\n CNPJ: ");
-            cnpj = lerString();
-        }
+        cnpj = lerCNPJ();
 
         System.out.print("Telefone da Seguradora: ");
         telefone = lerString();

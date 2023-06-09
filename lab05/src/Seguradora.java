@@ -86,8 +86,12 @@ public class Seguradora {
             System.out.println("\t" + cliente.toStringBasico());
     }
 
+    public boolean gerarSeguro(Seguro seguro){
+        return listaSeguros.add(seguro);
+    }
+
     public boolean gerarSeguro() {
-        String indiceVeiculo, resposta;
+        String indiceVeiculo, indiceFrota, resposta;
         Cliente cliente = escolhaCliente();
 
         Date dataInicio = Leitura.lerData("Data de inicio");
@@ -116,7 +120,7 @@ public class Seguradora {
                 }
                 
                 else if(resposta.equals("2")){
-                    System.out.println("Seguro cadastrado com sucesso.");
+                    System.out.println("Seguro" + seguro.getIdSeguro() +"cadastrado com sucesso.");
                     return listaSeguros.add(seguro);
                 }
 
@@ -127,14 +131,50 @@ public class Seguradora {
                 }
             }
         }
-        
-        else
 
-        return listaSeguros.add(seguro);
+        else{
+            SeguroPJ seguro = new SeguroPJ(dataInicio, dataFim, this, (ClientePJ)cliente);
+            System.out.println("Qual veiculo receberá o seguro:\n" + ((ClientePJ) cliente).listarFrotas());
+            indiceFrota = Leitura.lerString();
+
+            while (true) {
+                try {
+                    seguro.setFrota(((ClientePJ)cliente).getListaFrota().get(Leitura.INT(indiceFrota)));
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Indice invalido. Escolha novamente: ");
+                    indiceFrota = Leitura.lerString();
+                }
+            }
+
+            System.out.println("Cadatrar condutores:\n\t1-Nao\n\t2-Sim");
+            resposta = Leitura.lerString();
+            while(true){
+                if(resposta.equals("1")){
+                    seguro.autorizarCondutor();
+                }
+                
+                else if(resposta.equals("2")){
+                    System.out.println("Seguro" + seguro.getIdSeguro() +"cadastrado com sucesso.");
+                    return listaSeguros.add(seguro);
+                }
+
+                else{
+                    System.out.println("Indice invalido. Escolha novamente: ");
+                    resposta = Leitura.lerString();
+
+                }
+            }
+
+        }
     }
 
     public boolean cancelarSeguro(Seguro seguro) {
         return listaSeguros.remove(seguro);
+    }
+
+    public boolean cancelarSeguro(){
+        return cancelarSeguro(escolhaSeguro());
     }
 
     public boolean cadastrarCliente(Cliente cliente) {
@@ -218,10 +258,33 @@ public class Seguradora {
             try {
                 return listaClientes.get(Leitura.INT(indice));
             } catch (Exception e) {
-                System.out.println("Escolha uma opcao valida:");
+                System.out.print("Escolha uma opcao valida: ");
                 indice = Leitura.lerString();
             }
         }
     }
 
+    // Lista todos os seguros e retorna o seguro escolhido
+    private Seguro escolhaSeguro() {
+        System.out.println("Seguros:");
+
+        // Imprimi todos os clientes
+        for (int i = 0; i < listaSeguros.size(); i++) {
+            System.out.println(Integer.toString(i) + " - " + listaSeguros.get(i).getCliente().getNome() + " - " + listaSeguros.get(i).getIdSeguro());
+        }
+        System.out.println("Escolha uma opcao:");
+        String indice = Leitura.lerString();
+
+        // Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o
+        // tamanho da lista
+
+        while (true) {
+            try {
+                return listaSeguros.get(Leitura.INT(indice));
+            } catch (Exception e) {
+                System.out.print("Escolha uma opcao valida: ");
+                indice = Leitura.lerString();
+            }
+        }
+    } 
 }
