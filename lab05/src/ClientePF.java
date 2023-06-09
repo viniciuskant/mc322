@@ -63,7 +63,7 @@ public class ClientePF extends Cliente {
                 "\nData de nascimento: " + getDataNascimento() +
                 "\nEducação: " + getEducacao() +
                 "\nGênero: " + getGenero() +
-                "\nLista Veiculos" + listarVeiculos();
+                "\nLista Veiculos:\n" + listarVeiculos();
     }
 
     public String toStringBasico(){
@@ -73,12 +73,16 @@ public class ClientePF extends Cliente {
     public String listarVeiculos(){
         String info = "";
         for(int i = 0; i < listaVeiculos.size(); i++)
-            info += Integer.toString(i + 1) + " - " + listaVeiculos.get(i).toStringBasico() + "\n";
+            info +=  "\t" + listaVeiculos.get(i).toStringBasico() + "\n";
         return info;
     }
 
     public boolean CadastrarVeiculo(Veiculo veiculo) {
         return listaVeiculos.add(veiculo);
+    }
+
+    public boolean CadastrarVeiculo(){
+        return CadastrarVeiculo(Veiculo.lerVeiculo());
     }
 
     private int indexVeiculo(String placa) { // Talvez tenha erro
@@ -101,4 +105,5 @@ public class ClientePF extends Cliente {
         listaVeiculos.remove(i);
         return true;
     }
+
 }

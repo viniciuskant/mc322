@@ -39,9 +39,9 @@ public class ClientePJ extends Cliente {
         String info = super.toString() +
                 "\nCNPJ: " + getCnpj() +
                 "\nData de fundação: " + getdataFundacao() +
-                "\n Codigo das frotas:\n";
+                "\nCodigo das frotas:\n";
         for (Frota frota : listaFrota)
-            info += "\t- " + frota.getCode() + "\n";
+            info += "\t" + frota.getCode() + "\n";
 
         return info;
     }
@@ -60,6 +60,10 @@ public class ClientePJ extends Cliente {
 
     public boolean cadastarFrota(Frota frota) {
         return listaFrota.add(frota);
+    }
+
+    public boolean cadastarFrota(){
+        return cadastarFrota(Frota.lerFrota());
     }
 
     private int indiceFrota(String code) {

@@ -27,13 +27,13 @@ public class SeguroPF extends Seguro {
         this.veiculo = veiculo;
     }
 
+    @Override
     public String toString() {
         return "Cliente: " + cliente.getNome() + " - " + cliente.getCpf() +
                 "\n" + super.toString() +
                 "\nVeiculo: " + veiculo.toStringBasico();
     }
 
-    @Override
     public double getValorMensal() {
         this.setValorMensal(calcularValor());
         return super.getValorMensal();
@@ -65,6 +65,10 @@ public class SeguroPF extends Seguro {
     public boolean desautorizarCondutor() {
         Condutor condutor = escolheCodutor();
         return getListaCondutores().remove(condutor);
+    }
+
+    public void gerarSinistro(Sinistro sinistro){
+        getListaSinistros().add(sinistro);
     }
 
     public void gerarSinistro() {

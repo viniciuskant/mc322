@@ -71,12 +71,16 @@ public abstract class Seguro {
     }
 
     public String toString() {
-        return "ID: " + getIdSeguro() +
-                "Data de inicio: " + getDataInicio().toString() +
-                "Data final: " + getDataFim().toString() +
-                "Seguradora: " + seguradora.getNome() +
+        return "ID: " + getIdSeguro() + "\n" +
+                "Data de inicio: " + getDataInicio().toString() + "\n" +
+                "Data final: " + getDataFim().toString() + "\n" +
+                "Seguradora: " + seguradora.getNome() + "\n" +
                 "Valor mensal: " + Double.toString(idSeguro);
         // Talvez adiconar mais coisas
+    }
+
+    public String toStringBasico(){
+        return getIdSeguro() + " - R$ " + getValorMensal(); 
     }
 
     // Lista todos os clientes e retorna o cliente escolhido

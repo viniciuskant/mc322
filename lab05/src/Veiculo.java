@@ -56,4 +56,26 @@ public class Veiculo {
         return getModelo() + " - " + getplaca();
     }
 
+    // Metodo que interage com o usuário e retorna um Veiculo
+    public static Veiculo lerVeiculo() {
+        String placa, marca, modelo, anoFabricacao;
+
+        System.out.print("Placa do veículo: ");
+        placa = Leitura.lerString();
+
+        System.out.print("Marca: ");
+        marca = Leitura.lerString();
+
+        System.out.print("Modelo: ");
+        modelo = Leitura.lerString();
+
+        System.out.print("Ano de fabricação do veículo: ");
+        anoFabricacao = Leitura.lerString();
+        while (!Validacao.ehInteiro(anoFabricacao)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("Ano de fabricação invalido!\nAno de fabricação:");
+            anoFabricacao = Leitura.lerString();
+        }
+
+        return new Veiculo(placa, marca, modelo, Leitura.INT(anoFabricacao));
+    }
 }

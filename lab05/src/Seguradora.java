@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Seguradora {
@@ -81,9 +82,13 @@ public class Seguradora {
     }
 
     public void listarClientes() {
-        System.out.println("Lista de Clientes:");
-        for (Cliente cliente : listaClientes)
-            System.out.println("\t" + cliente.toStringBasico());
+        if(listaClientes.size() != 0){
+            System.out.println("Lista de Clientes:");
+            for (Cliente cliente : listaClientes)
+                System.out.println("\t" + cliente.toStringBasico());
+        }
+        else
+            System.out.println("Não a clientes cadastrados.");
     }
 
     public boolean gerarSeguro(Seguro seguro){
@@ -92,7 +97,7 @@ public class Seguradora {
 
     public boolean gerarSeguro() {
         String indiceVeiculo, indiceFrota, resposta;
-        Cliente cliente = escolhaCliente();
+        Cliente cliente = escolherCliente();
 
         Date dataInicio = Leitura.lerData("Data de inicio");
         Date dataFim = Leitura.lerData("Data de fim");
@@ -117,6 +122,7 @@ public class Seguradora {
             while(true){
                 if(resposta.equals("1")){
                     seguro.autorizarCondutor();
+                    System.out.println("Cadatrar condutores:\n\t1-Nao\n\t2-Sim");
                 }
                 
                 else if(resposta.equals("2")){
@@ -152,6 +158,7 @@ public class Seguradora {
             while(true){
                 if(resposta.equals("1")){
                     seguro.autorizarCondutor();
+                    System.out.println("Cadatrar condutores:\n\t1-Nao\n\t2-Sim");
                 }
                 
                 else if(resposta.equals("2")){
@@ -181,6 +188,11 @@ public class Seguradora {
         return listaClientes.add(cliente);
     }
 
+    public boolean cadastrarCliente(){
+        Cliente cliente = Leitura.lerCliente();
+        return cadastrarCliente(cliente);
+    }
+
     public int indexCliente(String cliente) {
         int i = 0;
         for (; i < listaClientes.size() && listaClientes.get(i).getNome() != cliente; i++)
@@ -192,13 +204,12 @@ public class Seguradora {
         return i;
     }
 
-    public boolean removeCliente(String cliente) {
-        int indice = indexCliente(cliente);
-        if (indice == -1)
-            return false;
+    public boolean removeCliente(Cliente cliente) {
+        return listaClientes.remove(cliente);
+    }
 
-        listaClientes.remove(indice);
-        return true;
+    public boolean removeCliente(){
+       return removeCliente(escolherCliente());
     }
 
     public ArrayList<Sinistro> getSinistroPorCliente(String CadastroNacional) {
@@ -212,6 +223,15 @@ public class Seguradora {
                     return seguro.getListaSinistros();
                 }
             }
+        }
+        return new ArrayList<Sinistro>();
+    }
+
+    public ArrayList<Sinistro> getSinistroPorCliente(){
+        Cliente cliente = escolherCliente();
+        for(Seguro seguro: listaSeguros){
+            if(seguro.getCliente().equals(cliente))
+                return seguro.getListaSinistros();
         }
         return new ArrayList<Sinistro>();
     }
@@ -232,6 +252,17 @@ public class Seguradora {
         return lista;
     }
 
+    public ArrayList<Seguro> getSeguroPorCliente() {
+        ArrayList<Seguro> lista = new ArrayList<Seguro>();
+        Cliente cliente = escolherCliente();
+        for(Seguro seguro: listaSeguros){
+            if(seguro.getCliente().equals(cliente))
+                lista.add(seguro);
+        }
+        return lista;
+    }
+
+
     public double calcularReceita() {
         double receita = 0;
         for (Seguro seguro : listaSeguros) {
@@ -241,7 +272,7 @@ public class Seguradora {
     }
 
     // Lista todos os clientes e retorna o cliente escolhido
-    private Cliente escolhaCliente() {
+    private Cliente escolherCliente() {
         System.out.println("Clientes:");
 
         // Imprimi todos os clientes
@@ -251,10 +282,7 @@ public class Seguradora {
         System.out.println("Escolha uma opcao:");
         String indice = Leitura.lerString();
 
-        // Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o
-        // tamanho da lista
-
-        while (true) {
+        while (true) { // Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
             try {
                 return listaClientes.get(Leitura.INT(indice));
             } catch (Exception e) {
@@ -275,10 +303,7 @@ public class Seguradora {
         System.out.println("Escolha uma opcao:");
         String indice = Leitura.lerString();
 
-        // Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o
-        // tamanho da lista
-
-        while (true) {
+        while (true) { // Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
             try {
                 return listaSeguros.get(Leitura.INT(indice));
             } catch (Exception e) {

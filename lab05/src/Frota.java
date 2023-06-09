@@ -43,13 +43,17 @@ public class Frota {
 
     // Métodos
     public String toString() {
-        return "Codigo:" + getCode() +
+        return "Codigo: " + getCode() +
                 "\nLista veiculos: " + printVeiculos();
 
     }
 
     public boolean addVeiculo(Veiculo veiculo) {
         return listaVeiculos.add(veiculo);
+    }
+
+    public boolean addVeiculo(){
+        return addVeiculo(Veiculo.lerVeiculo());
     }
 
     private int indexVeiculo(String placa) {
@@ -67,5 +71,48 @@ public class Frota {
 
         listaVeiculos.remove(i);
         return true;
+    }
+
+    public static Frota lerFrota(){
+        String resposta;
+        Frota frota = new Frota();
+        if(frota.addVeiculo()){
+            Veiculo veiculo =  frota.getListaVeiculos().get(frota.getListaVeiculos().size() - 1);
+            System.out.println("Veiculo " + veiculo.getModelo() + " (" + veiculo.getplaca() + ") adicionado com sucesso");
+        } 
+        
+        else{
+            System.out.println("Falha. Veiculo não adicionado.");
+        }
+
+        System.out.println("Cadatrar mais um veiculo:\n\t1-Nao\n\t2-Sim");
+        resposta = Leitura.lerString();
+
+        while(true){
+            if(resposta.equals("1")){
+                frota.addVeiculo();
+                if(frota.addVeiculo()){
+                    Veiculo veiculo =  frota.getListaVeiculos().get(frota.getListaVeiculos().size() - 1);
+                    System.out.println("Veiculo " + veiculo.getModelo() + " (" + veiculo.getplaca() + ") adicionado com sucesso");
+                } 
+                else{
+                    System.out.println("Falha. Veiculo não adicionado.");
+                }
+                System.out.println("Cadatrar mais um veiculo:\n\t1-Nao\n\t2-Sim");
+                resposta = Leitura.lerString();
+            }
+            
+            else if(resposta.equals("2")){
+                System.out.println("Frota " + frota.getCode() + "cadastrado com sucesso.");
+                break;
+            }
+
+            else{
+                System.out.println("Indice invalido. Escolha novamente: ");
+                resposta = Leitura.lerString();
+
+            }
+        }
+        return frota;
     }
 }

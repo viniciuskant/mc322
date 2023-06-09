@@ -133,29 +133,6 @@ public class Leitura {
         }
     }
 
-    // Metodo que interage com o usuário e retorna um Veiculo
-    public static Veiculo lerVeiculo() {
-        String placa, marca, modelo, anoFabricacao;
-
-        System.out.print("Placa do veículo: ");
-        placa = lerString();
-
-        System.out.print("Marca: ");
-        marca = lerString();
-
-        System.out.print("Modelo: ");
-        modelo = lerString();
-
-        System.out.print("Ano de fabricação do veículo: ");
-        anoFabricacao = lerString();
-        while (!Validacao.ehInteiro(anoFabricacao)) { // Não sai do loop enquanto a entrada não for valida
-            System.out.print("Ano de fabricação invalido!\nAno de fabricação:");
-            anoFabricacao = lerString();
-        }
-
-        return new Veiculo(placa, marca, modelo, INT(anoFabricacao));
-    }
-
     // Metodo que interage com o usuário e retorna uma Seguradora
     public static Seguradora lerSeguradora() {
         String nome, telefone, email, endereco, cnpj;

@@ -1,13 +1,13 @@
 public class Validacao {
     
-    private static boolean numeroIguais(String cpfTeste, int limite ){
-        int i, primeiroNumero = cpfTeste.charAt(0), nIguais = 0;
+    private static boolean numeroIguais(String teste, int limite ){
+        int i, primeiroNumero = teste.charAt(0), nIguais = 0;
         for (i = 0; i < limite; i++)
-            if (primeiroNumero == cpfTeste.charAt(i))
+            if (primeiroNumero == teste.charAt(i))
                 nIguais++;
 
         //Testo se todos os numeros são iguais
-        if (nIguais == limite)
+        if (nIguais == limite - 1)
             return true;
 
         return false;
@@ -63,17 +63,19 @@ public class Validacao {
     public static boolean validarCNPJ(String cnpjTeste){
         int somatorio, i, primeiroDigito, segundoDigito, resto, digito;
         cnpjTeste = cnpjTeste.replace(".", "");
-        cnpjTeste = cnpjTeste.replace("-", "");
+        cnpjTeste = cnpjTeste.replace("-", "");       
+        cnpjTeste = cnpjTeste.replace("/", "");
 
-        if(numeroIguais(cnpjTeste, 13))
-            return false;
 
         if (cnpjTeste.length() != 14) //Verifica se o tamanho está correto
             return false;
 
+        if(numeroIguais(cnpjTeste, 12))
+            return false;
+
         int[] digitos = new int[14];
         for (i = 0; i < 14; i++) {
-            if (cnpjTeste.charAt(i) - 48 < 0 || cnpjTeste.charAt(i) - 48 > 9)
+            if (cnpjTeste.charAt(i) < 48 || cnpjTeste.charAt(i) > 57)
                 return false;
             digitos[i] = cnpjTeste.charAt(i) - 48;
         }

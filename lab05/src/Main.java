@@ -1,7 +1,9 @@
-/*O Menu e submenus desse lab foram baseados no disponível em https://github.com/rebecapadovani/ExemploEnumMenu*/
+import java.util.ArrayList;
+
 public class Main {
+
 	// Metodo que instancia os objetos que o lab pede
-	private static void instanciar() {
+	private static void instanciar(	ArrayList<Seguradora> listaSeguradoras) {
 		ClientePF clientepf = new ClientePF(null, null, null, null, null, null, null, null);
 		ClientePJ clientepj =  new ClientePJ(null, null, null, null, null, null);
 		Condutor condutor1 = new Condutor(null, null, null, null, null, null);
@@ -49,11 +51,12 @@ public class Main {
 
 
 		// Instancio uma Seguradora
-		if (Validacao.validarCNPJ("46.068.666/0001-82")) {
-			seguradora = new Seguradora("Unicamp-seguros", "46.068.666/0001-82", "35 99999-9999", "Campinas",
+		if (Validacao.validarCNPJ("54.829.973/0001-67")) {
+			seguradora = new Seguradora("Unicamp-seguros", "54.829.973/0001-67", "35 99999-9999", "Campinas",
 					"unicamp@dac.unicamp.br");
 			seguradora.cadastrarCliente(clientepf);
 			seguradora.cadastrarCliente(clientepj);
+			listaSeguradoras.add(seguradora);
 		}
 
 		// Intancio os sinistros
@@ -97,15 +100,15 @@ public class Main {
 		seguroPJ.gerarSinistro(sinistro2);
 		seguroPJ.autorizarCondutor(condutor1);
 
-		System.out.println(frota1.toString());
-		System.out.println(veiculo1.toString());
-		System.out.println(clientepf.toString());
-		System.out.println(clientepj.toString());
-		System.out.println(seguradora.toString());
-		System.out.println(sinistro1.toString());
-		System.out.println(condutor1.toString());
-		System.out.println(seguroPF.toString());
-		System.out.println(seguroPJ.toString());
+		System.out.println("\nFrota 1" + frota1.toString() + "\n");
+		System.out.println("Veiculo 1:\n" + veiculo1.toString() + "\n");
+		System.out.println("Cliente PF" + clientepf.toString());
+		System.out.println("Cliente PJ" + clientepj.toString());
+		System.out.println("Seguradora:\n" + seguradora.toString());
+		System.out.println("\nSinistro 1\n" + sinistro1.toString());
+		System.out.println("\nCondutor 1\n" + condutor1.toString());
+		System.out.println("\nSeguro PF\n" + ((SeguroPF)seguroPF).toString());
+		System.out.println("\nSeguro PJ\n" + ((SeguroPJ)seguroPJ).toString() + "\n");
 	}
 
 	// Metodo que converte String em inteiro
@@ -113,58 +116,27 @@ public class Main {
 		return Integer.parseInt(string);
 	}
 
-	// Cadastra o cliente e o adiciona na lista de cliente e se pedido o adiciona a
-	// uma seguradora
-	private static void cadastrarCliente() {
+	// Lista todas Seguradoras cadastradas e retorna a seguradora escolhida
+	private static Seguradora escolherSeguradora(ArrayList<Seguradora> listaSeguradoras){
+		System.out.println("Seguradoras:");
 
-	}
-
-	// Cadastra o veiculo e o adiciona na lista de veiculos e se pedido o adiciona a
-	// um cliente
-	private static void cadastrarVeiculo() {
-
-	}
-
-	// Cadastra uma seguradora e adiciona na lista de seguradoras
-	private static void cadastrarSeguradora() {
-
-	}
-
-	// Gera um sinisto e o vincula a um cliente
-	private static void gerarSinistro() {
-
-	}
-
-	// Exclui um cliente desejado
-	private static void excluirCliente() {
-	}
-
-	private static String formatarString(String string) {
-		String separado[] = string.split("\n"), retorno = "";
-		for (int i = 0; i < separado.length; i++) {
-			retorno += Integer.toString(i) + " - " + separado[i] + "\n";
+		// Imprimi todas as seguradoras
+		for(int i = 0; i < listaSeguradoras.size(); i++){
+			System.out.println(Integer.toString(i) + " - " + listaSeguradoras.get(i).getNome());
 		}
-		return retorno;
-	}
+		System.out.println("Escolha uma opcao:"); 
+		String indice = Leitura.lerString();
 
-	// Exclui o veiculo de um determinado cliente
-	private static void excluirVeiculo() {
-
-	}
-
-	// Excluir o sinistro de um determinado cliente
-	private static void excluirSinistro() {
-
-	}
-
-	// Imprimi a receita da seguradora escolhida
-	private static void calcularReceira() {
-
-	}
-
-	// Transfere a lista de veiculos de um cliente para outro
-	private static void transferirSeguro() {
-
+		// Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
+		while(true){
+			try{
+				return listaSeguradoras.get(INT(indice));
+			}
+			catch(Exception e){
+				System.out.println("Escolha uma opcao valida:"); 
+				indice = Leitura.lerString();
+			}
+		}
 	}
 
 	// exibir menu externo
@@ -221,49 +193,82 @@ public class Main {
 	}
 
 	// executar opções do menu externo
-	private static void executarOpcaoMenuExterno(MenuOpcoes op) {
+	private static void executarOpcaoMenuExterno(MenuOpcoes op, ArrayList<Seguradora> listaSeguradoras) {
 		switch (op) {
-			case CADASTROS:
-			case LISTAR:
-			case EXCLUIR:
+			case SEGURADORAS:
+				Seguradora seguradora = escolherSeguradora(listaSeguradoras);
+				executarSubmenu(op, seguradora);
+			case CONFIGURACOES:
 				executarSubmenu(op);
-				break;
-			case GERAR_SINISTRO:
-				gerarSinistro();
-				break;
-			case CALCULAR_RECEITA:
-				calcularReceira();
-				break;
-			// case SAIR:
+			case SAIR:
 		}
 	}
 
 	public static void executarOpcaoSubMenu(SubmenuOpcoes opSubmenu) {
 		switch (opSubmenu) {
-			case CADASTRAR_CLIENTE:
-				cadastrarCliente();
-				break;
-			case CADASTRAR_VEICULO:
-				cadastrarVeiculo();
-				break;
 			case CADASTRAR_SEGURADORA:
-				cadastrarSeguradora();
 				break;
-			case EXCLUIR_CLIENTE:
-				excluirCliente();
+			case LISTAR_SEGURADORAS:
 				break;
-			case EXCLUIR_VEICULO:
-				excluirVeiculo();
-				;
-				break;
-			case EXCLUIR_SINISTRO:
-				excluirSinistro();
-				;
-				break;
-			// case VOLTAR:
-			// break;
+			case VOLTAR:
+			break;
 		}
 	}
+
+	public static void executarOpcaoSubMenu(SubmenuOpcoes opSubmenu, Seguradora seguradora) {
+		switch(opSubmenu){
+			case CADASTAR_SEGURO:
+				seguradora.gerarSeguro();
+				break;
+			case REMOVER_SEGURO:
+				if(seguradora.cancelarSeguro())
+					System.out.println("Seguro cancelado com sucesso!");
+				else
+					System.out.println("Falha! Não foi possivel cancelar.");
+				break;
+			case LISTAR_SEGUROS_CLIENTE:
+				ArrayList<Seguro> seguros = seguradora.getSeguroPorCliente();
+				if(seguros.size() != 0){
+					System.out.println("Lista de seguros:");
+					for(int i = 0; i < seguros.size(); i++){
+						System.out.println(Integer.toString(i) + " - " + seguros.get(i).toStringBasico() + "\n");
+					}
+				}
+				else
+					System.out.println("Nao ha seguros para listar.");
+				break;
+			case CADASTAR_CLIENTE:
+				if (seguradora.cadastrarCliente())
+					System.out.println("Cliente cadastrado com sucesso!");
+				else
+					System.out.println("Falha! Cliente não cadastrado.");
+				break;
+			case REMOVER_CLIENTE:
+				if(seguradora.removeCliente())
+					System.out.println("Cliente removido com sucesso.");
+				else
+					System.out.println("Falha! Não foi possível remover.");
+				break;
+			case LISTAR_CLIENTES:
+				seguradora.listarClientes();
+				break;
+			case SINISTROS_POR_CLIENTE:
+				ArrayList<Sinistro> sinistros = seguradora.getSinistroPorCliente();
+				if(sinistros.size() != 0){
+					System.out.println("Lista de sinistros:");
+					for(int i = 0; i < sinistros.size(); i++){
+						System.out.println(Integer.toString(i) + " - " + sinistros.get(i).toStringBasico() + "\n");
+					}
+				}
+				else
+					System.out.println("Nao ha sinistros para listar.");
+				break;
+			case VOLTAR:
+				break;
+			
+		}
+	}
+
 
 	// executa os submenus: exibição do menu, leitura da opção e execução dos
 	// métodos
@@ -276,15 +281,25 @@ public class Main {
 		} while (opSubmenu != SubmenuOpcoes.VOLTAR);
 	}
 
+	private static void executarSubmenu(MenuOpcoes op, Seguradora seguradora) {
+		SubmenuOpcoes opSubmenu;
+		do {
+			exibirSubmenu(op);
+			opSubmenu = lerOpcaoSubmenu(op);
+			executarOpcaoSubMenu(opSubmenu, seguradora);
+		} while (opSubmenu != SubmenuOpcoes.VOLTAR);
+	}
+
 	// executa o menu externo: exibição do menu, leitura da opção e execução da
 	// opção
 	public static void main(String[] args) {
-		instanciar();
+		ArrayList<Seguradora> listaSeguradoras =  new ArrayList<Seguradora>();
+		instanciar(listaSeguradoras);
 		MenuOpcoes op;
 		do {
 			exibirMenuExterno();
 			op = lerOpcaoMenuExterno();
-			executarOpcaoMenuExterno(op);
+			executarOpcaoMenuExterno(op, listaSeguradoras);
 		} while (op != MenuOpcoes.SAIR);
 		System.out.println("Saiu do sistema");
 	}

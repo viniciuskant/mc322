@@ -2,18 +2,15 @@
  * Define as constantes dos submenus
  */
 public enum SubmenuOpcoes {
-	CADASTRAR_CLIENTE("Cadastrar cliente"),
-	CADASTRAR_VEICULO("Cadastrar veiculo"),
-	CADASTRAR_SEGURADORA("Cadastrar seguradora"),
-	LISTAR_CLIENTES_PF("Listar cliente PF"),
-	LISTAR_CLIENTES_PJ("Listar cliente PJ"),
-	LISTAR_SINISTROS_SEGURADORA("Listar sinistros por Seguradora"),
-	LISTAR_SINISTROS_CLIENTE("Listar sinistros por Cliente"),
-	LISTAR_VEICULOS_CLIENTE("Listar veiculo por Cliente"),
-	LISTAR_VEICULOS_SEGURADORA("Listar veiculo por Seguradora"),
-	EXCLUIR_CLIENTE("Excluir cliente"),
-	EXCLUIR_VEICULO("Excluir veiculo"),
-	EXCLUIR_SINISTRO("Excluir sininstro"),
+	CADASTRAR_SEGURADORA("Cadastrar Seguradoras"),
+	LISTAR_SEGURADORAS("Listar Seguradoras"),
+	CADASTAR_SEGURO("Cadastar Seguro"),
+	REMOVER_SEGURO("Remover Seguro"),
+	LISTAR_SEGUROS_CLIENTE("Listar Seguros por Cliente"),
+	CADASTAR_CLIENTE("Cadastar Cliente"),
+	REMOVER_CLIENTE("Remover Cliente"),
+	LISTAR_CLIENTES("Listar Clientes"),
+	SINISTROS_POR_CLIENTE("Listar Sinistros por Cliente"),
 	VOLTAR("Voltar");
 	
 	//atributo
