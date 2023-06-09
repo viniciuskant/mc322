@@ -7,23 +7,23 @@ public class Sinistro {
 
     // construtor
     public Sinistro(Date data, String endereco, Seguro seguro, Condutor condutor) {
-        this.ID = Integer.parseInt(super.toString().replace("Sinistro@", ""), 16);
+        this.ID = super.hashCode();
         this.data = data;
         this.endereco = endereco;
         this.seguro = seguro;
         this.condutor = condutor;
     }
 
-    public Sinistro(Date data, String endereco, Veiculo veiculo, Cliente cliente) {
+    public Sinistro(Date data, String endereco, Veiculo veiculo) {
         this.data = data;
         this.endereco = endereco;
-        this.ID = Integer.parseInt(super.toString().replace("Sinistro@", ""), 16);
+        this.ID = super.hashCode();
     }
 
     public Sinistro(Date data, String endereco) {
         this.data = data;
         this.endereco = endereco;
-        this.ID = Integer.parseInt(super.toString().replace("Sinistro@", ""), 16);
+        this.ID = super.hashCode();
     }
 
     // getters e setters

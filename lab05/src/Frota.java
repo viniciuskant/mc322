@@ -5,9 +5,15 @@ public class Frota {
     private ArrayList<Veiculo> listaVeiculos = new ArrayList<Veiculo>();
 
     // construtor
-    public Frota(String code, ArrayList<Veiculo> listaVeiculos) {
-        this.code = code;
+    public Frota(ArrayList<Veiculo> listaVeiculos) {
+        int codigo = super.hashCode();
+        this.code = Integer.toString(codigo);
         this.listaVeiculos = listaVeiculos;
+    }
+
+    public Frota(){
+        int codigo = super.hashCode();
+        this.code = Integer.toString(codigo);
     }
 
     // getters e setters

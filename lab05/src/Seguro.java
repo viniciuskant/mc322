@@ -11,8 +11,7 @@ public abstract class Seguro {
 
     // construtor
     public Seguro(Date dataInicio, Date dataFim, Seguradora seguradora) {
-        this.idSeguro = Integer.parseInt(super.toString().replace("Seguro@", ""), 16);
-        ;
+        this.idSeguro = super.hashCode();
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.seguradora = seguradora;

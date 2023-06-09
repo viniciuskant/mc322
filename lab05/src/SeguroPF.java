@@ -1,13 +1,9 @@
-import java.util.ArrayList;
-
 public class SeguroPF extends Seguro {
     private Veiculo veiculo;
     private ClientePF cliente;
 
     // construtor
-    public SeguroPF(Date dataInicio, Date dataFim, Seguradora seguradora,
-            ArrayList<Sinistro> listaSinistros,
-            ClientePF cliente) {
+    public SeguroPF(Date dataInicio, Date dataFim, Seguradora seguradora, ClientePF cliente) {
         super(dataInicio, dataFim, seguradora);
         this.cliente = cliente;
         this.setValorMensal(calcularValor());

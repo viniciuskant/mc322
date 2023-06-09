@@ -67,7 +67,7 @@ public class ClientePF extends Cliente {
     }
 
     public String toStringBasico(){
-        return getNome() + " - " + getCpf() + "\n";
+        return      getNome() + " - " + getCpf() + "\n";
     }
 
     public boolean CadastrarVeiculo(Veiculo veiculo) {
