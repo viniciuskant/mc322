@@ -38,13 +38,34 @@ public class SeguroPJ extends Seguro {
         return getListaCondutores().add(condutor);
     }
 
-    public boolean desautorizarCondutor(Condutor condutor) {
+    public boolean desautorizarCondutor() {
+        Condutor condutor = escolheCodutor();
         return getListaCondutores().remove(condutor);
     }
 
-    public void gerarSinistro(Sinistro sinistro) {
-        getListaSinistros().add(sinistro);
+    public void gerarSinistro() {
+        Date dataSinistro;
+        String endereco, data, dataSeparada[];
+
+        Condutor condutor = escolheCodutor();
+
+
+        System.out.print("Data do Sinistro(dd/MM/aaaa): ");
+        data = Leitura.lerString();
+        while(!Validacao.validarData(data)){ //Não sai do loop enquanto a entrada não for valida
+            System.out.print("Data invalida!\nData do Sinistro(dd/MM/aaaa): ");
+            data = Leitura.lerString();
+        }
+        
+        dataSeparada = data.split("/");
+        dataSinistro = new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
+
+        System.out.print("Endereco: ");
+        endereco = Leitura.lerString();
+
+        getListaSinistros().add(new Sinistro(dataSinistro, endereco, this, condutor));
     }
+
 
 
     public double calcularValor() {

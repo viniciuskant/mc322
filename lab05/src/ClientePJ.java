@@ -12,7 +12,7 @@ public class ClientePJ extends Cliente {
         this.dataFundacao = dataFundacao;
     }
 
-    // getters e setters
+    // getters e setters    
     public String getCnpj() {
         return cnpj;
     }

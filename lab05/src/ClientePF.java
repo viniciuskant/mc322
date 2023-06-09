@@ -63,11 +63,18 @@ public class ClientePF extends Cliente {
                 "\nData de nascimento: " + getDataNascimento() +
                 "\nEducação: " + getEducacao() +
                 "\nGênero: " + getGenero() +
-                "\nLista Veiculos" + listaVeiculos.toString();
+                "\nLista Veiculos" + listarVeiculos();
     }
 
     public String toStringBasico(){
         return      getNome() + " - " + getCpf() + "\n";
+    }
+
+    public String listarVeiculos(){
+        String info = "";
+        for(int i = 0; i < listaVeiculos.size(); i++)
+            info += Integer.toString(i + 1) + " - " + listaVeiculos.get(i).toStringBasico() + "\n";
+        return info;
     }
 
     public boolean CadastrarVeiculo(Veiculo veiculo) {

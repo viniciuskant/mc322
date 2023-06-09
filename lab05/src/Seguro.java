@@ -56,8 +56,8 @@ public abstract class Seguro {
 
     public ArrayList<Condutor> getListaCondutores() {
         return listaCondutores;
-    }
-    ;
+    };
+
     public void setListaCondutores(ArrayList<Condutor> listaCondutores) {
         this.listaCondutores = listaCondutores;
     }
@@ -79,11 +79,33 @@ public abstract class Seguro {
         // Talvez adiconar mais coisas
     }
 
-    public abstract boolean desautorizarCondutor(Condutor condutor);
+    // Lista todos os clientes e retorna o cliente escolhido
+    public Condutor escolheCodutor() {
+        System.out.println("Condutores:");
+
+        // Imprimi todos os clientes
+        for (int i = 0; i < getListaCondutores().size(); i++) {
+            System.out.println(Integer.toString(i) + " - " + getListaCondutores().get(i).getNome());
+        }
+        System.out.println("Escolha uma opcao:");
+        String indice = Leitura.lerString();
+
+        // Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
+        while (true) {
+            try {
+                return getListaCondutores().get(Leitura.INT(indice));
+            } catch (Exception e) {
+                System.out.println("Escolha uma opcao valida:");
+                indice = Leitura.lerString();
+            }
+        }
+    }
+
+    public abstract boolean desautorizarCondutor();
 
     public abstract boolean autorizarCondutor(Condutor condutor);
 
     public abstract double calcularValor();
 
-    public abstract void gerarSinistro(Sinistro sinistro);
+    public abstract void gerarSinistro();
 }

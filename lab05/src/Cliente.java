@@ -12,10 +12,6 @@ public abstract class Cliente{
         this.email = email;
     }
 
-    // public Cliente(){
-    //     super();
-    // }
-
     //getters e setters      
     public String getNome() {
         return nome;

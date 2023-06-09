@@ -2,28 +2,60 @@ import java.util.Scanner;
 
 public class Leitura {
 
-    //Metodo que le o Terminal
-	public static String lerString(){
-		Scanner input = new Scanner(System.in);
-		return input.nextLine();
-	}
+    // Metodo que le o Terminal
+    public static String lerString() {
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
 
-    //Metodo que converte String em inteiro
-	public static int INT(String string){
-		return Integer.parseInt(string);
-	} 
+    // Metodo que le uma data válida do terminal
+    public static Date lerData(String info) {
+        String data;
+        System.out.print(info + " (dd/MM/aaaa): ");
+        data = lerString();
+        while (!Validacao.validarData(data)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("Data invalida\n" + info + " (dd/MM/aaaa): ");
+            data = lerString();
+        }
 
-	//Metodo que interage com o usuário e retorna um ClientePF
-	public static ClientePF lerPF(){
-        String nome, endereco, data, educacao, genero, cpf, telefone, email;
-        Date dataNascimento;  
+        String[] dataSeparada = data.split("/");
+        return new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
+    }
 
-        System.out.print("Nome da Pessoa: ");
+    // Metodo que le um nome válido do terminal
+    public static String lerNome(String info){
+        String nome;
+        System.out.print(info + ": ");
         nome = lerString();
-        while(!Validacao.validaNome(nome)){ //Não sai do loop enquanto a entrada não for valida
-            System.out.print("Nome invalido!\nNome da Pessoa: ");
+        while (!Validacao.validaNome(nome)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("Nome invalido!\n" + info + ": ");
             nome = lerString();
         }
+        return nome;
+    }
+
+    // Metodo  que le um cpf valido do terminal
+    public static String lerCPF(){
+        System.out.print("CPF: ");
+        String  cpf = lerString();
+        while (!Validacao.validarCPF(cpf)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("CPF inválido!\nCPF: ");
+            cpf = lerString();
+        }
+        return cpf;
+    }
+    
+    // Metodo que converte String em inteiro
+    public static int INT(String string) {
+        return Integer.parseInt(string);
+    }
+
+    // Metodo que interage com o usuário e retorna um ClientePF
+    public static ClientePF lerPF() {
+        String nome, endereco, educacao, genero, cpf, telefone, email;
+        Date dataNascimento;
+
+        nome = lerNome("Nome");
 
         System.out.print("Endereço: ");
         endereco = lerString();
@@ -34,15 +66,7 @@ public class Leitura {
         System.out.print("Email: ");
         email = lerString();
 
-        System.out.print("Data de Nascimento(dd/MM/aaaa): ");
-        data = lerString();
-        while(!Validacao.validarData(data)){ //Não sai do loop enquanto a entrada não for valida
-            System.out.print("Data invalida\nData de licença(dd/MM/aaaa): ");
-            data = lerString();
-        }
-        
-        String[] dataSeparada = data.split("/");
-        dataNascimento = new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
+        dataNascimento = lerData("Data de Nascimento");
 
         System.out.print("Escolaridade: ");
         educacao = lerString();
@@ -50,27 +74,17 @@ public class Leitura {
         System.out.print("Gênero: ");
         genero = lerString();
 
-        System.out.print("CPF: ");
-        cpf = lerString();
-        while(!Validacao.validarCPF(cpf)){ //Não sai do loop enquanto a entrada não for valida
-            System.out.print("CPF inválido!\nCPF: ");
-            cpf = lerString();
-        }
+        cpf = lerCPF();
 
         return new ClientePF(nome, endereco, telefone, email, educacao, genero, cpf, dataNascimento);
     }
 
-	//Metodo que interage com o usuário e retorna um ClientePJ
-    public static ClientePJ lerPJ(){
-        String nome, endereco, data, cnpj, telefone, email;
+    // Metodo que interage com o usuário e retorna um ClientePJ
+    public static ClientePJ lerPJ() {
+        String nome, endereco, cnpj, telefone, email;
         Date dataFundacao;
 
-        System.out.print("Nome da Empresa: "); //Não sai do loop enquanto a entrada não for valida
-        nome = lerString();
-        while(!Validacao.validaNome(nome)){
-            System.out.print("Nome invalido!\nNome da Empresa: ");
-            nome = lerString();
-        }
+        nome = lerNome("Nome da Empresa");
 
         System.out.print("Endereço: ");
         endereco = lerString();
@@ -84,78 +98,37 @@ public class Leitura {
         System.out.print("Email: ");
         email = lerString();
 
-		System.out.print("Data de licença(dd/MM/aaaa): ");
-        data = lerString();
-        while(!Validacao.validarData(data)){ //Não sai do loop enquanto a entrada não for valida
-            System.out.print("Data invalida\nData de licença(dd/MM/aaaa): ");
-            data = lerString();
-        }
-
-        String[] dataSeparada = data.split("/");
-        dataFundacao = new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
+        dataFundacao = lerData("Data de lincenca");
 
         System.out.print("CNPJ: ");
         cnpj = lerString();
-		while(!Validacao.validarCNPJ(cnpj)){ //Não sai do loop enquanto a entrada não for valida
+        while (!Validacao.validarCNPJ(cnpj)) { // Não sai do loop enquanto a entrada não for valida
             System.out.print("CNPJ inválido!\n CNPJ: ");
             cnpj = lerString();
         }
-
-        // System.out.print("Número de Funcionarios: ");
-        // nFuncionarios = lerString();
-		// while(!Validacao.ehInteiro(nFuncionarios) && INT(nFuncionarios) < 0){ //Não sai do loop enquanto a entrada não for valida
-        //     System.out.print("Número de Funcinários invalido!\nNúmero de Funcionarios: ");
-        //     nFuncionarios = lerString();
-        // }
-
         return new ClientePJ(nome, endereco, telefone, email, cnpj, dataFundacao);
     }
 
-	//Metodo que interage com o usuário e retorna um Cliente
-    public static Cliente lerCliente(){
-        
+    // Metodo que interage com o usuário e retorna um Cliente
+    public static Cliente lerCliente() {
+
         System.out.print("Tipo de cliente:\n0 - Pessoa Fisica\n1 - Pessoa Juridica\nDigite uma opcao:\n");
         String tipoCadastro = lerString();
-        while(true){ //Não sai do loop enquanto a entrada não for uma das opcoes
-            if(tipoCadastro.equals("0")){
-                return lerPF();  
-            }
-            else if(tipoCadastro.equals("1")){
+        while (true) { // Não sai do loop enquanto a entrada não for uma das opcoes
+            if (tipoCadastro.equals("0")) {
+                return lerPF();
+            } else if (tipoCadastro.equals("1")) {
                 return lerPJ();
-            }
-            else{
+            } else {
                 System.out.println("Opcao invalida.\nEscolha uma opcao:\n");
-				tipoCadastro = lerString();
+                tipoCadastro = lerString();
             }
         }
     }
 
-	//Metodo que interage com o usuário e retorna um Sinistro
-    public static Sinistro lerSinistro(){
-        Date dataSinistro;
-        String endereco, data, dataSeparada[];
-
-        System.out.print("Data do Sinistro(dd/MM/aaaa): ");
-        data = lerString();
-        while(!Validacao.validarData(data)){ //Não sai do loop enquanto a entrada não for valida
-            System.out.print("Data invalida!\nData do Sinistro(dd/MM/aaaa): ");
-            data = lerString();
-        }
-        
-        dataSeparada = data.split("/");
-        dataSinistro = new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
-
-        System.out.print("Endereco: ");
-        endereco = lerString();
-
-        return new Sinistro(dataSinistro, endereco);
-
-    }
-
-	//Metodo que interage com o usuário e retorna um Veiculo
-    public static Veiculo lerVeiculo(){
-        String placa, marca, modelo;
-        String anoFabricacao;
+    // Metodo que interage com o usuário e retorna um Veiculo
+    public static Veiculo lerVeiculo() {
+        String placa, marca, modelo, anoFabricacao;
 
         System.out.print("Placa do veículo: ");
         placa = lerString();
@@ -168,32 +141,27 @@ public class Leitura {
 
         System.out.print("Ano de fabricação do veículo: ");
         anoFabricacao = lerString();
-		while(!Validacao.ehInteiro(anoFabricacao)){ //Não sai do loop enquanto a entrada não for valida
-			System.out.print("Ano de fabricação invalido!\nAno de fabricação:");
-			anoFabricacao = lerString();
-		}
+        while (!Validacao.ehInteiro(anoFabricacao)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("Ano de fabricação invalido!\nAno de fabricação:");
+            anoFabricacao = lerString();
+        }
 
         return new Veiculo(placa, marca, modelo, INT(anoFabricacao));
     }
 
-	//Metodo que interage com o usuário e retorna uma Seguradora
-    public static Seguradora lerSeguradora(){
+    // Metodo que interage com o usuário e retorna uma Seguradora
+    public static Seguradora lerSeguradora() {
         String nome, telefone, email, endereco, cnpj;
 
-        System.out.print("Nome da Seguradora: ");
-        nome = lerString();
-        while(!Validacao.validaNome(nome)){ //Não sai do loop enquanto a entrada não for valida
-            System.out.print("Nome invalido!\nNome da Seguradora: ");
-            nome = lerString();
-        }
+        nome = lerNome("Nome da Seguradora");
 
         System.out.print("CNPJ: ");
         cnpj = lerString();
-		while(!Validacao.validarCNPJ(cnpj)){ //Não sai do loop enquanto a entrada não for valida
+        while (!Validacao.validarCNPJ(cnpj)) { // Não sai do loop enquanto a entrada não for valida
             System.out.print("CNPJ inválido!\n CNPJ: ");
             cnpj = lerString();
         }
-		
+
         System.out.print("Telefone da Seguradora: ");
         telefone = lerString();
 
@@ -203,7 +171,7 @@ public class Leitura {
         System.out.print("Endereço da Seguradora: ");
         endereco = lerString();
 
-        return new Seguradora(nome, cnpj, telefone, endereco, email); //Cadastra a Seguradora
+        return new Seguradora(nome, cnpj, telefone, endereco, email); // Cadastra a Seguradora
     }
-	
+
 }
