@@ -73,7 +73,7 @@ public class ClientePF extends Cliente {
     public String listarVeiculos(){
         String info = "";
         for(int i = 0; i < listaVeiculos.size(); i++)
-            info +=  "\t" + listaVeiculos.get(i).toStringBasico() + "\n";
+            info +=  "\t" + i +" " + listaVeiculos.get(i).toStringBasico() + "\n";
         return info;
     }
 

@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class SeguroPF extends Seguro {
     private Veiculo veiculo;
     private ClientePF cliente;
@@ -45,19 +47,19 @@ public class SeguroPF extends Seguro {
     }
 
     public boolean autorizarCondutor(){
-        String nome = Leitura.lerNome("Nome");
-        String cpf = Leitura.lerCPF();
+        String nome = Validacao.lerNome("Nome");
+        String cpf = Validacao.lerCPF();
 
         System.out.print("Telefone: ");
-        String telefone = Leitura.lerString();
+        String telefone = lerString();
 
         System.out.print("Endereco: ");
-        String endereco = Leitura.lerString();
+        String endereco = lerString();
 
         System.out.print("Email: ");
-        String email = Leitura.lerString();
+        String email = lerString();
 
-        Date dataNascimento = Leitura.lerData("Data de nascimento");
+        Date dataNascimento = Validacao.lerData("Data de nascimento");
 
         return getListaCondutores().add(new Condutor(nome, cpf, telefone, endereco, email, dataNascimento));
     }
@@ -79,17 +81,17 @@ public class SeguroPF extends Seguro {
 
 
         System.out.print("Data do Sinistro(dd/MM/aaaa): ");
-        data = Leitura.lerString();
+        data = lerString();
         while(!Validacao.validarData(data)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("Data invalida!\nData do Sinistro(dd/MM/aaaa): ");
-            data = Leitura.lerString();
+            data = lerString();
         }
         
         dataSeparada = data.split("/");
         dataSinistro = new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
 
         System.out.print("Endereco: ");
-        endereco = Leitura.lerString();
+        endereco = lerString();
 
         getListaSinistros().add(new Sinistro(dataSinistro, endereco, this, condutor));
     }
@@ -113,4 +115,11 @@ public class SeguroPF extends Seguro {
 
         return CalcSeguro.VALOR_BASE.getConstante() * fatorIdade * (1 + 1 / (cliente.getListaVeiculos().size()));
     }
+
+    // Metodo que le o Terminal
+    private static String lerString() {
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
+
 }

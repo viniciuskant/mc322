@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Frota {
     private String code;
@@ -86,7 +87,7 @@ public class Frota {
         }
 
         System.out.println("Cadatrar mais um veiculo:\n\t1-Nao\n\t2-Sim");
-        resposta = Leitura.lerString();
+        resposta = lerString();
 
         while(true){
             if(resposta.equals("1")){
@@ -99,7 +100,7 @@ public class Frota {
                     System.out.println("Falha. Veiculo não adicionado.");
                 }
                 System.out.println("Cadatrar mais um veiculo:\n\t1-Nao\n\t2-Sim");
-                resposta = Leitura.lerString();
+                resposta = lerString();
             }
             
             else if(resposta.equals("2")){
@@ -109,10 +110,17 @@ public class Frota {
 
             else{
                 System.out.println("Indice invalido. Escolha novamente: ");
-                resposta = Leitura.lerString();
+                resposta = lerString();
 
             }
         }
         return frota;
     }
+
+    // Metodo que le o Terminal
+    private static String lerString() {
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
+
 }

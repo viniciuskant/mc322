@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class SeguroPJ extends Seguro {
     private Frota frota;
     private ClientePJ cliente;
@@ -6,12 +8,6 @@ public class SeguroPJ extends Seguro {
     public SeguroPJ(Date dataInicio, Date dataFim, Seguradora seguradora, Frota frota, ClientePJ cliente) {
         super(dataInicio, dataFim, seguradora);
         this.frota = frota;
-        this.cliente = cliente;
-        this.setValorMensal(calcularValor());
-    }
-
-    public SeguroPJ(Date dataInicio, Date dataFim, Seguradora seguradora, ClientePJ cliente) {
-        super(dataInicio, dataFim, seguradora);
         this.cliente = cliente;
         this.setValorMensal(calcularValor());
     }
@@ -51,19 +47,19 @@ public class SeguroPJ extends Seguro {
     }
 
     public boolean autorizarCondutor(){
-        String nome = Leitura.lerNome("Nome");
-        String cpf = Leitura.lerCPF();
+        String nome = Validacao.lerNome("Nome");
+        String cpf = Validacao.lerCPF();
 
         System.out.print("Telefone: ");
-        String telefone = Leitura.lerString();
+        String telefone = lerString();
 
         System.out.print("Endereco: ");
-        String endereco = Leitura.lerString();
+        String endereco = lerString();
 
         System.out.print("Email: ");
-        String email = Leitura.lerString();
+        String email = lerString();
 
-        Date dataNascimento = Leitura.lerData("Data de nascimento");
+        Date dataNascimento = Validacao.lerData("Data de nascimento");
 
         return getListaCondutores().add(new Condutor(nome, cpf, telefone, endereco, email, dataNascimento));
     }
@@ -85,17 +81,17 @@ public class SeguroPJ extends Seguro {
 
 
         System.out.print("Data do Sinistro(dd/MM/aaaa): ");
-        data = Leitura.lerString();
+        data = lerString();
         while(!Validacao.validarData(data)){ //Não sai do loop enquanto a entrada não for valida
             System.out.print("Data invalida!\nData do Sinistro(dd/MM/aaaa): ");
-            data = Leitura.lerString();
+            data = lerString();
         }
         
         dataSeparada = data.split("/");
         dataSinistro = new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
 
         System.out.print("Endereco: ");
-        endereco = Leitura.lerString();
+        endereco = lerString();
 
         getListaSinistros().add(new Sinistro(dataSinistro, endereco, this, condutor));
     }
@@ -113,4 +109,11 @@ public class SeguroPJ extends Seguro {
 
         return (CalcSeguro.VALOR_BASE.getConstante() * (10 + ( quantidadeFunc ) /10) * (1 + 1/( quantidadeVeiculos +2) ) * (1 + 1/( AnosPosFundacao +2) ) * (2 + quantidadeSinistrosCliente /10) * (5 + quantidadeSinistrosCondutor /10));
     }
+
+    // Metodo que le o Terminal
+    private static String lerString() {
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
+
 }

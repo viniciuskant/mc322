@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -132,7 +133,7 @@ public class Main {
 	private static Seguradora escolherSeguradora(ArrayList<Seguradora> listaSeguradoras){
 		listar(listaSeguradoras);
 		System.out.println("Escolha uma opcao:"); 
-		String indice = Leitura.lerString();
+		String indice = lerString();
 
 		// Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
 		while(true){
@@ -141,10 +142,35 @@ public class Main {
 			}
 			catch(Exception e){
 				System.out.println("Escolha uma opcao valida:"); 
-				indice = Leitura.lerString();
+				indice = lerString();
 			}
 		}
 	}
+
+    // Metodo que le o Terminal
+    private static String lerString() {
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
+
+    public static Seguradora lerSeguradora() {
+        String nome, telefone, email, endereco, cnpj;
+
+        nome = Validacao.lerNome("Nome da Seguradora");
+
+        cnpj = Validacao.lerCNPJ();
+
+        System.out.print("Telefone da Seguradora: ");
+        telefone = lerString();
+
+        System.out.print("Email da Seguradora: ");
+        email = lerString();
+
+        System.out.print("Endereço da Seguradora: ");
+        endereco = lerString();
+
+        return new Seguradora(nome, cnpj, telefone, endereco, email); // Cadastra a Seguradora
+    }
 
 	// exibir menu externo
 	private static void exibirMenuExterno() {
@@ -179,7 +205,7 @@ public class Main {
 		MenuOpcoes opUsuarioConst;
 		do {
 			System.out.println("Digite uma opcao: ");
-			opUsuario = Leitura.lerString();
+			opUsuario = lerString();
 		} while (!Validacao.ehInteiro(opUsuario)
 				|| (INT(opUsuario) < 0 || INT(opUsuario) > MenuOpcoes.values().length - 1));
 		opUsuarioConst = MenuOpcoes.values()[INT(opUsuario)];
@@ -192,7 +218,7 @@ public class Main {
 		SubmenuOpcoes opUsuarioConst;
 		do {
 			System.out.println("Digite uma opcao: ");
-			opUsuario = Leitura.lerString();
+			opUsuario = lerString();
 		} while (!Validacao.ehInteiro(opUsuario)
 				|| (INT(opUsuario) < 0 || INT(opUsuario) > op.getSubmenu().length - 1));
 		opUsuarioConst = op.getSubmenu()[INT(opUsuario)];
@@ -216,7 +242,7 @@ public class Main {
 	public static void executarOpcaoSubMenu(SubmenuOpcoes opSubmenu,  ArrayList<Seguradora> listaSeguradoras) {
 		switch (opSubmenu) {
 			case CADASTRAR_SEGURADORA:
-				Seguradora seguradora = Leitura.lerSeguradora();
+				Seguradora seguradora = lerSeguradora();
 				if(listaSeguradoras.add(seguradora)){
 					System.out.println("Seguradora adicionda com sucesso");
 				}

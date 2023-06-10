@@ -53,7 +53,7 @@ public class ClientePJ extends Cliente {
     public String listarFrotas(){
         String info = "";
         for(int i = 0; i < listaFrota.size(); i++)
-            info+= listaFrota.get(i).getCode() + "\n";
+            info+=  "\t" + i + "- " + listaFrota.get(i).getCode() + "\n";
         
             return info;
     }

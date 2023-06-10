@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Validacao {
     
     private static boolean numeroIguais(String teste, int limite ){
@@ -153,5 +155,59 @@ public class Validacao {
             return false;
         }
 
+    }
+
+    // Metodo que le o Terminal
+    private static String lerString() {
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
+
+    // Metodo que le uma data válida do terminal
+    public static Date lerData(String info) {
+        String data;
+        System.out.print(info + " (dd/MM/aaaa): ");
+        data = lerString();
+        while (!validarData(data)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("Data invalida\n" + info + " (dd/MM/aaaa): ");
+            data = lerString();
+        }
+
+        String[] dataSeparada = data.split("/");
+        return new Date(dataSeparada[0], dataSeparada[1], dataSeparada[2]);
+    }
+
+    // Metodo que le um nome válido do terminal
+    public static String lerNome(String info){
+        String nome;
+        System.out.print(info + ": ");
+        nome = lerString();
+        while (!validaNome(nome)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("Nome invalido!\n" + info + ": ");
+            nome = lerString();
+        }
+        return nome;
+    }
+
+    // Metodo  que le um cpf valido do terminal
+    public static String lerCPF(){
+        System.out.print("CPF: ");
+        String  cpf = lerString();
+        while (!validarCPF(cpf)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("CPF inválido!\nCPF: ");
+            cpf = lerString();
+        }
+        return cpf;
+    }
+    
+    // Metodo  que le um cpf valido do terminal
+    public static String lerCNPJ(){
+        System.out.print("CNPJ: ");
+        String  cnpj = lerString();
+        while (!validarCNPJ(cnpj)) { // Não sai do loop enquanto a entrada não for valida
+            System.out.print("CPF inválido!\nCNPJ: ");
+            cnpj = lerString();
+        }
+        return cnpj;
     }
 }

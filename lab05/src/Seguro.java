@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public abstract class Seguro {
     private final int idSeguro;
@@ -92,15 +93,15 @@ public abstract class Seguro {
             System.out.println(Integer.toString(i) + " - " + getListaCondutores().get(i).getNome());
         }
         System.out.println("Escolha uma opcao:");
-        String indice = Leitura.lerString();
+        String indice = lerString();
 
         // Enquanto o indice não for um inteiro e não estiver no intervalo de 0 até o tamanho da lista
         while (true) {
             try {
-                return getListaCondutores().get(Leitura.INT(indice));
+                return getListaCondutores().get(Integer.parseInt(indice));
             } catch (Exception e) {
                 System.out.println("Escolha uma opcao valida:");
-                indice = Leitura.lerString();
+                indice = lerString();
             }
         }
     }
@@ -114,5 +115,12 @@ public abstract class Seguro {
     public abstract void gerarSinistro();
 
     public abstract Cliente getCliente();
+
+    // Metodo que le o Terminal
+    private static String lerString() {
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
+
     
 }

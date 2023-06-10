@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Veiculo {
     private String placa;
     private String marca;
@@ -61,21 +63,28 @@ public class Veiculo {
         String placa, marca, modelo, anoFabricacao;
 
         System.out.print("Placa do veículo: ");
-        placa = Leitura.lerString();
+        placa = lerString();
 
         System.out.print("Marca: ");
-        marca = Leitura.lerString();
+        marca = lerString();
 
         System.out.print("Modelo: ");
-        modelo = Leitura.lerString();
+        modelo = lerString();
 
         System.out.print("Ano de fabricação do veículo: ");
-        anoFabricacao = Leitura.lerString();
+        anoFabricacao = lerString();
         while (!Validacao.ehInteiro(anoFabricacao)) { // Não sai do loop enquanto a entrada não for valida
             System.out.print("Ano de fabricação invalido!\nAno de fabricação:");
-            anoFabricacao = Leitura.lerString();
+            anoFabricacao = lerString();
         }
 
-        return new Veiculo(placa, marca, modelo, Leitura.INT(anoFabricacao));
+        return new Veiculo(placa, marca, modelo, Integer.parseInt(anoFabricacao));
     }
+
+    // Metodo que le o Terminal
+    private static String lerString() {
+        Scanner input = new Scanner(System.in);
+        return input.nextLine();
+    }
+
 }
