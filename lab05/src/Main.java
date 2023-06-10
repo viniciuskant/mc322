@@ -180,22 +180,18 @@ public class Main {
 			System.out.println(op.ordinal() + " - " + op.getDescricao());
 		}
 	}
-
-	/*
-	 * exibir submenus
-	 * se a lista de constantes do submenu for percorrida da mesma forma que o meu
-	 * externo, a opção Voltar
-	 * é printada com a posição que está na lista do enum (9 - Voltar). Por isso, a
-	 * lista é percorrida
-	 * de forma diferente, tendo i como o inteiro correspondente. Assim, para listar
-	 * o submenu de cadastros,
-	 * por exemplo, vai ser printado "3 - Voltar".
-	 */
 	private static void exibirSubmenu(MenuOpcoes op) {
 		SubmenuOpcoes[] submenu = op.getSubmenu();
 		System.out.println(op.getDescricao());
 		for (int i = 0; i < submenu.length; i++) {
 			System.out.println(i + " - " + submenu[i].getDescricao());
+		}
+	}
+	private static void exibirSubSubmenun(SubmenuOpcoes op){
+		SubSubmenuOpcoes[] subsubmenu = op.getSubSubmenu();
+		System.out.println(op.getDescricao());
+		for (int i = 0; i < subsubmenu.length; i++) {
+			System.out.println(i + " - " + subsubmenu[i].getDescricao());
 		}
 	}
 
@@ -222,6 +218,18 @@ public class Main {
 		} while (!Validacao.ehInteiro(opUsuario)
 				|| (INT(opUsuario) < 0 || INT(opUsuario) > op.getSubmenu().length - 1));
 		opUsuarioConst = op.getSubmenu()[INT(opUsuario)];
+		return opUsuarioConst;
+	}
+	// ler opção dos subsubmenus
+	private static SubSubmenuOpcoes lerOpcaoSubSubmenu(SubmenuOpcoes op) {
+		String opUsuario;
+		SubSubmenuOpcoes opUsuarioConst;
+		do {
+			System.out.println("Digite uma opcao: ");
+			opUsuario = lerString();
+		} while (!Validacao.ehInteiro(opUsuario)
+				|| (INT(opUsuario) < 0 || INT(opUsuario) > op.getSubSubmenu().length - 1));
+		opUsuarioConst = op.getSubSubmenu()[INT(opUsuario)];
 		return opUsuarioConst;
 	}
 
@@ -293,6 +301,24 @@ public class Main {
 			case LISTAR_CLIENTES:
 				seguradora.listarClientes();
 				break;
+			case CONFIGURACOES_CLIENTES_PF:
+				if(seguradora.nClientesPF() != 0){
+					ClientePF clientePF = seguradora.escolherClientePF();
+					executarSubSubmenu(opSubmenu, clientePF);
+				}
+				else{
+					System.out.println("Não ha Clientes PF cadastrados.");
+				}
+				break;
+			case CONFIGURACOES_CLIENTES_PJ:
+				if(seguradora.nClientesPF() != 0){
+					ClientePJ clientePJ = seguradora.escolherClientePJ();
+					executarSubSubmenu(opSubmenu, clientePJ);
+				}
+				else{
+					System.out.println("Não ha Clientes PJ cadastrados.");
+				}				
+				break;
 			case SINISTROS_POR_CLIENTE:
 				ArrayList<Sinistro> sinistros = seguradora.getSinistroPorCliente();
 				if(sinistros.size() != 0){
@@ -307,6 +333,33 @@ public class Main {
 		}
 	}
 
+	public static void executarOpcoesSubSubmenu(SubSubmenuOpcoes op, ClientePF cliente){
+		switch(op){
+			case CADASTRA_VEICULO:
+				System.out.println("A FUNÇÃO CADASTRAR VEICULO, AINDA, NÃO FOI FEITA!");
+				break;
+			case REMOVER_VEICULO:
+				System.out.println("A FUNÇÃO REMOVER VEICULO, AINDA, NÃO FOI FEITA!");
+			break;
+		}
+
+	}
+	public static void executarOpcoesSubSubmenu(SubSubmenuOpcoes op, ClientePJ cliente){
+		switch(op){
+			case CADASTRA_FROTA:
+				System.out.println("A FUNÇÃO CADASTRAR FROTA, AINDA, NÃO FOI FEITA!");
+				break;
+			case ADICIONAR_VEICULO_FROTA:
+				System.out.println("A FUNÇÃO ADICIONAR VEICULO NA FROTA, AINDA, NÃO FOI FEITA!");
+				break;
+			case REMOVER_VEICULO_FROTA:
+				System.out.println("A FUNÇÃO REMOVER VEICULO DA FROTA, AINDA, NÃO FOI FEITA!");
+				break;
+			case SUBSTITUIR_FROTA:
+				System.out.println("A FUNÇÃO SUBSTITUIR FROTA, AINDA, NÃO FOI FEITA!");
+			break;
+		}
+	}
 
 	// executa os submenus: exibição do menu, leitura da opção e execução dos métodos
 	private static void executarSubmenu(MenuOpcoes op,   ArrayList<Seguradora> listaSeguradoras) {
@@ -325,6 +378,24 @@ public class Main {
 			opSubmenu = lerOpcaoSubmenu(op);
 			executarOpcaoSubMenu(opSubmenu, seguradora);
 		} while (opSubmenu != SubmenuOpcoes.VOLTAR);
+	}
+
+	private static void executarSubSubmenu(SubmenuOpcoes op, ClientePF cliente) {
+		SubSubmenuOpcoes opSubmenu;
+		do {
+			exibirSubSubmenun(op);
+			opSubmenu = lerOpcaoSubSubmenu(op);
+			executarOpcoesSubSubmenu(opSubmenu, cliente);
+		} while (opSubmenu != SubSubmenuOpcoes.VOLTAR);
+	}
+
+	private static void executarSubSubmenu(SubmenuOpcoes op, ClientePJ cliente) {
+		SubSubmenuOpcoes opSubmenu;
+		do {
+			exibirSubSubmenun(op);
+			opSubmenu = lerOpcaoSubSubmenu(op);
+			executarOpcoesSubSubmenu(opSubmenu, cliente);
+		} while (opSubmenu != SubSubmenuOpcoes.VOLTAR);
 	}
 
 	// executa o menu externo: exibição do menu, leitura da opção e execução da opção

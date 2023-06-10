@@ -81,7 +81,7 @@ public class ClientePJ extends Cliente {
         return listaFrota.get(indice).getListaVeiculos().add(veiculo);
     }
 
-    public boolean atualizarFrota(Veiculo veiculo) { // Adiciona o veiculo da frota do codigo desejado
+    public boolean atualizarFrota(Veiculo veiculo) { // Remover o veiculo da frota do codigo desejado
         for(Frota frota: listaFrota)
             if(frota.getListaVeiculos().remove(veiculo))
                 return true;

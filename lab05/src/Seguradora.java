@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -274,6 +273,94 @@ public class Seguradora {
             receita += seguro.getValorMensal();
         }
         return receita;
+    }
+
+    public int nClientesPF(){
+            int contador = 0;
+        for(Cliente cliente: listaClientes){
+            if(cliente instanceof ClientePF)
+                contador++;
+        }
+        return contador;
+    }
+
+    public int nClientesPJ(){
+            int contador = 0;
+        for(Cliente cliente: listaClientes){
+            if(cliente instanceof ClientePJ)
+                contador++;
+        }
+        return contador;
+    }
+
+    // private boolean noVetor(int i, int[]vetor, int tamanho){
+    //     for(int indice = 0; indice <= tamanho; indice ++){
+    //         if(vetor[indice] == i)
+    //             return true;
+    //     }
+    //     return false;
+    // } 
+
+    public ClientePF escolherClientePF(){
+        System.out.println("Clientes PF:");
+        int i = 0, indicesValidos[] =  new int[listaClientes.size()];
+        for(int indice = 0; indice < listaClientes.size(); indice++){
+            if(listaClientes.get(indice) instanceof ClientePF){
+                System.out.print(i + " - " + listaClientes.get(i).toStringBasico());
+                indicesValidos[i] = indice;
+                i++;
+            }
+        }
+		System.out.println("Escolha uma opcao:"); 
+		String indice = lerString();
+
+		while(true){
+			try{
+                int intIndice = Integer.parseInt(indice);
+                if(intIndice < 0 || intIndice >= i){
+                    System.out.println("Escolha uma opcao valida:"); 
+				    indice = lerString();
+                }
+                else {
+                    return (ClientePF)listaClientes.get(indicesValidos[intIndice]);
+                }
+			}
+			catch(Exception e){
+				System.out.println("Escolha uma opcao valida:"); 
+				indice = lerString();
+			}
+		}
+    }
+
+    public ClientePJ escolherClientePJ(){
+        System.out.println("Clientes PJ:");
+        int i = 0, indicesValidos[] =  new int[listaClientes.size()];
+        for(int intIndice = 0; intIndice < listaClientes.size(); intIndice++){
+            if(listaClientes.get(intIndice) instanceof ClientePJ){
+                System.out.print(i + " - " + listaClientes.get(i).toStringBasico());
+                indicesValidos[i] = intIndice;
+                i++;
+            }
+        }
+		System.out.println("Escolha uma opcao:"); 
+		String indice = lerString();
+
+		while(true){
+			try{
+                int intIndice = Integer.parseInt(indice);
+                if(intIndice < 0 || intIndice >= i){
+                    System.out.println("Escolha uma opcao valida:"); 
+				    indice = lerString();
+                }
+                else {
+                    return (ClientePJ)listaClientes.get(indicesValidos[intIndice]);
+                }
+			}
+			catch(Exception e){
+				System.out.println("Escolha uma opcao valida:"); 
+				indice = lerString();
+			}
+		}
     }
 
     // Lista todos os clientes e retorna o cliente escolhido

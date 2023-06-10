@@ -11,6 +11,8 @@ public enum MenuOpcoes {
 		SubmenuOpcoes.CADASTAR_CLIENTE,
 		SubmenuOpcoes.REMOVER_CLIENTE,
 		SubmenuOpcoes.LISTAR_CLIENTES,
+		SubmenuOpcoes.CONFIGURACOES_CLIENTES_PF,
+		SubmenuOpcoes.CONFIGURACOES_CLIENTES_PJ,
 		SubmenuOpcoes.SINISTROS_POR_CLIENTE,
 		SubmenuOpcoes.VOLTAR
 	}),	
