@@ -86,12 +86,11 @@ public class Frota {
             System.out.println("Falha. Veiculo não adicionado.");
         }
 
-        System.out.println("Cadatrar mais um veiculo:\n\t1-Nao\n\t2-Sim");
+        System.out.println("Cadatrar mais um veiculo:\n\t0-Sim\n\t1-Nao");
         resposta = lerString();
 
         while(true){
-            if(resposta.equals("1")){
-                frota.addVeiculo();
+            if(resposta.equals("0")){
                 if(frota.addVeiculo()){
                     Veiculo veiculo =  frota.getListaVeiculos().get(frota.getListaVeiculos().size() - 1);
                     System.out.println("Veiculo " + veiculo.getModelo() + " (" + veiculo.getplaca() + ") adicionado com sucesso");
@@ -99,12 +98,12 @@ public class Frota {
                 else{
                     System.out.println("Falha. Veiculo não adicionado.");
                 }
-                System.out.println("Cadatrar mais um veiculo:\n\t1-Nao\n\t2-Sim");
+                System.out.println("Cadatrar mais um veiculo:\n\t0-Sim\n\t1-Nao");
                 resposta = lerString();
             }
             
-            else if(resposta.equals("2")){
-                System.out.println("Frota " + frota.getCode() + "cadastrado com sucesso.");
+            else if(resposta.equals("1")){
+                System.out.println("Frota " + frota.getCode() + " cadastrado com sucesso.");
                 break;
             }
 

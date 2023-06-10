@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ClientePJ extends Cliente {
     private final String cnpj;
@@ -106,5 +107,47 @@ public class ClientePJ extends Cliente {
             return true;
         }
         return false;
+    }
+
+    public boolean addVeiculo(){
+        Frota frota = escolherFrota();
+        return atualizarFrota(frota.getCode(), Veiculo.lerVeiculo());
+    }
+
+    public boolean removeVeiculo(){
+        Scanner input = new Scanner(System.in);
+        Frota frota = escolherFrota();
+        if(frota.getListaVeiculos().size() == 0)
+            return false;
+        System.out.println("Escolha um veiculo:");
+        for(int i = 0; i < frota.getListaVeiculos().size(); i ++){
+            System.out.println("\t" + i + " - " + frota.getListaVeiculos().get(i).toStringBasico());
+        }
+        String indice = input.nextLine();
+        while(true){
+            try {
+                return atualizarFrota(frota.getListaVeiculos().get(Integer.parseInt(indice)));
+            } catch (Exception e) {
+                System.out.println("Escolha um indice válido: ");
+                indice = input.nextLine();
+            }
+        }
+    }
+
+    private Frota escolherFrota(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Escolha uma frota:");
+        for(int i = 0; i < listaFrota.size(); i++){
+            System.out.println("\t" + i + " - " + listaFrota.get(i).getCode());
+        }
+        String indice = input.nextLine();
+        while(true){      
+            try {
+                return listaFrota.get(Integer.parseInt(indice));
+            } catch (Exception e) {
+                System.out.println("Escolha um indice valido: ");
+                indice = input.nextLine();
+            }
+        }
     }
 }

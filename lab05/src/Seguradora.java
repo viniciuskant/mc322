@@ -293,20 +293,12 @@ public class Seguradora {
         return contador;
     }
 
-    // private boolean noVetor(int i, int[]vetor, int tamanho){
-    //     for(int indice = 0; indice <= tamanho; indice ++){
-    //         if(vetor[indice] == i)
-    //             return true;
-    //     }
-    //     return false;
-    // } 
-
     public ClientePF escolherClientePF(){
         System.out.println("Clientes PF:");
         int i = 0, indicesValidos[] =  new int[listaClientes.size()];
         for(int indice = 0; indice < listaClientes.size(); indice++){
             if(listaClientes.get(indice) instanceof ClientePF){
-                System.out.print(i + " - " + listaClientes.get(i).toStringBasico());
+                System.out.print(i + " - " + listaClientes.get(indice).toStringBasico());
                 indicesValidos[i] = indice;
                 i++;
             }
@@ -337,7 +329,7 @@ public class Seguradora {
         int i = 0, indicesValidos[] =  new int[listaClientes.size()];
         for(int intIndice = 0; intIndice < listaClientes.size(); intIndice++){
             if(listaClientes.get(intIndice) instanceof ClientePJ){
-                System.out.print(i + " - " + listaClientes.get(i).toStringBasico());
+                System.out.print(i + " - " + listaClientes.get(intIndice).toStringBasico());
                 indicesValidos[i] = intIndice;
                 i++;
             }

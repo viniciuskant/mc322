@@ -14,12 +14,15 @@ public enum SubmenuOpcoes {
 	CONFIGURACOES_CLIENTES_PF("Configurações Clientes PF", new SubSubmenuOpcoes[]{
 		SubSubmenuOpcoes.CADASTRA_VEICULO,
 		SubSubmenuOpcoes.REMOVER_VEICULO,
+		SubSubmenuOpcoes.LISTAR_VEICULOS,
 		SubSubmenuOpcoes.VOLTAR
 	}),
 	CONFIGURACOES_CLIENTES_PJ("Configuracoes Clientes PJ", new SubSubmenuOpcoes[]{
 		SubSubmenuOpcoes.CADASTRA_FROTA,
+		SubSubmenuOpcoes.ADICIONAR_VEICULO_FROTA,
 		SubSubmenuOpcoes.REMOVER_VEICULO_FROTA,
-		SubSubmenuOpcoes.REMOVER_VEICULO_FROTA,
+		SubSubmenuOpcoes.SUBSTITUIR_FROTA,
+		SubSubmenuOpcoes.LISTAR_FROTAS,
 		SubSubmenuOpcoes.VOLTAR
 	}),
 	VOLTAR("Voltar", new SubSubmenuOpcoes[]{});

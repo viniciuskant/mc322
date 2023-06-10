@@ -336,24 +336,46 @@ public class Main {
 	public static void executarOpcoesSubSubmenu(SubSubmenuOpcoes op, ClientePF cliente){
 		switch(op){
 			case CADASTRA_VEICULO:
-				System.out.println("A FUNÇÃO CADASTRAR VEICULO, AINDA, NÃO FOI FEITA!");
+				cliente.CadastrarVeiculo();
 				break;
 			case REMOVER_VEICULO:
-				System.out.println("A FUNÇÃO REMOVER VEICULO, AINDA, NÃO FOI FEITA!");
+				if(cliente.removerVeiculo()){
+					System.out.println("Veiculo removido");
+				}
+				else{
+					System.out.println("Falha! Lista Vazia ou não foi possivel remover.");
+				}
+				break;
+			case LISTAR_VEICULOS:
+				String lista = cliente.listarVeiculos();
+				if(lista.equals(""))
+					System.out.println("Lista vazia.");
+				else{
+					System.out.println("Lista de veiculos:\n" + lista);
+				}
 			break;
 		}
-
+		
 	}
 	public static void executarOpcoesSubSubmenu(SubSubmenuOpcoes op, ClientePJ cliente){
 		switch(op){
 			case CADASTRA_FROTA:
-				System.out.println("A FUNÇÃO CADASTRAR FROTA, AINDA, NÃO FOI FEITA!");
+				cliente.cadastarFrota();
 				break;
 			case ADICIONAR_VEICULO_FROTA:
-				System.out.println("A FUNÇÃO ADICIONAR VEICULO NA FROTA, AINDA, NÃO FOI FEITA!");
+				cliente.addVeiculo();
 				break;
 			case REMOVER_VEICULO_FROTA:
-				System.out.println("A FUNÇÃO REMOVER VEICULO DA FROTA, AINDA, NÃO FOI FEITA!");
+				if(cliente.removeVeiculo()){
+					System.out.println("Veiculo removido com sucesso!");
+				}
+				break;
+			case LISTAR_FROTAS:
+				String lista = cliente.listarFrotas();
+				if(lista.equals(""))
+					System.out.println("Nao ha frotas para listar.");
+				else
+					System.out.print("Lista de frotas:\n" + lista);
 				break;
 			case SUBSTITUIR_FROTA:
 				System.out.println("A FUNÇÃO SUBSTITUIR FROTA, AINDA, NÃO FOI FEITA!");

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ClientePF extends Cliente {
     private final String cpf;
@@ -103,6 +104,23 @@ public class ClientePF extends Cliente {
             return false;
 
         listaVeiculos.remove(i);
+        return true;
+    }
+
+    public boolean removerVeiculo(){
+        Scanner input = new Scanner(System.in);
+
+        if(listaVeiculos.size() == 0)
+            return false;
+        System.out.println("Qual veiculo sera removido:");
+        System.out.print(listarVeiculos());
+        String indice =input.nextLine();
+        try {
+            Veiculo veiculo = listaVeiculos.get(Integer.parseInt(indice));
+            return listaVeiculos.remove(veiculo);
+        } catch (Exception e) {
+            System.out.println("Falha! Escolha uma opcao valida: ");
+        }
         return true;
     }
 
