@@ -189,6 +189,21 @@ public class Seguradora {
         return cancelarSeguro(escolhaSeguro());
     }
 
+    public boolean cancelarSeguro(Cliente cliente){
+        int incides[] = new int[listaSeguros.size()];
+        int contador = 0;
+        for(int i = 0; i < listaSeguros.size(); i++){
+            if(listaSeguros.get(i).getCliente().equals(cliente)){
+                incides[contador] = i;
+                contador++;
+            }
+        }
+        for(int indice: incides){
+            listaSeguros.remove(indice);
+        }
+        return true;
+    }
+
     public boolean cadastrarCliente(Cliente cliente) {
         return listaClientes.add(cliente);
     }
@@ -214,7 +229,9 @@ public class Seguradora {
     }
 
     public boolean removeCliente(){
-       return removeCliente(escolherCliente());
+       Cliente cliente = escolherCliente();
+       cancelarSeguro(cliente);
+       return removeCliente(cliente);
     }
 
     public ArrayList<Sinistro> getSinistroPorCliente(String CadastroNacional) {

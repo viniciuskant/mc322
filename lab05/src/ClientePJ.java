@@ -89,12 +89,12 @@ public class ClientePJ extends Cliente {
         return false;
     }
 
-    public boolean atualizarFrota(String code, ArrayList<Veiculo> listaVeiculos) { // Troca a lista de veiculo da frota do codigo desejado
+    public boolean atualizarFrota(String code) { // Troca a lista de veiculo da frota do codigo desejado
         int indice = indiceFrota(code);
         if (indice == -1)
             return false;
-        listaFrota.get(indice).setListaVeiculos(listaVeiculos);
-        return true;
+        listaFrota.remove(indice);
+        return cadastarFrota();
     }
 
     public boolean getVeiculosPorFrota(int code) {
@@ -132,6 +132,10 @@ public class ClientePJ extends Cliente {
                 indice = input.nextLine();
             }
         }
+    }
+
+    public boolean substituirFrota(){
+        return atualizarFrota(escolherFrota().getCode());
     }
 
     private Frota escolherFrota(){

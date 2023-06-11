@@ -252,7 +252,7 @@ public class Main {
 			case CADASTRAR_SEGURADORA:
 				Seguradora seguradora = lerSeguradora();
 				if(listaSeguradoras.add(seguradora)){
-					System.out.println("Seguradora adicionda com sucesso");
+					System.out.println("Seguradora adicionda com sucesso.");
 				}
 				else{
 					System.out.println("Falha ao adiconar!");
@@ -267,7 +267,10 @@ public class Main {
 	public static void executarOpcaoSubMenu(SubmenuOpcoes opSubmenu, Seguradora seguradora) {
 		switch(opSubmenu){
 			case CADASTAR_SEGURO:
-				seguradora.gerarSeguro();
+				if(seguradora.getListaClientes().size() != 0)
+					seguradora.gerarSeguro();
+				else
+					System.out.println("Não ha clientes cadastrados. Cadastrar primeiro um cliente.");
 				break;
 			case CANCELAR_SEGURO:
 				if(seguradora.cancelarSeguro())
@@ -276,15 +279,20 @@ public class Main {
 					System.out.println("Falha! Não foi possivel cancelar.");
 				break;
 			case LISTAR_SEGUROS_CLIENTE:
-				ArrayList<Seguro> seguros = seguradora.getSeguroPorCliente();
-				if(seguros.size() != 0){
-					System.out.println("Lista de seguros:");
-					for(int i = 0; i < seguros.size(); i++){
-						System.out.println(Integer.toString(i) + " - " + seguros.get(i).toStringBasico() + "\n");
+				if(seguradora.getListaSeguros().size() != 0){
+					ArrayList<Seguro> seguros = seguradora.getSeguroPorCliente();
+					if(seguros.size() != 0){
+						System.out.println("Lista de seguros:");
+						for(int i = 0; i < seguros.size(); i++){
+							System.out.println(Integer.toString(i) + " - " + seguros.get(i).toStringBasico() + "\n");
+						}
 					}
+					else
+						System.out.println("Nao ha seguros para listar.");
 				}
-				else
+				else{
 					System.out.println("Nao ha seguros para listar.");
+				}
 				break;
 			case CADASTAR_CLIENTE:
 				if (seguradora.cadastrarCliente())
@@ -293,10 +301,14 @@ public class Main {
 					System.out.println("Falha! Cliente não cadastrado.");
 				break;
 			case REMOVER_CLIENTE:
-				if(seguradora.removeCliente())
-					System.out.println("Cliente removido com sucesso.");
+				if(seguradora.getListaClientes().size() !=0){
+					if(seguradora.removeCliente())
+						System.out.println("Cliente removido com sucesso.");
+					else
+						System.out.println("Falha! Não foi possível remover.");
+				}
 				else
-					System.out.println("Falha! Não foi possível remover.");
+					System.out.println("Nao ha clientes cadastrados.");
 				break;
 			case LISTAR_CLIENTES:
 				seguradora.listarClientes();
@@ -320,15 +332,20 @@ public class Main {
 				}				
 				break;
 			case SINISTROS_POR_CLIENTE:
-				ArrayList<Sinistro> sinistros = seguradora.getSinistroPorCliente();
-				if(sinistros.size() != 0){
-					System.out.println("Lista de sinistros:");
-					for(int i = 0; i < sinistros.size(); i++){
-						System.out.println(Integer.toString(i) + " - " + sinistros.get(i).toStringBasico() + "\n");
+				if(seguradora.getListaClientes().size() != 0){
+					ArrayList<Sinistro> sinistros = seguradora.getSinistroPorCliente();
+					if(sinistros.size() != 0){
+						System.out.println("Lista de sinistros:");
+						for(int i = 0; i < sinistros.size(); i++){
+							System.out.println(Integer.toString(i) + " - " + sinistros.get(i).toStringBasico() + "\n");
+						}
 					}
+					else
+						System.out.println("Nao ha sinistros para listar.");
 				}
-				else
-					System.out.println("Nao ha sinistros para listar.");
+				else{
+					System.out.println("Não ha clientes cadastrados.");
+				}
 			break;		
 		}
 	}
@@ -378,7 +395,9 @@ public class Main {
 					System.out.print("Lista de frotas:\n" + lista);
 				break;
 			case SUBSTITUIR_FROTA:
-				System.out.println("A FUNÇÃO SUBSTITUIR FROTA, AINDA, NÃO FOI FEITA!");
+				if(!cliente.substituirFrota()){
+					System.out.println("Não foi possivel substituir.");
+				}
 			break;
 		}
 	}
